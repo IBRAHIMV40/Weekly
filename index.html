@@ -1634,6 +1634,77 @@
             font-size: 14px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
         }
+        
+        /* Password Modal Styles */
+        .password-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 4000;
+            justify-content: center;
+            align-items: center;
+        }
+        .password-modal.open {
+            display: flex;
+        }
+        .password-content {
+            background-color: #fff;
+            width: 90%;
+            max-width: 400px;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .password-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .password-header h3 {
+            font-size: 18px;
+            margin: 0;
+            color: #333;
+        }
+        .password-header button {
+            background: none;
+            border: none;
+            color: #333;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .password-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .password-input {
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            text-align: center;
+        }
+        .password-submit {
+            background: linear-gradient(to right, #004d00, #00b300);
+            color: #fff;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .password-error {
+            color: #ff0000;
+            font-size: 14px;
+            text-align: center;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
@@ -1738,17 +1809,17 @@
         
         <div class="sidebar-list" id="sidebar-list">
             <!-- Director Center - Now with upload functionality -->
-            <div class="sidebar-item" onclick="openUploadModal()">
+            <div class="sidebar-item" onclick="checkUploadPassword()">
                 <img src="https://cdn-icons-png.flaticon.com/128/18831/18831648.png" alt="Director Center">
                 <span>Director Center</span>
             </div>
-            <div class="sidebar-item">
-                <img src="https://cdn-icons-png.flaticon.com/128/5303/5303479.png" alt="Earn Rewards">
-                <span>Earn Rewards</span>
+            <div class="sidebar-item" onclick="openAppsCenter()">
+                <img src="https://cdn-icons-png.flaticon.com/128/5303/5303479.png" alt="Apps Center">
+                <span>Apps Center</span>
             </div>
-            <div class="sidebar-item">
-                <img src="https://cdn-icons-png.flaticon.com/128/9592/9592247.png" alt="Viewer Gift">
-                <span>Viewer Gift</span>
+            <div class="sidebar-item" onclick="openAdsCenter()">
+                <img src="https://cdn-icons-png.flaticon.com/128/9592/9592247.png" alt="Ads Center">
+                <span>Ads Center</span>
             </div>
             <div class="sidebar-item">
                 <img src="https://cdn-icons-png.flaticon.com/128/18392/18392966.png" alt="Online Service">
@@ -1767,6 +1838,21 @@
                 <img src="https://cdn-icons-png.flaticon.com/128/2838/2838694.png" alt="Help">
                 <span>Help & Support</span>
             </div>
+        </div>
+    </div>
+    
+    <!-- Password Modal -->
+    <div class="password-modal" id="password-modal">
+        <div class="password-content">
+            <div class="password-header">
+                <h3>Enter Password</h3>
+                <button onclick="closePasswordModal()">✖</button>
+            </div>
+            <form class="password-form" onsubmit="validatePassword(event)">
+                <input type="password" class="password-input" id="password-input" placeholder="Enter password" required>
+                <button type="submit" class="password-submit">Submit</button>
+                <div class="password-error" id="password-error"></div>
+            </form>
         </div>
     </div>
     
@@ -1814,8 +1900,31 @@
                     </select>
                 </div>
                 <div class="form-group">
+                    <label for="video-country">Country</label>
+                    <select id="video-country" required>
+                        <option value="USA">USA</option>
+                        <option value="UK">UK</option>
+                        <option value="Nigeria">Nigeria</option>
+                        <option value="India">India</option>
+                        <option value="Canada">Canada</option>
+                        <option value="Australia">Australia</option>
+                        <option value="Germany">Germany</option>
+                        <option value="France">France</option>
+                        <option value="Japan">Japan</option>
+                        <option value="China">China</option>
+                        <option value="South Korea">South Korea</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
                     <label for="video-year">Year</label>
                     <input type="number" id="video-year" min="1900" max="2030" placeholder="2023" required>
+                </div>
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="video-trending" name="trending">
+                        Mark as Trending
+                    </label>
                 </div>
                 <div class="form-group">
                     <label for="video-url">Video URL (YouTube embed or Google Drive preview)</label>
@@ -2122,6 +2231,9 @@
         // Track if we're currently in the upload modal
         let inUploadModal = false;
         
+        // Track if we're currently in the password modal
+        let inPasswordModal = false;
+        
         // Track current grid data for filtering
         let currentGridData = [];
         
@@ -2203,6 +2315,54 @@
             
             // Reset form
             document.getElementById('upload-form').reset();
+        };
+        
+        // Function to check password before opening upload modal
+        const checkUploadPassword = () => {
+            const passwordModal = document.getElementById('password-modal');
+            passwordModal.classList.add('open');
+            inPasswordModal = true;
+            
+            // Focus on password input
+            setTimeout(() => {
+                document.getElementById('password-input').focus();
+            }, 100);
+        };
+        
+        const closePasswordModal = () => {
+            const passwordModal = document.getElementById('password-modal');
+            passwordModal.classList.remove('open');
+            inPasswordModal = false;
+            
+            // Clear password input and error message
+            document.getElementById('password-input').value = '';
+            document.getElementById('password-error').textContent = '';
+        };
+        
+        const validatePassword = (event) => {
+            event.preventDefault();
+            
+            const password = document.getElementById('password-input').value;
+            const correctPassword = "Mm&&0220";
+            
+            if (password === correctPassword) {
+                closePasswordModal();
+                openUploadModal();
+            } else {
+                document.getElementById('password-error').textContent = "Incorrect password. Please try again.";
+            }
+        };
+        
+        // Function to open Apps Center
+        const openAppsCenter = () => {
+            showNotification("Apps Center - Upload and manage your apps here", "info");
+            // In a real implementation, this would open a modal or navigate to a new page
+        };
+        
+        // Function to open Ads Center
+        const openAdsCenter = () => {
+            showNotification("Ads Center - Upload and manage your ads here", "info");
+            // In a real implementation, this would open a modal or navigate to a new page
         };
         
         // Function to toggle series fields based on video type
@@ -2366,7 +2526,9 @@
             const type = document.getElementById('video-type').value;
             const category = document.getElementById('video-category').value;
             const genre = document.getElementById('video-genre').value;
+            const country = document.getElementById('video-country').value;
             const year = document.getElementById('video-year').value;
+            const trending = document.getElementById('video-trending').checked;
             const videoUrl = document.getElementById('video-url').value;
             const thumbnail = document.getElementById('video-thumbnail').value || `https://picsum.photos/seed/${Math.random().toString(36).substring(7)}/300/450.jpg`;
             
@@ -2386,7 +2548,9 @@
                     type,
                     category,
                     genre,
+                    country,
                     year: parseInt(year),
+                    trending,
                     videoUrl,
                     imgUrl: thumbnail,
                     createdAt: firebase.firestore.FieldValue.serverTimestamp(),
@@ -2543,8 +2707,8 @@
             // Example list of URL logos (replace with your own data)
             const urlLogos = [
                 { logoUrl: "https://cdn-icons-png.flaticon.com/128/18831/18831648.png", name: "Director Center", url: "#", isUpload: true },
-                { logoUrl: "https://cdn-icons-png.flaticon.com/128/5303/5303479.png", name: "Earn Rewards", url: "#" },
-                { logoUrl: "https://cdn-icons-png.flaticon.com/128/9592/9592247.png", name: "Viewer Gift", url: "#" },
+                { logoUrl: "https://cdn-icons-png.flaticon.com/128/5303/5303479.png", name: "Apps Center", url: "#", isApps: true },
+                { logoUrl: "https://cdn-icons-png.flaticon.com/128/9592/9592247.png", name: "Ads Center", url: "#", isAds: true },
                 { logoUrl: "https://cdn-icons-png.flaticon.com/128/18392/18392966.png", name: "Online Service", url: "#" },
                 { logoUrl: "https://cdn-icons-png.flaticon.com/128/2312/2312342.png", name: "Privacy Policy", url: "#" },
                 { logoUrl: "https://cdn-icons-png.flaticon.com/128/3405/3405247.png", name: "Settings", url: "#" },
@@ -2556,7 +2720,13 @@
                 
                 if (item.isUpload) {
                     // Director Center with upload functionality
-                    sidebarItem.onclick = openUploadModal;
+                    sidebarItem.onclick = checkUploadPassword;
+                } else if (item.isApps) {
+                    // Apps Center
+                    sidebarItem.onclick = openAppsCenter;
+                } else if (item.isAds) {
+                    // Ads Center
+                    sidebarItem.onclick = openAdsCenter;
                 } else {
                     sidebarItem.onclick = () => window.open(item.url, '_blank');
                 }
@@ -4336,10 +4506,19 @@
                 }
             });
             
+            document.getElementById('password-modal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closePasswordModal();
+                }
+            });
+            
             // Add keyboard event to close modal with Escape key
             document.addEventListener('keydown', function(e) {
                 if (e.key === 'Escape' && inUploadModal) {
                     closeUploadModal();
+                }
+                if (e.key === 'Escape' && inPasswordModal) {
+                    closePasswordModal();
                 }
             });
             
@@ -4384,6 +4563,11 @@
                 else if (inUploadModal) {
                     document.getElementById('upload-modal').classList.remove('open');
                     inUploadModal = false;
+                }
+                // Handle password modal
+                else if (inPasswordModal) {
+                    document.getElementById('password-modal').classList.remove('open');
+                    inPasswordModal = false;
                 }
                 // Default to discover if no specific state
                 else {
