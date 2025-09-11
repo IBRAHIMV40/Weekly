@@ -1476,8 +1476,6 @@
             z-index: 10000;
             font-weight: 500;
             transition: opacity 0.5s ease;
-            max-width: 80%;
-            text-align: center;
         }
         .notification.success {
             background-color: #4CAF50;
@@ -1636,118 +1634,6 @@
             font-size: 14px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
         }
-        
-        /* Password Modal */
-        .password-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            z-index: 4000;
-            justify-content: center;
-            align-items: center;
-        }
-        .password-modal.open {
-            display: flex;
-        }
-        .password-content {
-            background-color: #fff;
-            width: 90%;
-            max-width: 400px;
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        .password-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        .password-header h3 {
-            font-size: 18px;
-            margin: 0;
-            color: #333;
-        }
-        .password-header button {
-            background: none;
-            border: none;
-            color: #333;
-            font-size: 16px;
-            cursor: pointer;
-        }
-        .password-form {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-        .password-input {
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 14px;
-        }
-        .password-submit {
-            background: linear-gradient(to right, #004d00, #00b300);
-            color: #fff;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: bold;
-        }
-        .password-error {
-            color: #ff0000;
-            font-size: 14px;
-            text-align: center;
-            margin-top: 10px;
-        }
-        
-        /* File upload styling */
-        .file-upload {
-            position: relative;
-            display: inline-block;
-            cursor: pointer;
-            width: 100%;
-        }
-        .file-upload input[type=file] {
-            position: absolute;
-            left: 0;
-            top: 0;
-            opacity: 0;
-            width: 100%;
-            height: 100%;
-            cursor: pointer;
-        }
-        .file-upload-label {
-            display: block;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            background-color: #f9f9f9;
-            color: #333;
-            font-size: 14px;
-            text-align: center;
-            transition: all 0.3s ease;
-        }
-        .file-upload:hover .file-upload-label {
-            background-color: #f0f0f0;
-            border-color: #00b300;
-        }
-        .file-preview {
-            margin-top: 10px;
-            text-align: center;
-        }
-        .file-preview img {
-            max-width: 100%;
-            max-height: 200px;
-            border-radius: 4px;
-            border: 1px solid #ddd;
-        }
     </style>
 </head>
 <body>
@@ -1852,19 +1738,17 @@
         
         <div class="sidebar-list" id="sidebar-list">
             <!-- Director Center - Now with upload functionality -->
-            <div class="sidebar-item" onclick="checkPasswordAndOpenUpload()">
+            <div class="sidebar-item" onclick="openUploadModal()">
                 <img src="https://cdn-icons-png.flaticon.com/128/18831/18831648.png" alt="Director Center">
                 <span>Director Center</span>
             </div>
-            <!-- Apps Center - Changed from Earn Rewards -->
-            <div class="sidebar-item" onclick="checkPasswordAndOpenApps()">
-                <img src="https://cdn-icons-png.flaticon.com/128/5303/5303479.png" alt="Apps Center">
-                <span>Apps Center</span>
+            <div class="sidebar-item">
+                <img src="https://cdn-icons-png.flaticon.com/128/5303/5303479.png" alt="Earn Rewards">
+                <span>Earn Rewards</span>
             </div>
-            <!-- Ads Center - Changed from Viewer Gift -->
-            <div class="sidebar-item" onclick="checkPasswordAndOpenAds()">
-                <img src="https://cdn-icons-png.flaticon.com/128/9592/9592247.png" alt="Ads Center">
-                <span>Ads Center</span>
+            <div class="sidebar-item">
+                <img src="https://cdn-icons-png.flaticon.com/128/9592/9592247.png" alt="Viewer Gift">
+                <span>Viewer Gift</span>
             </div>
             <div class="sidebar-item">
                 <img src="https://cdn-icons-png.flaticon.com/128/18392/18392966.png" alt="Online Service">
@@ -1883,21 +1767,6 @@
                 <img src="https://cdn-icons-png.flaticon.com/128/2838/2838694.png" alt="Help">
                 <span>Help & Support</span>
             </div>
-        </div>
-    </div>
-    
-    <!-- Password Modal -->
-    <div class="password-modal" id="password-modal">
-        <div class="password-content">
-            <div class="password-header">
-                <h3>Enter Password</h3>
-                <button onclick="closePasswordModal()">✖</button>
-            </div>
-            <form class="password-form" id="password-form" onsubmit="validatePassword(event)">
-                <input type="password" id="password-input" class="password-input" placeholder="Enter password" required>
-                <button type="submit" class="password-submit">Submit</button>
-                <div id="password-error" class="password-error"></div>
-            </form>
         </div>
     </div>
     
@@ -1944,34 +1813,6 @@
                         <option value="Thriller">Thriller</option>
                     </select>
                 </div>
-                <!-- New Countries field -->
-                <div class="form-group">
-                    <label for="video-country">Country</label>
-                    <select id="video-country" required>
-                        <option value="USA">USA</option>
-                        <option value="Nigeria">Nigeria</option>
-                        <option value="India">India</option>
-                        <option value="UK">UK</option>
-                        <option value="Canada">Canada</option>
-                        <option value="France">France</option>
-                        <option value="Germany">Germany</option>
-                        <option value="Japan">Japan</option>
-                        <option value="South Korea">South Korea</option>
-                        <option value="China">China</option>
-                        <option value="Australia">Australia</option>
-                        <option value="Brazil">Brazil</option>
-                        <option value="Mexico">Mexico</option>
-                        <option value="Other">Other</option>
-                    </select>
-                </div>
-                <!-- New Trending field -->
-                <div class="form-group">
-                    <label for="video-trending">Trending</label>
-                    <select id="video-trending" required>
-                        <option value="false">No</option>
-                        <option value="true">Yes</option>
-                    </select>
-                </div>
                 <div class="form-group">
                     <label for="video-year">Year</label>
                     <input type="number" id="video-year" min="1900" max="2030" placeholder="2023" required>
@@ -1980,14 +1821,9 @@
                     <label for="video-url">Video URL (YouTube embed or Google Drive preview)</label>
                     <input type="url" id="video-url" placeholder="https://www.youtube.com/embed/VIDEO_ID or https://drive.google.com/file/d/FILE_ID/preview" required>
                 </div>
-                <!-- Changed from URL to File upload -->
                 <div class="form-group">
-                    <label for="video-thumbnail">Thumbnail File</label>
-                    <div class="file-upload">
-                        <input type="file" id="video-thumbnail" accept="image/*" onchange="previewThumbnail(this)">
-                        <label for="video-thumbnail" class="file-upload-label">Choose an image file</label>
-                    </div>
-                    <div id="thumbnail-preview" class="file-preview"></div>
+                    <label for="video-thumbnail">Thumbnail URL</label>
+                    <input type="url" id="video-thumbnail" placeholder="https://example.com/thumbnail.jpg">
                 </div>
                 
                 <!-- Series-specific fields - initially hidden -->
@@ -2009,82 +1845,6 @@
                     <p>YouTube: https://www.youtube.com/embed/MN4hHqWWpwU</p>
                     <p>Google Drive: https://drive.google.com/file/d/1CWOELtePqeDDI-t07aWB0NAWQXlvH-ul/preview</p>
                 </div>
-            </form>
-        </div>
-    </div>
-    
-    <!-- Apps Upload Modal -->
-    <div class="upload-modal" id="apps-upload-modal">
-        <div class="upload-content">
-            <div class="upload-header">
-                <h3>Upload App</h3>
-                <button onclick="closeAppsUploadModal()">✖</button>
-            </div>
-            <form class="upload-form" id="apps-upload-form">
-                <div class="form-group">
-                    <label for="app-name">App Name</label>
-                    <input type="text" id="app-name" placeholder="Enter app name" required>
-                </div>
-                <div class="form-group">
-                    <label for="app-description">Description</label>
-                    <textarea id="app-description" placeholder="Enter app description"></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="app-category">Category</label>
-                    <select id="app-category" required>
-                        <option value="Games">Games</option>
-                        <option value="Productivity">Productivity</option>
-                        <option value="Social">Social</option>
-                        <option value="Entertainment">Entertainment</option>
-                        <option value="Education">Education</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="app-link">App Link</label>
-                    <input type="url" id="app-link" placeholder="https://example.com/app" required>
-                </div>
-                <div class="form-group">
-                    <label for="app-icon">App Icon</label>
-                    <div class="file-upload">
-                        <input type="file" id="app-icon" accept="image/*" onchange="previewAppIcon(this)">
-                        <label for="app-icon" class="file-upload-label">Choose an image file</label>
-                    </div>
-                    <div id="app-icon-preview" class="file-preview"></div>
-                </div>
-                <button type="submit" class="upload-btn">Upload App</button>
-            </form>
-        </div>
-    </div>
-    
-    <!-- Ads Upload Modal -->
-    <div class="upload-modal" id="ads-upload-modal">
-        <div class="upload-content">
-            <div class="upload-header">
-                <h3>Upload Ad</h3>
-                <button onclick="closeAdsUploadModal()">✖</button>
-            </div>
-            <form class="upload-form" id="ads-upload-form">
-                <div class="form-group">
-                    <label for="ad-title">Ad Title</label>
-                    <input type="text" id="ad-title" placeholder="Enter ad title" required>
-                </div>
-                <div class="form-group">
-                    <label for="ad-description">Description</label>
-                    <textarea id="ad-description" placeholder="Enter ad description"></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="ad-link">Ad Link</label>
-                    <input type="url" id="ad-link" placeholder="https://example.com/ad" required>
-                </div>
-                <div class="form-group">
-                    <label for="ad-image">Ad Image</label>
-                    <div class="file-upload">
-                        <input type="file" id="ad-image" accept="image/*" onchange="previewAdImage(this)">
-                        <label for="ad-image" class="file-upload-label">Choose an image file</label>
-                    </div>
-                    <div id="ad-image-preview" class="file-preview"></div>
-                </div>
-                <button type="submit" class="upload-btn">Upload Ad</button>
             </form>
         </div>
     </div>
@@ -2284,44 +2044,6 @@
             }
         }
         
-        // Fetch apps from Firestore
-        async function fetchAppsFromFirestore() {
-            try {
-                showLoading();
-                const snapshot = await db.collection('apps').get();
-                const apps = [];
-                snapshot.forEach(doc => {
-                    apps.push({ id: doc.id, ...doc.data() });
-                });
-                hideLoading();
-                return apps;
-            } catch (error) {
-                console.error('Error fetching apps:', error);
-                hideLoading();
-                showNotification('Failed to load apps. Please check your connection.', 'error');
-                return [];
-            }
-        }
-        
-        // Fetch ads from Firestore
-        async function fetchAdsFromFirestore() {
-            try {
-                showLoading();
-                const snapshot = await db.collection('ads').get();
-                const ads = [];
-                snapshot.forEach(doc => {
-                    ads.push({ id: doc.id, ...doc.data() });
-                });
-                hideLoading();
-                return ads;
-            } catch (error) {
-                console.error('Error fetching ads:', error);
-                hideLoading();
-                showNotification('Failed to load ads. Please check your connection.', 'error');
-                return [];
-            }
-        }
-        
         // Initialize saved movies from localStorage
         let savedMovies = JSON.parse(localStorage.getItem('savedMovies')) || [];
         
@@ -2400,15 +2122,6 @@
         // Track if we're currently in the upload modal
         let inUploadModal = false;
         
-        // Track if we're currently in the apps upload modal
-        let inAppsUploadModal = false;
-        
-        // Track if we're currently in the ads upload modal
-        let inAdsUploadModal = false;
-        
-        // Track if we're currently in the password modal
-        let inPasswordModal = false;
-        
         // Track current grid data for filtering
         let currentGridData = [];
         
@@ -2425,9 +2138,6 @@
         
         // Track if we're opening a direct video link
         let openingDirectLink = false;
-        
-        // Track the current upload type (video, app, or ad)
-        let currentUploadType = 'video';
         
         // Function to show/hide loading spinner
         function showLoading() {
@@ -2451,82 +2161,6 @@
             }
         }
         
-        // Function to check password and open upload modal
-        const checkPasswordAndOpenUpload = () => {
-            currentUploadType = 'video';
-            openPasswordModal();
-        };
-        
-        // Function to check password and open apps upload modal
-        const checkPasswordAndOpenApps = () => {
-            currentUploadType = 'apps';
-            openPasswordModal();
-        };
-        
-        // Function to check password and open ads upload modal
-        const checkPasswordAndOpenAds = () => {
-            currentUploadType = 'ads';
-            openPasswordModal();
-        };
-        
-        // Function to open password modal
-        const openPasswordModal = () => {
-            const passwordModal = document.getElementById('password-modal');
-            passwordModal.classList.add('open');
-            inPasswordModal = true;
-            
-            // Clear previous error message
-            document.getElementById('password-error').textContent = '';
-            
-            // Focus on password input
-            setTimeout(() => {
-                document.getElementById('password-input').focus();
-            }, 100);
-        };
-        
-        // Function to close password modal
-        const closePasswordModal = () => {
-            const passwordModal = document.getElementById('password-modal');
-            passwordModal.classList.remove('open');
-            inPasswordModal = false;
-            
-            // Clear password input
-            document.getElementById('password-input').value = '';
-            document.getElementById('password-error').textContent = '';
-        };
-        
-        // Function to validate password
-        const validatePassword = (event) => {
-            event.preventDefault();
-            
-            const password = document.getElementById('password-input').value;
-            const correctPassword = 'Mm&&0220';
-            
-            if (password === correctPassword) {
-                // Password is correct, open the appropriate upload modal
-                closePasswordModal();
-                
-                if (currentUploadType === 'video') {
-                    openUploadModal();
-                } else if (currentUploadType === 'apps') {
-                    openAppsUploadModal();
-                } else if (currentUploadType === 'ads') {
-                    openAdsUploadModal();
-                }
-            } else {
-                // Password is incorrect, show error message
-                document.getElementById('password-error').textContent = 'Incorrect password. Please try again.';
-                
-                // Clear password input
-                document.getElementById('password-input').value = '';
-                
-                // Focus on password input again
-                setTimeout(() => {
-                    document.getElementById('password-input').focus();
-                }, 100);
-            }
-        };
-        
         // Function to toggle the upload modal
         const openUploadModal = () => {
             const uploadModal = document.getElementById('upload-modal');
@@ -2547,9 +2181,6 @@
             
             // Reset form
             document.getElementById('upload-form').reset();
-            
-            // Reset thumbnail preview
-            document.getElementById('thumbnail-preview').innerHTML = '';
             
             // Reset seasons data
             seasons = [];
@@ -2572,207 +2203,6 @@
             
             // Reset form
             document.getElementById('upload-form').reset();
-            
-            // Reset thumbnail preview
-            document.getElementById('thumbnail-preview').innerHTML = '';
-        };
-        
-        // Function to toggle the apps upload modal
-        const openAppsUploadModal = () => {
-            const appsUploadModal = document.getElementById('apps-upload-modal');
-            const sidebarModal = document.getElementById('sidebar-modal');
-            
-            // Close sidebar modal first
-            if (sidebarModal.classList.contains('open')) {
-                sidebarModal.classList.remove('open');
-                inSidebarModal = false;
-            }
-            
-            // Open apps upload modal
-            appsUploadModal.classList.add('open');
-            inAppsUploadModal = true;
-            
-            // Push state to history
-            history.pushState({ appsUploadOpen: true }, '');
-            
-            // Reset form
-            document.getElementById('apps-upload-form').reset();
-            
-            // Reset app icon preview
-            document.getElementById('app-icon-preview').innerHTML = '';
-            
-            // Scroll to top of modal content
-            setTimeout(() => {
-                const uploadContent = document.querySelector('.upload-content');
-                if (uploadContent) {
-                    uploadContent.scrollTop = 0;
-                }
-            }, 100);
-        };
-        
-        const closeAppsUploadModal = () => {
-            const appsUploadModal = document.getElementById('apps-upload-modal');
-            appsUploadModal.classList.remove('open');
-            inAppsUploadModal = false;
-            
-            // Reset form
-            document.getElementById('apps-upload-form').reset();
-            
-            // Reset app icon preview
-            document.getElementById('app-icon-preview').innerHTML = '';
-        };
-        
-        // Function to toggle the ads upload modal
-        const openAdsUploadModal = () => {
-            const adsUploadModal = document.getElementById('ads-upload-modal');
-            const sidebarModal = document.getElementById('sidebar-modal');
-            
-            // Close sidebar modal first
-            if (sidebarModal.classList.contains('open')) {
-                sidebarModal.classList.remove('open');
-                inSidebarModal = false;
-            }
-            
-            // Open ads upload modal
-            adsUploadModal.classList.add('open');
-            inAdsUploadModal = true;
-            
-            // Push state to history
-            history.pushState({ adsUploadOpen: true }, '');
-            
-            // Reset form
-            document.getElementById('ads-upload-form').reset();
-            
-            // Reset ad image preview
-            document.getElementById('ad-image-preview').innerHTML = '';
-            
-            // Scroll to top of modal content
-            setTimeout(() => {
-                const uploadContent = document.querySelector('.upload-content');
-                if (uploadContent) {
-                    uploadContent.scrollTop = 0;
-                }
-            }, 100);
-        };
-        
-        const closeAdsUploadModal = () => {
-            const adsUploadModal = document.getElementById('ads-upload-modal');
-            adsUploadModal.classList.remove('open');
-            inAdsUploadModal = false;
-            
-            // Reset form
-            document.getElementById('ads-upload-form').reset();
-            
-            // Reset ad image preview
-            document.getElementById('ad-image-preview').innerHTML = '';
-        };
-        
-        // Function to preview thumbnail
-        const previewThumbnail = (input) => {
-            if (input.files && input.files[0]) {
-                const reader = new FileReader();
-                
-                reader.onload = function(e) {
-                    const preview = document.getElementById('thumbnail-preview');
-                    preview.innerHTML = `<img src="${e.target.result}" alt="Thumbnail preview">`;
-                };
-                
-                reader.readAsDataURL(input.files[0]);
-            }
-        };
-        
-        // Function to preview app icon
-        const previewAppIcon = (input) => {
-            if (input.files && input.files[0]) {
-                const reader = new FileReader();
-                
-                reader.onload = function(e) {
-                    const preview = document.getElementById('app-icon-preview');
-                    preview.innerHTML = `<img src="${e.target.result}" alt="App icon preview">`;
-                };
-                
-                reader.readAsDataURL(input.files[0]);
-            }
-        };
-        
-        // Function to preview ad image
-        const previewAdImage = (input) => {
-            if (input.files && input.files[0]) {
-                const reader = new FileReader();
-                
-                reader.onload = function(e) {
-                    const preview = document.getElementById('ad-image-preview');
-                    preview.innerHTML = `<img src="${e.target.result}" alt="Ad image preview">`;
-                };
-                
-                reader.readAsDataURL(input.files[0]);
-            }
-        };
-        
-        // Function to upload file to Firebase Storage and get URL
-        const uploadFileAndGetUrl = async (file, path) => {
-            try {
-                showLoading();
-                
-                // Check if file exists
-                if (!file) {
-                    throw new Error('No file selected');
-                }
-                
-                // Check file size (limit to 10MB)
-                if (file.size > 10 * 1024 * 1024) {
-                    throw new Error('File size exceeds 10MB limit');
-                }
-                
-                // Create a storage reference
-                const storageRef = storage.ref();
-                const fileRef = storageRef.child(path);
-                
-                // Upload file with metadata
-                const metadata = {
-                    contentType: file.type,
-                    name: file.name
-                };
-                
-                const uploadTask = fileRef.put(file, metadata);
-                
-                // Monitor upload progress
-                uploadTask.on('state_changed', 
-                    (snapshot) => {
-                        // Progress indicator can be added here
-                        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                        console.log('Upload is ' + progress + '% done');
-                    }, 
-                    (error) => {
-                        // Handle unsuccessful uploads
-                        console.error('Upload error:', error);
-                        hideLoading();
-                        showNotification('Error uploading file: ' + error.message, 'error');
-                        throw error;
-                    }, 
-                    () => {
-                        // Handle successful uploads on complete
-                        // For instance, get the download URL
-                        uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-                            console.log('File available at', downloadURL);
-                            hideLoading();
-                            return downloadURL;
-                        });
-                    }
-                );
-                
-                // Wait for upload to complete and get URL
-                const snapshot = await uploadTask;
-                const downloadUrl = await snapshot.ref.getDownloadURL();
-                
-                hideLoading();
-                return downloadUrl;
-            } catch (error) {
-                console.error('Error uploading file:', error);
-                hideLoading();
-                showNotification('Error uploading file: ' + error.message, 'error');
-                throw error;
-            }
         };
         
         // Function to toggle series fields based on video type
@@ -2936,11 +2366,9 @@
             const type = document.getElementById('video-type').value;
             const category = document.getElementById('video-category').value;
             const genre = document.getElementById('video-genre').value;
-            const country = document.getElementById('video-country').value;
-            const trending = document.getElementById('video-trending').value === 'true';
             const year = document.getElementById('video-year').value;
             const videoUrl = document.getElementById('video-url').value;
-            const thumbnailFile = document.getElementById('video-thumbnail').files[0];
+            const thumbnail = document.getElementById('video-thumbnail').value || `https://picsum.photos/seed/${Math.random().toString(36).substring(7)}/300/450.jpg`;
             
             // Validate URL format
             if (!isValidVideoUrl(videoUrl)) {
@@ -2951,13 +2379,6 @@
             try {
                 showLoading();
                 
-                // Upload thumbnail file and get URL
-                let thumbnailUrl = `https://picsum.photos/seed/${Math.random().toString(36).substring(7)}/300/450.jpg`;
-                if (thumbnailFile) {
-                    const thumbnailPath = `thumbnails/${Date.now()}_${thumbnailFile.name}`;
-                    thumbnailUrl = await uploadFileAndGetUrl(thumbnailFile, thumbnailPath);
-                }
-                
                 // Create video object
                 const videoData = {
                     title,
@@ -2965,11 +2386,9 @@
                     type,
                     category,
                     genre,
-                    country,
-                    trending,
                     year: parseInt(year),
                     videoUrl,
-                    imgUrl: thumbnailUrl,
+                    imgUrl: thumbnail,
                     createdAt: firebase.firestore.FieldValue.serverTimestamp(),
                     uploadedBy: 'anonymous' // Use 'anonymous' instead of user ID
                 };
@@ -3028,112 +2447,6 @@
             } catch (error) {
                 console.error('Error uploading video:', error);
                 showNotification('Error uploading video. Please try again.', 'warning');
-            } finally {
-                hideLoading();
-            }
-        });
-        
-        // Handle form submission for apps upload
-        document.getElementById('apps-upload-form').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            // Get form values
-            const name = document.getElementById('app-name').value;
-            const description = document.getElementById('app-description').value;
-            const category = document.getElementById('app-category').value;
-            const link = document.getElementById('app-link').value;
-            const iconFile = document.getElementById('app-icon').files[0];
-            
-            try {
-                showLoading();
-                
-                // Upload icon file and get URL
-                let iconUrl = `https://picsum.photos/seed/${Math.random().toString(36).substring(7)}/100/100.jpg`;
-                if (iconFile) {
-                    const iconPath = `app-icons/${Date.now()}_${iconFile.name}`;
-                    iconUrl = await uploadFileAndGetUrl(iconFile, iconPath);
-                }
-                
-                // Create app object
-                const appData = {
-                    name,
-                    description,
-                    category,
-                    link,
-                    icon: iconUrl,
-                    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-                    uploadedBy: 'anonymous' // Use 'anonymous' instead of user ID
-                };
-                
-                // Add to Firestore
-                const docRef = await db.collection('apps').add(appData);
-                
-                // Show success message
-                showNotification('App uploaded successfully!', 'success');
-                
-                // Close modal
-                closeAppsUploadModal();
-                
-                // Refresh the UI if on profile section
-                if (inGridView && document.querySelector('.profile-item')) {
-                    showProfileSection();
-                }
-                
-            } catch (error) {
-                console.error('Error uploading app:', error);
-                showNotification('Error uploading app. Please try again.', 'warning');
-            } finally {
-                hideLoading();
-            }
-        });
-        
-        // Handle form submission for ads upload
-        document.getElementById('ads-upload-form').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            // Get form values
-            const title = document.getElementById('ad-title').value;
-            const description = document.getElementById('ad-description').value;
-            const link = document.getElementById('ad-link').value;
-            const imageFile = document.getElementById('ad-image').files[0];
-            
-            try {
-                showLoading();
-                
-                // Upload image file and get URL
-                let imageUrl = `https://picsum.photos/seed/${Math.random().toString(36).substring(7)}/300/200.jpg`;
-                if (imageFile) {
-                    const imagePath = `ad-images/${Date.now()}_${imageFile.name}`;
-                    imageUrl = await uploadFileAndGetUrl(imageFile, imagePath);
-                }
-                
-                // Create ad object
-                const adData = {
-                    title,
-                    description,
-                    link,
-                    image: imageUrl,
-                    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-                    uploadedBy: 'anonymous' // Use 'anonymous' instead of user ID
-                };
-                
-                // Add to Firestore
-                const docRef = await db.collection('ads').add(adData);
-                
-                // Show success message
-                showNotification('Ad uploaded successfully!', 'success');
-                
-                // Close modal
-                closeAdsUploadModal();
-                
-                // Refresh ads
-                fetchAdsFromFirestore().then(ads => {
-                    adsData = ads;
-                });
-                
-            } catch (error) {
-                console.error('Error uploading ad:', error);
-                showNotification('Error uploading ad. Please try again.', 'warning');
             } finally {
                 hideLoading();
             }
@@ -3230,8 +2543,8 @@
             // Example list of URL logos (replace with your own data)
             const urlLogos = [
                 { logoUrl: "https://cdn-icons-png.flaticon.com/128/18831/18831648.png", name: "Director Center", url: "#", isUpload: true },
-                { logoUrl: "https://cdn-icons-png.flaticon.com/128/5303/5303479.png", name: "Apps Center", url: "#", isApps: true },
-                { logoUrl: "https://cdn-icons-png.flaticon.com/128/9592/9592247.png", name: "Ads Center", url: "#", isAds: true },
+                { logoUrl: "https://cdn-icons-png.flaticon.com/128/5303/5303479.png", name: "Earn Rewards", url: "#" },
+                { logoUrl: "https://cdn-icons-png.flaticon.com/128/9592/9592247.png", name: "Viewer Gift", url: "#" },
                 { logoUrl: "https://cdn-icons-png.flaticon.com/128/18392/18392966.png", name: "Online Service", url: "#" },
                 { logoUrl: "https://cdn-icons-png.flaticon.com/128/2312/2312342.png", name: "Privacy Policy", url: "#" },
                 { logoUrl: "https://cdn-icons-png.flaticon.com/128/3405/3405247.png", name: "Settings", url: "#" },
@@ -3243,13 +2556,7 @@
                 
                 if (item.isUpload) {
                     // Director Center with upload functionality
-                    sidebarItem.onclick = checkPasswordAndOpenUpload;
-                } else if (item.isApps) {
-                    // Apps Center with upload functionality
-                    sidebarItem.onclick = checkPasswordAndOpenApps;
-                } else if (item.isAds) {
-                    // Ads Center with upload functionality
-                    sidebarItem.onclick = checkPasswordAndOpenAds;
+                    sidebarItem.onclick = openUploadModal;
                 } else {
                     sidebarItem.onclick = () => window.open(item.url, '_blank');
                 }
@@ -3437,7 +2744,7 @@
             }
         };
         
-        const showProfileSection = async () => {
+        const showProfileSection = () => {
             // Reset scroll position
             window.scrollTo(0, 0);
             
@@ -3454,15 +2761,14 @@
             document.getElementById('categories-container').style.display = 'none';
             gridContainer.style.display = 'block'; // Use block for list layout
             
-            // Fetch apps from Firestore
-            const apps = await fetchAppsFromFirestore();
-            if (apps.length > 0) {
-                apps.forEach(item => {
+            // Add profile content using profileApps data
+            if (profileApps && Array.isArray(profileApps)) {
+                profileApps.forEach(item => {
                     const profileItem = createProfileItem(item);
                     gridContainer.appendChild(profileItem);
                 });
             } else {
-                showNotification('No apps available. Please check back later.', 'warning');
+                showNotification('Profile apps data not available', 'warning');
             }
         };
         
@@ -3697,7 +3003,7 @@
             openButton.style.border = 'none';
             openButton.style.padding = '6px 12px';
             openButton.style.borderRadius = '5px';
-            openButton.style.cursor = 'pointer';
+            openButton.style.cursor = pointer;
             openButton.style.fontSize = '14px';
             openButton.onclick = () => window.open(item.link, '_blank');
             content.appendChild(name);
@@ -4241,11 +3547,6 @@
                         return true;
                     }
                     
-                    // Search in country
-                    if (item.country && item.country.toLowerCase().includes(searchTerm)) {
-                        return true;
-                    }
-                    
                     return false;
                 });
                 
@@ -4330,15 +3631,6 @@
                         item: item
                     });
                 }
-                
-                // Country suggestions
-                if (item.country && item.country.toLowerCase().includes(searchTerm)) {
-                    suggestions.add({
-                        text: item.country,
-                        type: 'Country',
-                        item: item
-                    });
-                }
             });
             
             // Convert to array and limit to 5 suggestions
@@ -4380,12 +3672,6 @@
         
         // Improved notification system
         function showNotification(message, type = 'info') {
-            // Remove any existing notifications
-            const existingNotifications = document.querySelectorAll('.notification');
-            existingNotifications.forEach(notification => {
-                notification.remove();
-            });
-            
             const notification = document.createElement('div');
             notification.className = `notification ${type}`;
             notification.textContent = message;
@@ -4399,8 +3685,6 @@
             notification.style.padding = '15px 25px';
             notification.style.borderRadius = '8px';
             notification.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
-            notification.style.maxWidth = '80%';
-            notification.style.textAlign = 'center';
             
             // Style based on type
             switch(type) {
@@ -4428,9 +3712,7 @@
                 notification.style.opacity = '0';
                 notification.style.transition = 'opacity 0.5s ease';
                 setTimeout(() => {
-                    if (notification.parentNode) {
-                        notification.parentNode.removeChild(notification);
-                    }
+                    document.body.removeChild(notification);
                 }, 500);
             }, 3000);
         }
@@ -4585,13 +3867,8 @@
             try {
                 showLoading();
                 
-                // Fetch videos, apps, and ads from Firestore
-                const [fetchedVideos, fetchedApps, fetchedAds] = await Promise.all([
-                    fetchVideosFromFirestore(),
-                    fetchAppsFromFirestore(),
-                    fetchAdsFromFirestore()
-                ]);
-                
+                // Fetch videos from Firestore
+                const fetchedVideos = await fetchVideosFromFirestore();
                 if (fetchedVideos.length > 0) {
                     data = shuffleArray(fetchedVideos);
                     combinedData = data;
@@ -4602,16 +3879,6 @@
                     initCarousel();
                 } else {
                     showNotification('No videos available. Please check back later.', 'warning');
-                }
-                
-                if (fetchedApps.length > 0) {
-                    profileApps = fetchedApps;
-                }
-                
-                if (fetchedAds.length > 0) {
-                    adsData = fetchedAds;
-                    // Initialize ads rotation
-                    rotateAds();
                 }
                 
                 hideLoading();
@@ -4991,10 +4258,10 @@
             const app = adsData[index];
             adContent.innerHTML = `
                 <div class="app-icon">
-                    <img src="${app.image}" alt="App Icon" />
+                    <img src="${app.icon}" alt="App Icon" />
                 </div>
                 <div class="ad-info">
-                    <div class="app-name">${app.title}</div>
+                    <div class="app-name">${app.name}</div>
                     <div class="ad-meta">
                         <span class="sponsored">Sponsored ·</span>
                         <span>${app.rating} ★ FREE</span>
@@ -5014,6 +4281,9 @@
             showAd(currentAdIndex);
             currentAdIndex = (currentAdIndex + 1) % adsData.length;
         }
+        // Show first ad immediately and rotate
+        rotateAds();
+        setInterval(rotateAds, 15000);
         
         // Initialize all new features when the page loads
         window.addEventListener('load', () => {
@@ -5066,36 +4336,10 @@
                 }
             });
             
-            document.getElementById('apps-upload-modal').addEventListener('click', function(e) {
-                if (e.target === this) {
-                    closeAppsUploadModal();
-                }
-            });
-            
-            document.getElementById('ads-upload-modal').addEventListener('click', function(e) {
-                if (e.target === this) {
-                    closeAdsUploadModal();
-                }
-            });
-            
-            document.getElementById('password-modal').addEventListener('click', function(e) {
-                if (e.target === this) {
-                    closePasswordModal();
-                }
-            });
-            
             // Add keyboard event to close modal with Escape key
             document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape') {
-                    if (inUploadModal) {
-                        closeUploadModal();
-                    } else if (inAppsUploadModal) {
-                        closeAppsUploadModal();
-                    } else if (inAdsUploadModal) {
-                        closeAdsUploadModal();
-                    } else if (inPasswordModal) {
-                        closePasswordModal();
-                    }
+                if (e.key === 'Escape' && inUploadModal) {
+                    closeUploadModal();
                 }
             });
             
@@ -5140,21 +4384,6 @@
                 else if (inUploadModal) {
                     document.getElementById('upload-modal').classList.remove('open');
                     inUploadModal = false;
-                }
-                // Handle apps upload modal
-                else if (inAppsUploadModal) {
-                    document.getElementById('apps-upload-modal').classList.remove('open');
-                    inAppsUploadModal = false;
-                }
-                // Handle ads upload modal
-                else if (inAdsUploadModal) {
-                    document.getElementById('ads-upload-modal').classList.remove('open');
-                    inAdsUploadModal = false;
-                }
-                // Handle password modal
-                else if (inPasswordModal) {
-                    document.getElementById('password-modal').classList.remove('open');
-                    inPasswordModal = false;
                 }
                 // Default to discover if no specific state
                 else {
