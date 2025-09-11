@@ -1515,7 +1515,6 @@
             align-items: center;
             z-index: 9999;
         }
-
         .loading-spinner {
             width: 50px;
             height: 50px;
@@ -1524,7 +1523,6 @@
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
-
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
@@ -1543,44 +1541,80 @@
             font-weight: 500;
             transition: opacity 0.5s ease;
         }
-
         .notification.success {
             background-color: #4CAF50;
             color: white;
         }
-
         .notification.warning {
             background-color: #FF9800;
             color: white;
         }
-
         .notification.error {
             background-color: #F44336;
             color: white;
         }
-
         .notification.info {
             background-color: #2196F3;
             color: white;
         }
+        
+        /* Downloaded item styles */
+        .downloaded-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            border-bottom: 1px solid #333;
+            position: relative;
+        }
+        .downloaded-item img {
+            width: 80px;
+            height: 115px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+        .downloaded-item .content {
+            flex: 1;
+        }
+        .downloaded-item .content h4 {
+            font-size: 14px;
+            margin: 0;
+            color: #ccc;
+        }
+        .downloaded-item .content p {
+            font-size: 12px;
+            margin: 0;
+            color: #777;
+        }
+        .downloaded-item .play-button {
+            background-color: #00b300;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        .downloaded-item .delete-button {
+            background-color: #ff0000;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
     </style>
-    <!-- External JavaScript files -->
-    <script src="videos-data.js"></script>
-    <script src="series-data.js"></script>
-    <script src="anime-data.js"></script>
-    <script src="profile-apps.js"></script>
-    <script src="ads-data.js"></script>
 </head>
 <body>
     <!-- Loading Spinner -->
     <div id="loading" class="loading" style="display: none;">
         <div class="loading-spinner"></div>
     </div>
-
     <!-- Hidden radio buttons for navigation -->
     <input type="radio" name="nav" id="nav-discover" class="nav-radio" checked>
     <input type="radio" name="nav" id="nav-movies" class="nav-radio">
     <input type="radio" name="nav" id="nav-trending" class="nav-radio">
+    <input type="radio" name="nav" id="nav-downloads" class="nav-radio">
     <input type="radio" name="nav" id="nav-mylist" class="nav-radio">
     <input type="radio" name="nav" id="nav-apps" class="nav-radio">
     
@@ -1933,6 +1967,10 @@
             <i class="fas fa-fire"></i>
             <span>Trending</span>
         </label>
+        <label for="nav-downloads" class="nav-icon" onclick="showDownloadedVideos();">
+            <i class="fas fa-download"></i>
+            <span>Downloads</span>
+        </label>
         <label for="nav-mylist" class="nav-icon" onclick="showMyList();">
             <i class="fas fa-list"></i>
             <span>My List</span>
@@ -1944,29 +1982,122 @@
     </footer>
     
     <script>
-        // Initialize Firebase with error handling
-        let firebaseApp, db, storage;
-        
-        try {
-            const firebaseConfig = {
-                apiKey: "AIzaSyA9JK8BX2pAXpmW_d6GpXRZjFpTLkso1KI",
-                authDomain: "movie-nest-77e6b.firebaseapp.com",
-                projectId: "movie-nest-77e6b",
-                storageBucket: "movie-nest-77e6b.firebasestorage.app",
-                messagingSenderId: "513317696448",
-                appId: "1:513317696448:web:c70c566151226ef55bce25"
-            };
-            
-            firebaseApp = firebase.initializeApp(firebaseConfig);
-            db = firebase.firestore();
-            storage = firebase.storage();
-            
-            console.log("Firebase initialized successfully");
-        } catch (error) {
-            console.error("Firebase initialization error:", error);
-            showNotification("Failed to initialize app. Please refresh.", "warning");
+        // Initialize Firebase with your configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyA9JK8BX2pAXpmW_d6GpXRZjFpTLkso1KI",
+            authDomain: "movie-nest-77e6b.firebaseapp.com",
+            projectId: "movie-nest-77e6b",
+            storageBucket: "movie-nest-77e6b.firebasestorage.app",
+            messagingSenderId: "513317696448",
+            appId: "1:513317696448:web:c70c566151226ef55bce25"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        const storage = firebase.storage();
+
+        // Generate or get device ID
+        function getDeviceId() {
+            let deviceId = localStorage.getItem('deviceId');
+            if (!deviceId) {
+                deviceId = 'device_' + Math.random().toString(36).substring(2, 15);
+                localStorage.setItem('deviceId', deviceId);
+            }
+            return deviceId;
         }
-        
+
+        // Fetch videos from Firestore
+        async function fetchVideosFromFirestore() {
+            try {
+                showLoading();
+                const snapshot = await db.collection('videos').get();
+                const videos = [];
+                snapshot.forEach(doc => {
+                    videos.push({ id: doc.id, ...doc.data() });
+                });
+                hideLoading();
+                return videos;
+            } catch (error) {
+                console.error('Error fetching videos:', error);
+                hideLoading();
+                showNotification('Failed to load videos. Please check your connection.', 'error');
+                return [];
+            }
+        }
+
+        // Save download to Firestore
+        async function saveDownloadToFirestore(videoData) {
+            try {
+                const deviceId = getDeviceId();
+                const downloadData = {
+                    deviceId,
+                    videoId: videoData.id,
+                    title: videoData.title,
+                    description: videoData.description,
+                    imgUrl: videoData.imgUrl,
+                    videoUrl: videoData.videoUrl,
+                    category: videoData.category,
+                    genre: videoData.genre,
+                    year: videoData.year,
+                    downloadDate: firebase.firestore.FieldValue.serverTimestamp()
+                };
+                
+                await db.collection('downloads').add(downloadData);
+                return true;
+            } catch (error) {
+                console.error('Error saving download:', error);
+                return false;
+            }
+        }
+
+        // Get downloads from Firestore
+        async function getDownloadsFromFirestore() {
+            try {
+                const deviceId = getDeviceId();
+                const snapshot = await db.collection('downloads')
+                    .where('deviceId', '==', deviceId)
+                    .orderBy('downloadDate', 'desc')
+                    .get();
+                
+                const downloads = [];
+                snapshot.forEach(doc => {
+                    downloads.push({ id: doc.id, ...doc.data() });
+                });
+                return downloads;
+            } catch (error) {
+                console.error('Error fetching downloads:', error);
+                return [];
+            }
+        }
+
+        // Delete download from Firestore
+        async function deleteDownloadFromFirestore(downloadId) {
+            try {
+                await db.collection('downloads').doc(downloadId).delete();
+                return true;
+            } catch (error) {
+                console.error('Error deleting download:', error);
+                return false;
+            }
+        }
+
+        // Check if video is downloaded
+        async function isVideoDownloaded(videoId) {
+            try {
+                const deviceId = getDeviceId();
+                const snapshot = await db.collection('downloads')
+                    .where('deviceId', '==', deviceId)
+                    .where('videoId', '==', videoId)
+                    .get();
+                
+                return !snapshot.empty;
+            } catch (error) {
+                console.error('Error checking download status:', error);
+                return false;
+            }
+        }
+
         // Initialize saved movies from localStorage
         let savedMovies = JSON.parse(localStorage.getItem('savedMovies')) || [];
         
@@ -2809,11 +2940,14 @@
         // Track current movie in modal
         let currentMovieInModal = null;
         
-        const openVideoNav = (videoUrl, videoId, item) => {
+        const openVideoNav = async (videoUrl, videoId, item) => {
             // Check network connection before opening video
             if (!navigator.onLine) {
-                showNetworkWarning();
-                return;
+                const downloaded = await isVideoDownloaded(item.id);
+                if (!downloaded) {
+                    showNetworkWarning();
+                    return;
+                }
             }
             
             // Validate video URL
@@ -2864,6 +2998,9 @@
             
             // Update save button state
             updateSaveButton();
+            
+            // Update download button state
+            updateDownloadButton();
             
             // Only push state if we're not already in the modal
             if (!inVideoModal) {
@@ -3103,6 +3240,21 @@
             } else {
                 saveBtn.textContent = 'Add to list';
                 saveBtn.style.backgroundColor = '#00b300';
+            }
+        };
+        
+        // Function to update download button state
+        const updateDownloadButton = async () => {
+            const downloadBtn = document.getElementById('download-btn');
+            if (currentMovieInModal) {
+                const downloaded = await isVideoDownloaded(currentMovieInModal.id);
+                if (downloaded) {
+                    downloadBtn.innerHTML = '<i class="fas fa-check"></i> Downloaded';
+                    downloadBtn.style.backgroundColor = '#ff0000';
+                } else {
+                    downloadBtn.innerHTML = '<i class="fas fa-download"></i>';
+                    downloadBtn.style.backgroundColor = '#00b300';
+                }
             }
         };
         
@@ -3592,17 +3744,29 @@
         }
         
         // Initialize the page
-        function initializeApp() {
+        async function initializeApp() {
             try {
-                createCarousel();
-                createDiscoverSection();
-                createCategories();
-                updateHistoryList();
-                initCarousel();
-                console.log("App initialized successfully");
+                showLoading();
+                
+                // Fetch videos from Firestore
+                const fetchedVideos = await fetchVideosFromFirestore();
+                if (fetchedVideos.length > 0) {
+                    data = shuffleArray(fetchedVideos);
+                    combinedData = data;
+                    createCarousel();
+                    createDiscoverSection();
+                    createCategories();
+                    updateHistoryList();
+                    initCarousel();
+                } else {
+                    showNotification('No videos available. Please check back later.', 'warning');
+                }
+                
+                hideLoading();
             } catch (error) {
                 console.error("App initialization failed:", error);
                 showNotification("Failed to load content. Please check your connection.", "warning");
+                hideLoading();
             }
         }
         
@@ -3781,9 +3945,49 @@
         };
         
         // Download movie function - updated to visit arewa.com
-        const downloadMovie = () => {
-            // Open the arewa.com link in a new tab
-            window.open('http://arewa.com', '_blank');
+        const downloadMovie = async () => {
+            if (!currentMovieInModal) {
+                showNotification('No video selected for download', 'warning');
+                return;
+            }
+            
+            // Check if video is already downloaded
+            const alreadyDownloaded = await isVideoDownloaded(currentMovieInModal.id);
+            if (alreadyDownloaded) {
+                showNotification('This video is already downloaded', 'info');
+                return;
+            }
+            
+            // Show download progress
+            const downloadProgress = document.getElementById('download-progress');
+            downloadProgress.classList.add('open');
+            
+            // Simulate download progress
+            let progress = 0;
+            const progressInterval = setInterval(() => {
+                progress += 5;
+                document.querySelector('.progress-fill').style.width = `${progress}%`;
+                document.querySelector('.download-percentage').textContent = `${progress}%`;
+                
+                if (progress >= 100) {
+                    clearInterval(progressInterval);
+                    
+                    // Save to Firestore
+                    saveDownloadToFirestore(currentMovieInModal).then(success => {
+                        if (success) {
+                            // Hide progress after a delay
+                            setTimeout(() => {
+                                downloadProgress.classList.remove('open');
+                                showNotification('Video downloaded successfully!', 'success');
+                                updateDownloadButton();
+                            }, 1000);
+                        } else {
+                            downloadProgress.classList.remove('open');
+                            showNotification('Failed to save download. Please try again.', 'error');
+                        }
+                    });
+                }
+            }, 200);
         };
         
         // Open Edit Profile Modal
@@ -3967,6 +4171,119 @@
         // Show first ad immediately and rotate
         rotateAds();
         setInterval(rotateAds, 15000);
+        
+        // Function to show downloaded videos
+        const showDownloadedVideos = async () => {
+            // Reset scroll position
+            window.scrollTo(0, 0);
+            
+            // Set flag and push state for grid view
+            inGridView = true;
+            history.pushState({ gridView: true }, '');
+            
+            const gridContainer = document.getElementById('grid-container');
+            gridContainer.innerHTML = '';
+            gridContainer.scrollTop = 0;
+            
+            // Hide other sections
+            document.getElementById('discover-container').style.display = 'none';
+            document.getElementById('categories-container').style.display = 'none';
+            gridContainer.style.display = 'block';
+            
+            // Show loading
+            showLoading();
+            
+            // Get downloaded videos from Firestore
+            const downloadedVideos = await getDownloadsFromFirestore();
+            
+            if (downloadedVideos.length > 0) {
+                downloadedVideos.forEach(item => {
+                    const listItem = createDownloadedListItem(item);
+                    gridContainer.appendChild(listItem);
+                });
+            } else {
+                showNotification('No downloaded videos found.', 'warning');
+            }
+            
+            hideLoading();
+        };
+        
+        // Create a special list item for downloaded videos with delete option
+        const createDownloadedListItem = (item) => {
+            const listItem = document.createElement('div');
+            listItem.className = 'downloaded-item';
+            listItem.style.display = 'flex';
+            listItem.style.alignItems = 'center';
+            listItem.style.gap = '10px';
+            listItem.style.padding = '10px';
+            listItem.style.borderBottom = '1px solid #333';
+            listItem.style.position = 'relative';
+            
+            const img = document.createElement('img');
+            img.src = item.imgUrl;
+            img.alt = item.title;
+            img.style.width = '80px';
+            img.style.height = '115px';
+            img.style.objectFit = 'cover';
+            img.style.borderRadius = '5px';
+            
+            const content = document.createElement('div');
+            content.style.flex = '1';
+            
+            const title = document.createElement('h4');
+            title.textContent = item.title;
+            title.style.margin = '0';
+            title.style.fontSize = '14px';
+            title.style.color = '#ccc';
+            
+            const description = document.createElement('p');
+            description.textContent = `Downloaded: ${new Date(item.downloadDate.toDate()).toLocaleDateString()}`;
+            description.style.margin = '0';
+            description.style.fontSize = '12px';
+            description.style.color = '#777';
+            
+            // Play button
+            const playButton = document.createElement('button');
+            playButton.innerHTML = '<i class="fas fa-play"></i>';
+            playButton.className = 'play-button';
+            
+            // Delete button
+            const deleteButton = document.createElement('button');
+            deleteButton.innerHTML = '<i class="fas fa-trash"></i>';
+            deleteButton.className = 'delete-button';
+            
+            // Add click events
+            playButton.onclick = () => {
+                openVideoNav(item.videoUrl, item.title, item);
+            };
+            
+            deleteButton.onclick = (e) => {
+                e.stopPropagation();
+                deleteDownloadedVideo(item.id);
+                listItem.remove(); // Remove from UI
+            };
+            
+            content.appendChild(title);
+            content.appendChild(description);
+            listItem.appendChild(img);
+            listItem.appendChild(content);
+            listItem.appendChild(playButton);
+            listItem.appendChild(deleteButton);
+            
+            return listItem;
+        };
+        
+        // Function to delete a downloaded video
+        const deleteDownloadedVideo = async (downloadId) => {
+            const success = await deleteDownloadFromFirestore(downloadId);
+            if (success) {
+                showNotification('Video removed from downloads', 'success');
+                // Refresh the downloads list
+                showDownloadedVideos();
+            } else {
+                showNotification('Failed to remove download. Please try again.', 'error');
+            }
+        };
         
         // Initialize all new features when the page loads
         window.addEventListener('load', () => {
