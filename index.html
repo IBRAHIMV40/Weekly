@@ -1683,7 +1683,6 @@
             gap: 15px;
         }
         .password-input {
-            width: 100%;
             padding: 12px;
             border: 1px solid #ddd;
             border-radius: 4px;
@@ -1699,58 +1698,53 @@
             font-size: 16px;
             font-weight: bold;
         }
-        .password-submit:hover {
-            background: linear-gradient(to right, #003d00, #009900);
+        .password-error {
+            color: #ff0000;
+            font-size: 14px;
+            text-align: center;
+            margin-top: 10px;
         }
         
-        /* Delete Video Section */
-        .delete-section {
-            margin-top: 20px;
-            padding: 15px;
-            background-color: #fff5f5;
-            border-radius: 8px;
-            border: 1px solid #ffdddd;
-        }
-        .delete-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-        .delete-header h3 {
-            font-size: 16px;
-            margin: 0;
-            color: #d32f2f;
-        }
-        .delete-form {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        .delete-input {
+        /* File upload styling */
+        .file-upload {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
             width: 100%;
-            padding: 10px;
+        }
+        .file-upload input[type=file] {
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+        .file-upload-label {
+            display: block;
+            padding: 12px;
             border: 1px solid #ddd;
             border-radius: 4px;
+            background-color: #f9f9f9;
+            color: #333;
             font-size: 14px;
+            text-align: center;
+            transition: all 0.3s ease;
         }
-        .delete-btn {
-            background-color: #d32f2f;
-            color: white;
-            border: none;
-            padding: 10px 15px;
+        .file-upload:hover .file-upload-label {
+            background-color: #f0f0f0;
+            border-color: #00b300;
+        }
+        .file-preview {
+            margin-top: 10px;
+            text-align: center;
+        }
+        .file-preview img {
+            max-width: 100%;
+            max-height: 200px;
             border-radius: 4px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: bold;
-        }
-        .delete-btn:hover {
-            background-color: #b71c1c;
-        }
-        .delete-info {
-            font-size: 12px;
-            color: #666;
-            margin-top: 5px;
+            border: 1px solid #ddd;
         }
     </style>
 </head>
@@ -1856,17 +1850,19 @@
         
         <div class="sidebar-list" id="sidebar-list">
             <!-- Director Center - Now with upload functionality -->
-            <div class="sidebar-item" onclick="openPasswordModal()">
+            <div class="sidebar-item" onclick="checkPasswordAndOpenUpload()">
                 <img src="https://cdn-icons-png.flaticon.com/128/18831/18831648.png" alt="Director Center">
                 <span>Director Center</span>
             </div>
-            <div class="sidebar-item">
-                <img src="https://cdn-icons-png.flaticon.com/128/5303/5303479.png" alt="Earn Rewards">
-                <span>Earn Rewards</span>
+            <!-- Apps Center - Changed from Earn Rewards -->
+            <div class="sidebar-item" onclick="checkPasswordAndOpenApps()">
+                <img src="https://cdn-icons-png.flaticon.com/128/5303/5303479.png" alt="Apps Center">
+                <span>Apps Center</span>
             </div>
-            <div class="sidebar-item">
-                <img src="https://cdn-icons-png.flaticon.com/128/9592/9592247.png" alt="Viewer Gift">
-                <span>Viewer Gift</span>
+            <!-- Ads Center - Changed from Viewer Gift -->
+            <div class="sidebar-item" onclick="checkPasswordAndOpenAds()">
+                <img src="https://cdn-icons-png.flaticon.com/128/9592/9592247.png" alt="Ads Center">
+                <span>Ads Center</span>
             </div>
             <div class="sidebar-item">
                 <img src="https://cdn-icons-png.flaticon.com/128/18392/18392966.png" alt="Online Service">
@@ -1898,6 +1894,7 @@
             <form class="password-form" id="password-form" onsubmit="validatePassword(event)">
                 <input type="password" id="password-input" class="password-input" placeholder="Enter password" required>
                 <button type="submit" class="password-submit">Submit</button>
+                <div id="password-error" class="password-error"></div>
             </form>
         </div>
     </div>
@@ -1912,7 +1909,7 @@
             <form class="upload-form" id="upload-form">
                 <div class="form-group">
                     <label for="video-title">Video Title</label>
-                    <input type="text" id="video-title" placeholder="Enter video title" required oninput="searchVideoByTitle()">
+                    <input type="text" id="video-title" placeholder="Enter video title" required>
                 </div>
                 <div class="form-group">
                     <label for="video-description">Description</label>
@@ -1945,6 +1942,34 @@
                         <option value="Thriller">Thriller</option>
                     </select>
                 </div>
+                <!-- New Countries field -->
+                <div class="form-group">
+                    <label for="video-country">Country</label>
+                    <select id="video-country" required>
+                        <option value="USA">USA</option>
+                        <option value="Nigeria">Nigeria</option>
+                        <option value="India">India</option>
+                        <option value="UK">UK</option>
+                        <option value="Canada">Canada</option>
+                        <option value="France">France</option>
+                        <option value="Germany">Germany</option>
+                        <option value="Japan">Japan</option>
+                        <option value="South Korea">South Korea</option>
+                        <option value="China">China</option>
+                        <option value="Australia">Australia</option>
+                        <option value="Brazil">Brazil</option>
+                        <option value="Mexico">Mexico</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <!-- New Trending field -->
+                <div class="form-group">
+                    <label for="video-trending">Trending</label>
+                    <select id="video-trending" required>
+                        <option value="false">No</option>
+                        <option value="true">Yes</option>
+                    </select>
+                </div>
                 <div class="form-group">
                     <label for="video-year">Year</label>
                     <input type="number" id="video-year" min="1900" max="2030" placeholder="2023" required>
@@ -1953,9 +1978,14 @@
                     <label for="video-url">Video URL (YouTube embed or Google Drive preview)</label>
                     <input type="url" id="video-url" placeholder="https://www.youtube.com/embed/VIDEO_ID or https://drive.google.com/file/d/FILE_ID/preview" required>
                 </div>
+                <!-- Changed from URL to File upload -->
                 <div class="form-group">
-                    <label for="video-thumbnail">Thumbnail URL</label>
-                    <input type="url" id="video-thumbnail" placeholder="https://example.com/thumbnail.jpg">
+                    <label for="video-thumbnail">Thumbnail File</label>
+                    <div class="file-upload">
+                        <input type="file" id="video-thumbnail" accept="image/*" onchange="previewThumbnail(this)">
+                        <label for="video-thumbnail" class="file-upload-label">Choose an image file</label>
+                    </div>
+                    <div id="thumbnail-preview" class="file-preview"></div>
                 </div>
                 
                 <!-- Series-specific fields - initially hidden -->
@@ -1978,23 +2008,82 @@
                     <p>Google Drive: https://drive.google.com/file/d/1CWOELtePqeDDI-t07aWB0NAWQXlvH-ul/preview</p>
                 </div>
             </form>
-            
-            <!-- Delete Video Section -->
-            <div class="delete-section" id="delete-section" style="display: none;">
-                <div class="delete-header">
-                    <h3>Delete Video</h3>
-                    <button onclick="toggleDeleteSection()">✖</button>
-                </div>
-                <div id="delete-form-container">
-                    <div id="video-id-input-container" style="display: none;">
-                        <input type="text" id="delete-video-id" class="delete-input" placeholder="Enter video ID to delete">
-                    </div>
-                    <div id="delete-info" class="delete-info" style="display: none;">
-                        Click the delete button below to permanently delete this video.
-                    </div>
-                    <button onclick="deleteVideo(event)" class="delete-btn">Delete Video</button>
-                </div>
+        </div>
+    </div>
+    
+    <!-- Apps Upload Modal -->
+    <div class="upload-modal" id="apps-upload-modal">
+        <div class="upload-content">
+            <div class="upload-header">
+                <h3>Upload App</h3>
+                <button onclick="closeAppsUploadModal()">✖</button>
             </div>
+            <form class="upload-form" id="apps-upload-form">
+                <div class="form-group">
+                    <label for="app-name">App Name</label>
+                    <input type="text" id="app-name" placeholder="Enter app name" required>
+                </div>
+                <div class="form-group">
+                    <label for="app-description">Description</label>
+                    <textarea id="app-description" placeholder="Enter app description"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="app-category">Category</label>
+                    <select id="app-category" required>
+                        <option value="Games">Games</option>
+                        <option value="Productivity">Productivity</option>
+                        <option value="Social">Social</option>
+                        <option value="Entertainment">Entertainment</option>
+                        <option value="Education">Education</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="app-link">App Link</label>
+                    <input type="url" id="app-link" placeholder="https://example.com/app" required>
+                </div>
+                <div class="form-group">
+                    <label for="app-icon">App Icon</label>
+                    <div class="file-upload">
+                        <input type="file" id="app-icon" accept="image/*" onchange="previewAppIcon(this)">
+                        <label for="app-icon" class="file-upload-label">Choose an image file</label>
+                    </div>
+                    <div id="app-icon-preview" class="file-preview"></div>
+                </div>
+                <button type="submit" class="upload-btn">Upload App</button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Ads Upload Modal -->
+    <div class="upload-modal" id="ads-upload-modal">
+        <div class="upload-content">
+            <div class="upload-header">
+                <h3>Upload Ad</h3>
+                <button onclick="closeAdsUploadModal()">✖</button>
+            </div>
+            <form class="upload-form" id="ads-upload-form">
+                <div class="form-group">
+                    <label for="ad-title">Ad Title</label>
+                    <input type="text" id="ad-title" placeholder="Enter ad title" required>
+                </div>
+                <div class="form-group">
+                    <label for="ad-description">Description</label>
+                    <textarea id="ad-description" placeholder="Enter ad description"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="ad-link">Ad Link</label>
+                    <input type="url" id="ad-link" placeholder="https://example.com/ad" required>
+                </div>
+                <div class="form-group">
+                    <label for="ad-image">Ad Image</label>
+                    <div class="file-upload">
+                        <input type="file" id="ad-image" accept="image/*" onchange="previewAdImage(this)">
+                        <label for="ad-image" class="file-upload-label">Choose an image file</label>
+                    </div>
+                    <div id="ad-image-preview" class="file-preview"></div>
+                </div>
+                <button type="submit" class="upload-btn">Upload Ad</button>
+            </form>
         </div>
     </div>
     
@@ -2193,6 +2282,44 @@
             }
         }
         
+        // Fetch apps from Firestore
+        async function fetchAppsFromFirestore() {
+            try {
+                showLoading();
+                const snapshot = await db.collection('apps').get();
+                const apps = [];
+                snapshot.forEach(doc => {
+                    apps.push({ id: doc.id, ...doc.data() });
+                });
+                hideLoading();
+                return apps;
+            } catch (error) {
+                console.error('Error fetching apps:', error);
+                hideLoading();
+                showNotification('Failed to load apps. Please check your connection.', 'error');
+                return [];
+            }
+        }
+        
+        // Fetch ads from Firestore
+        async function fetchAdsFromFirestore() {
+            try {
+                showLoading();
+                const snapshot = await db.collection('ads').get();
+                const ads = [];
+                snapshot.forEach(doc => {
+                    ads.push({ id: doc.id, ...doc.data() });
+                });
+                hideLoading();
+                return ads;
+            } catch (error) {
+                console.error('Error fetching ads:', error);
+                hideLoading();
+                showNotification('Failed to load ads. Please check your connection.', 'error');
+                return [];
+            }
+        }
+        
         // Initialize saved movies from localStorage
         let savedMovies = JSON.parse(localStorage.getItem('savedMovies')) || [];
         
@@ -2271,6 +2398,12 @@
         // Track if we're currently in the upload modal
         let inUploadModal = false;
         
+        // Track if we're currently in the apps upload modal
+        let inAppsUploadModal = false;
+        
+        // Track if we're currently in the ads upload modal
+        let inAdsUploadModal = false;
+        
         // Track if we're currently in the password modal
         let inPasswordModal = false;
         
@@ -2291,8 +2424,8 @@
         // Track if we're opening a direct video link
         let openingDirectLink = false;
         
-        // Track if we're editing an existing video
-        let editingVideoId = null;
+        // Track the current upload type (video, app, or ad)
+        let currentUploadType = 'video';
         
         // Function to show/hide loading spinner
         function showLoading() {
@@ -2316,23 +2449,32 @@
             }
         }
         
+        // Function to check password and open upload modal
+        const checkPasswordAndOpenUpload = () => {
+            currentUploadType = 'video';
+            openPasswordModal();
+        };
+        
+        // Function to check password and open apps upload modal
+        const checkPasswordAndOpenApps = () => {
+            currentUploadType = 'apps';
+            openPasswordModal();
+        };
+        
+        // Function to check password and open ads upload modal
+        const checkPasswordAndOpenAds = () => {
+            currentUploadType = 'ads';
+            openPasswordModal();
+        };
+        
         // Function to open password modal
         const openPasswordModal = () => {
             const passwordModal = document.getElementById('password-modal');
-            const sidebarModal = document.getElementById('sidebar-modal');
-            
-            // Close sidebar modal first
-            if (sidebarModal.classList.contains('open')) {
-                sidebarModal.classList.remove('open');
-                inSidebarModal = false;
-            }
-            
-            // Open password modal
             passwordModal.classList.add('open');
             inPasswordModal = true;
             
-            // Clear password input
-            document.getElementById('password-input').value = '';
+            // Clear previous error message
+            document.getElementById('password-error').textContent = '';
             
             // Focus on password input
             setTimeout(() => {
@@ -2345,6 +2487,10 @@
             const passwordModal = document.getElementById('password-modal');
             passwordModal.classList.remove('open');
             inPasswordModal = false;
+            
+            // Clear password input
+            document.getElementById('password-input').value = '';
+            document.getElementById('password-error').textContent = '';
         };
         
         // Function to validate password
@@ -2352,14 +2498,30 @@
             event.preventDefault();
             
             const password = document.getElementById('password-input').value;
-            const correctPassword = "Mm&&0220";
+            const correctPassword = 'Mm&&0220';
             
             if (password === correctPassword) {
+                // Password is correct, open the appropriate upload modal
                 closePasswordModal();
-                openUploadModal();
+                
+                if (currentUploadType === 'video') {
+                    openUploadModal();
+                } else if (currentUploadType === 'apps') {
+                    openAppsUploadModal();
+                } else if (currentUploadType === 'ads') {
+                    openAdsUploadModal();
+                }
             } else {
-                showNotification('Incorrect password. Please try again.', 'error');
+                // Password is incorrect, show error message
+                document.getElementById('password-error').textContent = 'Incorrect password. Please try again.';
+                
+                // Clear password input
                 document.getElementById('password-input').value = '';
+                
+                // Focus on password input again
+                setTimeout(() => {
+                    document.getElementById('password-input').focus();
+                }, 100);
             }
         };
         
@@ -2384,16 +2546,13 @@
             // Reset form
             document.getElementById('upload-form').reset();
             
+            // Reset thumbnail preview
+            document.getElementById('thumbnail-preview').innerHTML = '';
+            
             // Reset seasons data
             seasons = [];
             seasonCounter = 0;
             document.getElementById('seasons-list').innerHTML = '';
-            
-            // Hide delete section
-            document.getElementById('delete-section').style.display = 'none';
-            
-            // Reset editing video ID
-            editingVideoId = null;
             
             // Scroll to top of modal content
             setTimeout(() => {
@@ -2412,188 +2571,164 @@
             // Reset form
             document.getElementById('upload-form').reset();
             
-            // Hide delete section
-            document.getElementById('delete-section').style.display = 'none';
-            
-            // Reset editing video ID
-            editingVideoId = null;
+            // Reset thumbnail preview
+            document.getElementById('thumbnail-preview').innerHTML = '';
         };
         
-        // Function to toggle delete section
-        const toggleDeleteSection = () => {
-            const deleteSection = document.getElementById('delete-section');
-            const videoIdInputContainer = document.getElementById('video-id-input-container');
-            const deleteInfo = document.getElementById('delete-info');
+        // Function to toggle the apps upload modal
+        const openAppsUploadModal = () => {
+            const appsUploadModal = document.getElementById('apps-upload-modal');
+            const sidebarModal = document.getElementById('sidebar-modal');
             
-            if (deleteSection.style.display === 'none') {
-                deleteSection.style.display = 'block';
-                
-                // Show/hide video ID input based on editing state
-                if (editingVideoId) {
-                    videoIdInputContainer.style.display = 'none';
-                    deleteInfo.style.display = 'block';
-                } else {
-                    videoIdInputContainer.style.display = 'block';
-                    deleteInfo.style.display = 'none';
-                    // Focus on delete input
-                    setTimeout(() => {
-                        document.getElementById('delete-video-id').focus();
-                    }, 100);
+            // Close sidebar modal first
+            if (sidebarModal.classList.contains('open')) {
+                sidebarModal.classList.remove('open');
+                inSidebarModal = false;
+            }
+            
+            // Open apps upload modal
+            appsUploadModal.classList.add('open');
+            inAppsUploadModal = true;
+            
+            // Push state to history
+            history.pushState({ appsUploadOpen: true }, '');
+            
+            // Reset form
+            document.getElementById('apps-upload-form').reset();
+            
+            // Reset app icon preview
+            document.getElementById('app-icon-preview').innerHTML = '';
+            
+            // Scroll to top of modal content
+            setTimeout(() => {
+                const uploadContent = document.querySelector('.upload-content');
+                if (uploadContent) {
+                    uploadContent.scrollTop = 0;
                 }
-            } else {
-                deleteSection.style.display = 'none';
+            }, 100);
+        };
+        
+        const closeAppsUploadModal = () => {
+            const appsUploadModal = document.getElementById('apps-upload-modal');
+            appsUploadModal.classList.remove('open');
+            inAppsUploadModal = false;
+            
+            // Reset form
+            document.getElementById('apps-upload-form').reset();
+            
+            // Reset app icon preview
+            document.getElementById('app-icon-preview').innerHTML = '';
+        };
+        
+        // Function to toggle the ads upload modal
+        const openAdsUploadModal = () => {
+            const adsUploadModal = document.getElementById('ads-upload-modal');
+            const sidebarModal = document.getElementById('sidebar-modal');
+            
+            // Close sidebar modal first
+            if (sidebarModal.classList.contains('open')) {
+                sidebarModal.classList.remove('open');
+                inSidebarModal = false;
+            }
+            
+            // Open ads upload modal
+            adsUploadModal.classList.add('open');
+            inAdsUploadModal = true;
+            
+            // Push state to history
+            history.pushState({ adsUploadOpen: true }, '');
+            
+            // Reset form
+            document.getElementById('ads-upload-form').reset();
+            
+            // Reset ad image preview
+            document.getElementById('ad-image-preview').innerHTML = '';
+            
+            // Scroll to top of modal content
+            setTimeout(() => {
+                const uploadContent = document.querySelector('.upload-content');
+                if (uploadContent) {
+                    uploadContent.scrollTop = 0;
+                }
+            }, 100);
+        };
+        
+        const closeAdsUploadModal = () => {
+            const adsUploadModal = document.getElementById('ads-upload-modal');
+            adsUploadModal.classList.remove('open');
+            inAdsUploadModal = false;
+            
+            // Reset form
+            document.getElementById('ads-upload-form').reset();
+            
+            // Reset ad image preview
+            document.getElementById('ad-image-preview').innerHTML = '';
+        };
+        
+        // Function to preview thumbnail
+        const previewThumbnail = (input) => {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    const preview = document.getElementById('thumbnail-preview');
+                    preview.innerHTML = `<img src="${e.target.result}" alt="Thumbnail preview">`;
+                };
+                
+                reader.readAsDataURL(input.files[0]);
             }
         };
         
-        // Function to search video by title
-        const searchVideoByTitle = async () => {
-            const title = document.getElementById('video-title').value.trim();
-            
-            if (title.length < 3) {
-                // Reset form if title is too short
-                resetUploadForm();
-                return;
+        // Function to preview app icon
+        const previewAppIcon = (input) => {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    const preview = document.getElementById('app-icon-preview');
+                    preview.innerHTML = `<img src="${e.target.result}" alt="App icon preview">`;
+                };
+                
+                reader.readAsDataURL(input.files[0]);
             }
-            
+        };
+        
+        // Function to preview ad image
+        const previewAdImage = (input) => {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    const preview = document.getElementById('ad-image-preview');
+                    preview.innerHTML = `<img src="${e.target.result}" alt="Ad image preview">`;
+                };
+                
+                reader.readAsDataURL(input.files[0]);
+            }
+        };
+        
+        // Function to upload file to Firebase Storage and get URL
+        const uploadFileAndGetUrl = async (file, path) => {
             try {
                 showLoading();
                 
-                // Search for video by title in Firestore
-                const snapshot = await db.collection('videos')
-                    .where('title', '>=', title)
-                    .where('title', '<=', title + '\uf8ff')
-                    .limit(1)
-                    .get();
+                // Create a storage reference
+                const storageRef = storage.ref();
+                const fileRef = storageRef.child(path);
                 
-                if (!snapshot.empty) {
-                    const videoDoc = snapshot.docs[0];
-                    const videoData = videoDoc.data();
-                    
-                    // Populate form with video data
-                    document.getElementById('video-description').value = videoData.description || '';
-                    document.getElementById('video-type').value = videoData.type || 'movie';
-                    document.getElementById('video-category').value = videoData.category || 'Hollywood';
-                    document.getElementById('video-genre').value = videoData.genre || 'Action';
-                    document.getElementById('video-year').value = videoData.year || new Date().getFullYear();
-                    document.getElementById('video-url').value = videoData.videoUrl || '';
-                    document.getElementById('video-thumbnail').value = videoData.imgUrl || '';
-                    
-                    // Store video ID for editing
-                    editingVideoId = videoDoc.id;
-                    
-                    // Show delete section
-                    document.getElementById('delete-section').style.display = 'block';
-                    
-                    // Configure delete section for editing mode
-                    document.getElementById('video-id-input-container').style.display = 'none';
-                    document.getElementById('delete-info').style.display = 'block';
-                    
-                    // If it's a series, populate seasons data
-                    if ((videoData.type === 'series' || videoData.type === 'anime') && videoData.seasons) {
-                        // Show series fields
-                        document.getElementById('series-fields').style.display = 'block';
-                        
-                        // Clear existing seasons
-                        seasons = [];
-                        seasonCounter = 0;
-                        document.getElementById('seasons-list').innerHTML = '';
-                        
-                        // Add seasons from video data
-                        videoData.seasons.forEach(seasonData => {
-                            // Add season
-                            addSeason();
-                            
-                            // Add episodes to the season
-                            const currentSeason = seasons[seasons.length - 1];
-                            seasonData.episodes.forEach(episodeData => {
-                                // Add episode
-                                addEpisode(currentSeason.id);
-                                
-                                // Update episode data
-                                const currentEpisode = currentSeason.episodes[currentSeason.episodes.length - 1];
-                                currentEpisode.title = episodeData.title;
-                                currentEpisode.url = episodeData.url;
-                                
-                                // Update UI
-                                const episodeElement = document.getElementById(currentEpisode.id);
-                                if (episodeElement) {
-                                    episodeElement.querySelector('.episode-title input').value = episodeData.title;
-                                    episodeElement.querySelector('.episode-actions input').value = episodeData.url;
-                                }
-                            });
-                        });
-                    }
-                    
-                    showNotification('Video data loaded. You can now edit it.', 'info');
-                } else {
-                    // Reset form if no video found
-                    resetUploadForm();
-                }
+                // Upload file
+                const snapshot = await fileRef.put(file);
+                
+                // Get download URL
+                const downloadUrl = await snapshot.ref.getDownloadURL();
                 
                 hideLoading();
+                return downloadUrl;
             } catch (error) {
-                console.error('Error searching video:', error);
+                console.error('Error uploading file:', error);
                 hideLoading();
-                showNotification('Error searching video. Please try again.', 'error');
-            }
-        };
-        
-        // Function to reset upload form
-        const resetUploadForm = () => {
-            // Keep the title, reset other fields
-            const title = document.getElementById('video-title').value;
-            document.getElementById('upload-form').reset();
-            document.getElementById('video-title').value = title;
-            
-            // Reset seasons data
-            seasons = [];
-            seasonCounter = 0;
-            document.getElementById('seasons-list').innerHTML = '';
-            
-            // Hide delete section
-            document.getElementById('delete-section').style.display = 'none';
-            
-            // Reset editing video ID
-            editingVideoId = null;
-        };
-        
-        // Function to delete video
-        const deleteVideo = async (event) => {
-            event.preventDefault();
-            
-            let videoId;
-            
-            // Check if we're editing a video (have the video ID)
-            if (editingVideoId) {
-                videoId = editingVideoId;
-            } else {
-                // Get video ID from input field
-                videoId = document.getElementById('delete-video-id').value.trim();
-                
-                if (!videoId) {
-                    showNotification('Please enter a video ID to delete.', 'warning');
-                    return;
-                }
-            }
-            
-            try {
-                showLoading();
-                
-                // Delete video from Firestore
-                await db.collection('videos').doc(videoId).delete();
-                
-                showNotification('Video deleted successfully!', 'success');
-                
-                // Close upload modal
-                closeUploadModal();
-                
-                // Refresh the UI
-                initializeApp();
-                
-            } catch (error) {
-                console.error('Error deleting video:', error);
-                hideLoading();
-                showNotification('Error deleting video. Please try again.', 'error');
+                showNotification('Error uploading file. Please try again.', 'error');
+                throw error;
             }
         };
         
@@ -2758,9 +2893,11 @@
             const type = document.getElementById('video-type').value;
             const category = document.getElementById('video-category').value;
             const genre = document.getElementById('video-genre').value;
+            const country = document.getElementById('video-country').value;
+            const trending = document.getElementById('video-trending').value === 'true';
             const year = document.getElementById('video-year').value;
             const videoUrl = document.getElementById('video-url').value;
-            const thumbnail = document.getElementById('video-thumbnail').value || `https://picsum.photos/seed/${Math.random().toString(36).substring(7)}/300/450.jpg`;
+            const thumbnailFile = document.getElementById('video-thumbnail').files[0];
             
             // Validate URL format
             if (!isValidVideoUrl(videoUrl)) {
@@ -2771,6 +2908,13 @@
             try {
                 showLoading();
                 
+                // Upload thumbnail file and get URL
+                let thumbnailUrl = `https://picsum.photos/seed/${Math.random().toString(36).substring(7)}/300/450.jpg`;
+                if (thumbnailFile) {
+                    const thumbnailPath = `thumbnails/${Date.now()}_${thumbnailFile.name}`;
+                    thumbnailUrl = await uploadFileAndGetUrl(thumbnailFile, thumbnailPath);
+                }
+                
                 // Create video object
                 const videoData = {
                     title,
@@ -2778,9 +2922,11 @@
                     type,
                     category,
                     genre,
+                    country,
+                    trending,
                     year: parseInt(year),
                     videoUrl,
-                    imgUrl: thumbnail,
+                    imgUrl: thumbnailUrl,
                     createdAt: firebase.firestore.FieldValue.serverTimestamp(),
                     uploadedBy: 'anonymous' // Use 'anonymous' instead of user ID
                 };
@@ -2816,26 +2962,135 @@
                     }
                 }
                 
-                // Check if we're editing an existing video
-                if (editingVideoId) {
-                    // Update existing video
-                    await db.collection('videos').doc(editingVideoId).update(videoData);
-                    showNotification('Video updated successfully!', 'success');
-                } else {
-                    // Add new video to Firestore
-                    const docRef = await db.collection('videos').add(videoData);
-                    showNotification('Video uploaded successfully!', 'success');
-                }
+                // Add to Firestore
+                const docRef = await db.collection('videos').add(videoData);
+                
+                // Show success message
+                showNotification('Video uploaded successfully!', 'success');
                 
                 // Close modal
                 closeUploadModal();
                 
+                // Add the new video to the local data array
+                const newVideo = {
+                    id: docRef.id,
+                    ...videoData
+                };
+                data.unshift(newVideo);
+                
                 // Refresh the UI
-                initializeApp();
+                createDiscoverSection();
+                createCategories();
                 
             } catch (error) {
                 console.error('Error uploading video:', error);
                 showNotification('Error uploading video. Please try again.', 'warning');
+            } finally {
+                hideLoading();
+            }
+        });
+        
+        // Handle form submission for apps upload
+        document.getElementById('apps-upload-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const name = document.getElementById('app-name').value;
+            const description = document.getElementById('app-description').value;
+            const category = document.getElementById('app-category').value;
+            const link = document.getElementById('app-link').value;
+            const iconFile = document.getElementById('app-icon').files[0];
+            
+            try {
+                showLoading();
+                
+                // Upload icon file and get URL
+                let iconUrl = `https://picsum.photos/seed/${Math.random().toString(36).substring(7)}/100/100.jpg`;
+                if (iconFile) {
+                    const iconPath = `app-icons/${Date.now()}_${iconFile.name}`;
+                    iconUrl = await uploadFileAndGetUrl(iconFile, iconPath);
+                }
+                
+                // Create app object
+                const appData = {
+                    name,
+                    description,
+                    category,
+                    link,
+                    icon: iconUrl,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    uploadedBy: 'anonymous' // Use 'anonymous' instead of user ID
+                };
+                
+                // Add to Firestore
+                const docRef = await db.collection('apps').add(appData);
+                
+                // Show success message
+                showNotification('App uploaded successfully!', 'success');
+                
+                // Close modal
+                closeAppsUploadModal();
+                
+                // Refresh the UI if on profile section
+                if (inGridView && document.querySelector('.profile-item')) {
+                    showProfileSection();
+                }
+                
+            } catch (error) {
+                console.error('Error uploading app:', error);
+                showNotification('Error uploading app. Please try again.', 'warning');
+            } finally {
+                hideLoading();
+            }
+        });
+        
+        // Handle form submission for ads upload
+        document.getElementById('ads-upload-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const title = document.getElementById('ad-title').value;
+            const description = document.getElementById('ad-description').value;
+            const link = document.getElementById('ad-link').value;
+            const imageFile = document.getElementById('ad-image').files[0];
+            
+            try {
+                showLoading();
+                
+                // Upload image file and get URL
+                let imageUrl = `https://picsum.photos/seed/${Math.random().toString(36).substring(7)}/300/200.jpg`;
+                if (imageFile) {
+                    const imagePath = `ad-images/${Date.now()}_${imageFile.name}`;
+                    imageUrl = await uploadFileAndGetUrl(imageFile, imagePath);
+                }
+                
+                // Create ad object
+                const adData = {
+                    title,
+                    description,
+                    link,
+                    image: imageUrl,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    uploadedBy: 'anonymous' // Use 'anonymous' instead of user ID
+                };
+                
+                // Add to Firestore
+                const docRef = await db.collection('ads').add(adData);
+                
+                // Show success message
+                showNotification('Ad uploaded successfully!', 'success');
+                
+                // Close modal
+                closeAdsUploadModal();
+                
+                // Refresh ads
+                fetchAdsFromFirestore().then(ads => {
+                    adsData = ads;
+                });
+                
+            } catch (error) {
+                console.error('Error uploading ad:', error);
+                showNotification('Error uploading ad. Please try again.', 'warning');
             } finally {
                 hideLoading();
             }
@@ -2932,8 +3187,8 @@
             // Example list of URL logos (replace with your own data)
             const urlLogos = [
                 { logoUrl: "https://cdn-icons-png.flaticon.com/128/18831/18831648.png", name: "Director Center", url: "#", isUpload: true },
-                { logoUrl: "https://cdn-icons-png.flaticon.com/128/5303/5303479.png", name: "Earn Rewards", url: "#" },
-                { logoUrl: "https://cdn-icons-png.flaticon.com/128/9592/9592247.png", name: "Viewer Gift", url: "#" },
+                { logoUrl: "https://cdn-icons-png.flaticon.com/128/5303/5303479.png", name: "Apps Center", url: "#", isApps: true },
+                { logoUrl: "https://cdn-icons-png.flaticon.com/128/9592/9592247.png", name: "Ads Center", url: "#", isAds: true },
                 { logoUrl: "https://cdn-icons-png.flaticon.com/128/18392/18392966.png", name: "Online Service", url: "#" },
                 { logoUrl: "https://cdn-icons-png.flaticon.com/128/2312/2312342.png", name: "Privacy Policy", url: "#" },
                 { logoUrl: "https://cdn-icons-png.flaticon.com/128/3405/3405247.png", name: "Settings", url: "#" },
@@ -2945,7 +3200,13 @@
                 
                 if (item.isUpload) {
                     // Director Center with upload functionality
-                    sidebarItem.onclick = openPasswordModal;
+                    sidebarItem.onclick = checkPasswordAndOpenUpload;
+                } else if (item.isApps) {
+                    // Apps Center with upload functionality
+                    sidebarItem.onclick = checkPasswordAndOpenApps;
+                } else if (item.isAds) {
+                    // Ads Center with upload functionality
+                    sidebarItem.onclick = checkPasswordAndOpenAds;
                 } else {
                     sidebarItem.onclick = () => window.open(item.url, '_blank');
                 }
@@ -3133,7 +3394,7 @@
             }
         };
         
-        const showProfileSection = () => {
+        const showProfileSection = async () => {
             // Reset scroll position
             window.scrollTo(0, 0);
             
@@ -3150,14 +3411,15 @@
             document.getElementById('categories-container').style.display = 'none';
             gridContainer.style.display = 'block'; // Use block for list layout
             
-            // Add profile content using profileApps data
-            if (profileApps && Array.isArray(profileApps)) {
-                profileApps.forEach(item => {
+            // Fetch apps from Firestore
+            const apps = await fetchAppsFromFirestore();
+            if (apps.length > 0) {
+                apps.forEach(item => {
                     const profileItem = createProfileItem(item);
                     gridContainer.appendChild(profileItem);
                 });
             } else {
-                showNotification('Profile apps data not available', 'warning');
+                showNotification('No apps available. Please check back later.', 'warning');
             }
         };
         
@@ -3392,7 +3654,7 @@
             openButton.style.border = 'none';
             openButton.style.padding = '6px 12px';
             openButton.style.borderRadius = '5px';
-            openButton.style.cursor = pointer;
+            openButton.style.cursor = 'pointer';
             openButton.style.fontSize = '14px';
             openButton.onclick = () => window.open(item.link, '_blank');
             content.appendChild(name);
@@ -3936,6 +4198,11 @@
                         return true;
                     }
                     
+                    // Search in country
+                    if (item.country && item.country.toLowerCase().includes(searchTerm)) {
+                        return true;
+                    }
+                    
                     return false;
                 });
                 
@@ -4017,6 +4284,15 @@
                     suggestions.add({
                         text: item.category,
                         type: 'Category',
+                        item: item
+                    });
+                }
+                
+                // Country suggestions
+                if (item.country && item.country.toLowerCase().includes(searchTerm)) {
+                    suggestions.add({
+                        text: item.country,
+                        type: 'Country',
                         item: item
                     });
                 }
@@ -4256,8 +4532,13 @@
             try {
                 showLoading();
                 
-                // Fetch videos from Firestore
-                const fetchedVideos = await fetchVideosFromFirestore();
+                // Fetch videos, apps, and ads from Firestore
+                const [fetchedVideos, fetchedApps, fetchedAds] = await Promise.all([
+                    fetchVideosFromFirestore(),
+                    fetchAppsFromFirestore(),
+                    fetchAdsFromFirestore()
+                ]);
+                
                 if (fetchedVideos.length > 0) {
                     data = shuffleArray(fetchedVideos);
                     combinedData = data;
@@ -4268,6 +4549,16 @@
                     initCarousel();
                 } else {
                     showNotification('No videos available. Please check back later.', 'warning');
+                }
+                
+                if (fetchedApps.length > 0) {
+                    profileApps = fetchedApps;
+                }
+                
+                if (fetchedAds.length > 0) {
+                    adsData = fetchedAds;
+                    // Initialize ads rotation
+                    rotateAds();
                 }
                 
                 hideLoading();
@@ -4647,10 +4938,10 @@
             const app = adsData[index];
             adContent.innerHTML = `
                 <div class="app-icon">
-                    <img src="${app.icon}" alt="App Icon" />
+                    <img src="${app.image}" alt="App Icon" />
                 </div>
                 <div class="ad-info">
-                    <div class="app-name">${app.name}</div>
+                    <div class="app-name">${app.title}</div>
                     <div class="ad-meta">
                         <span class="sponsored">Sponsored ·</span>
                         <span>${app.rating} ★ FREE</span>
@@ -4670,9 +4961,6 @@
             showAd(currentAdIndex);
             currentAdIndex = (currentAdIndex + 1) % adsData.length;
         }
-        // Show first ad immediately and rotate
-        rotateAds();
-        setInterval(rotateAds, 15000);
         
         // Initialize all new features when the page loads
         window.addEventListener('load', () => {
@@ -4725,10 +5013,36 @@
                 }
             });
             
+            document.getElementById('apps-upload-modal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeAppsUploadModal();
+                }
+            });
+            
+            document.getElementById('ads-upload-modal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeAdsUploadModal();
+                }
+            });
+            
+            document.getElementById('password-modal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closePasswordModal();
+                }
+            });
+            
             // Add keyboard event to close modal with Escape key
             document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape' && inUploadModal) {
-                    closeUploadModal();
+                if (e.key === 'Escape') {
+                    if (inUploadModal) {
+                        closeUploadModal();
+                    } else if (inAppsUploadModal) {
+                        closeAppsUploadModal();
+                    } else if (inAdsUploadModal) {
+                        closeAdsUploadModal();
+                    } else if (inPasswordModal) {
+                        closePasswordModal();
+                    }
                 }
             });
             
@@ -4769,15 +5083,25 @@
                     document.getElementById('sidebar-modal').classList.remove('open');
                     inSidebarModal = false;
                 }
-                // Handle password modal
-                else if (inPasswordModal) {
-                    document.getElementById('password-modal').classList.remove('open');
-                    inPasswordModal = false;
-                }
                 // Handle upload modal
                 else if (inUploadModal) {
                     document.getElementById('upload-modal').classList.remove('open');
                     inUploadModal = false;
+                }
+                // Handle apps upload modal
+                else if (inAppsUploadModal) {
+                    document.getElementById('apps-upload-modal').classList.remove('open');
+                    inAppsUploadModal = false;
+                }
+                // Handle ads upload modal
+                else if (inAdsUploadModal) {
+                    document.getElementById('ads-upload-modal').classList.remove('open');
+                    inAdsUploadModal = false;
+                }
+                // Handle password modal
+                else if (inPasswordModal) {
+                    document.getElementById('password-modal').classList.remove('open');
+                    inPasswordModal = false;
                 }
                 // Default to discover if no specific state
                 else {
