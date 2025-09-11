@@ -158,7 +158,7 @@
             cursor: pointer;
         }
         .history-modal-header button:hover {
-            color: #007bff;
+            color: #007bff';
         }
         .history-list {
             max-height: 300px;
@@ -873,7 +873,7 @@
             cursor: pointer;
         }
         .sidebar-modal-header button:hover {
-            color: #007bff;
+            color: #007bff';
         }
         .sidebar-list {
             display: flex;
@@ -1705,6 +1705,139 @@
             text-align: center;
             margin-top: 10px;
         }
+        
+        /* Ad Upload Modal Styles */
+        .ad-upload-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 3000;
+            justify-content: center;
+            align-items: center;
+            overflow-y: auto;
+            padding: 20px 0;
+        }
+        .ad-upload-modal.open {
+            display: flex;
+        }
+        .ad-upload-content {
+            background-color: #fff;
+            width: 90%;
+            max-width: 500px;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-height: 90vh;
+            overflow-y: auto;
+            margin: auto;
+        }
+        .ad-upload-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            position: sticky;
+            top: 0;
+            background-color: #fff;
+            z-index: 10;
+            padding-bottom: 10px;
+        }
+        .ad-upload-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        /* App Upload Modal Styles */
+        .app-upload-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 3000;
+            justify-content: center;
+            align-items: center;
+            overflow-y: auto;
+            padding: 20px 0;
+        }
+        .app-upload-modal.open {
+            display: flex;
+        }
+        .app-upload-content {
+            background-color: #fff;
+            width: 90%;
+            max-width: 500px;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-height: 90vh;
+            overflow-y: auto;
+            margin: auto;
+        }
+        .app-upload-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            position: sticky;
+            top: 0;
+            background-color: #fff;
+            z-index: 10;
+            padding-bottom: 10px;
+        }
+        .app-upload-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        /* Submenu Styles */
+        .submenu {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 3500;
+            padding: 10px;
+            min-width: 200px;
+        }
+        .submenu.open {
+            display: block;
+        }
+        .submenu-item {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .submenu-item:last-child {
+            border-bottom: none;
+        }
+        .submenu-item:hover {
+            background-color: #f5f5f5;
+        }
+        .submenu-item img {
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+        }
+        .submenu-item span {
+            font-size: 14px;
+            color: #333;
+        }
     </style>
 </head>
 <body>
@@ -1958,6 +2091,121 @@
         </div>
     </div>
     
+    <!-- Ad Upload Modal -->
+    <div class="ad-upload-modal" id="ad-upload-modal">
+        <div class="ad-upload-content">
+            <div class="ad-upload-header">
+                <h3>Upload Ad</h3>
+                <button onclick="closeAdUploadModal()">✖</button>
+            </div>
+            <form class="ad-upload-form" id="ad-upload-form">
+                <div class="form-group">
+                    <label for="ad-title">Ad Title</label>
+                    <input type="text" id="ad-title" placeholder="Enter ad title" required>
+                </div>
+                <div class="form-group">
+                    <label for="ad-description">Description</label>
+                    <textarea id="ad-description" placeholder="Enter ad description"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="ad-image">Ad Image URL</label>
+                    <input type="url" id="ad-image" placeholder="https://example.com/ad-image.jpg" required>
+                </div>
+                <div class="form-group">
+                    <label for="ad-link">Ad Link</label>
+                    <input type="url" id="ad-link" placeholder="https://example.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="ad-category">Ad Category</label>
+                    <select id="ad-category" required>
+                        <option value="App">App</option>
+                        <option value="Game">Game</option>
+                        <option value="Service">Service</option>
+                        <option value="Product">Product</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="ad-position">Ad Position</label>
+                    <select id="ad-position" required>
+                        <option value="footer">Footer</option>
+                        <option value="sidebar">Sidebar</option>
+                        <option value="popup">Popup</option>
+                    </select>
+                </div>
+                <button type="submit" class="upload-btn">Upload Ad</button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- App Upload Modal -->
+    <div class="app-upload-modal" id="app-upload-modal">
+        <div class="app-upload-content">
+            <div class="app-upload-header">
+                <h3>Upload App</h3>
+                <button onclick="closeAppUploadModal()">✖</button>
+            </div>
+            <form class="app-upload-form" id="app-upload-form">
+                <div class="form-group">
+                    <label for="app-name">App Name</label>
+                    <input type="text" id="app-name" placeholder="Enter app name" required>
+                </div>
+                <div class="form-group">
+                    <label for="app-description">Description</label>
+                    <textarea id="app-description" placeholder="Enter app description"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="app-icon">App Icon URL</label>
+                    <input type="url" id="app-icon" placeholder="https://example.com/app-icon.png" required>
+                </div>
+                <div class="form-group">
+                    <label for="app-link">App Download Link</label>
+                    <input type="url" id="app-link" placeholder="https://example.com/download" required>
+                </div>
+                <div class="form-group">
+                    <label for="app-category">App Category</label>
+                    <select id="app-category" required>
+                        <option value="Entertainment">Entertainment</option>
+                        <option value="Games">Games</option>
+                        <option value="Productivity">Productivity</option>
+                        <option value="Social">Social</option>
+                        <option value="Tools">Tools</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="app-rating">App Rating</label>
+                    <input type="number" id="app-rating" min="1" max="5" step="0.1" placeholder="4.5" required>
+                </div>
+                <button type="submit" class="upload-btn">Upload App</button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Submenu for Ads Center -->
+    <div class="submenu" id="ads-submenu">
+        <div class="submenu-item" onclick="openAdUploadModal()">
+            <img src="https://cdn-icons-png.flaticon.com/128/4208/4208469.png" alt="Upload Ad">
+            <span>Upload Ad</span>
+        </div>
+        <div class="submenu-item" onclick="viewAds()">
+            <img src="https://cdn-icons-png.flaticon.com/128/2767/2767325.png" alt="View Ads">
+            <span>View Ads</span>
+        </div>
+    </div>
+    
+    <!-- Submenu for Apps Center -->
+    <div class="submenu" id="apps-submenu">
+        <div class="submenu-item" onclick="openAppUploadModal()">
+            <img src="https://cdn-icons-png.flaticon.com/128/4208/4208469.png" alt="Upload App">
+            <span>Upload App</span>
+        </div>
+        <div class="submenu-item" onclick="viewApps()">
+            <img src="https://cdn-icons-png.flaticon.com/128/2767/2767325.png" alt="View Apps">
+            <span>View Apps</span>
+        </div>
+    </div>
+    
     <!-- Edit Profile Modal -->
     <div class="edit-profile-modal" id="edit-profile-modal">
         <div class="edit-profile-content">
@@ -2153,6 +2401,36 @@
             }
         }
         
+        // Fetch ads from Firestore
+        async function fetchAdsFromFirestore() {
+            try {
+                const snapshot = await db.collection('ads').get();
+                const ads = [];
+                snapshot.forEach(doc => {
+                    ads.push({ id: doc.id, ...doc.data() });
+                });
+                return ads;
+            } catch (error) {
+                console.error('Error fetching ads:', error);
+                return [];
+            }
+        }
+        
+        // Fetch apps from Firestore
+        async function fetchAppsFromFirestore() {
+            try {
+                const snapshot = await db.collection('apps').get();
+                const apps = [];
+                snapshot.forEach(doc => {
+                    apps.push({ id: doc.id, ...doc.data() });
+                });
+                return apps;
+            } catch (error) {
+                console.error('Error fetching apps:', error);
+                return [];
+            }
+        }
+        
         // Initialize saved movies from localStorage
         let savedMovies = JSON.parse(localStorage.getItem('savedMovies')) || [];
         
@@ -2233,6 +2511,18 @@
         
         // Track if we're currently in the password modal
         let inPasswordModal = false;
+        
+        // Track if we're currently in the ad upload modal
+        let inAdUploadModal = false;
+        
+        // Track if we're currently in the app upload modal
+        let inAppUploadModal = false;
+        
+        // Track if we're currently in the ads submenu
+        let inAdsSubmenu = false;
+        
+        // Track if we're currently in the apps submenu
+        let inAppsSubmenu = false;
         
         // Track current grid data for filtering
         let currentGridData = [];
@@ -2317,6 +2607,92 @@
             document.getElementById('upload-form').reset();
         };
         
+        // Function to toggle the ad upload modal
+        const openAdUploadModal = () => {
+            const adUploadModal = document.getElementById('ad-upload-modal');
+            const sidebarModal = document.getElementById('sidebar-modal');
+            const adsSubmenu = document.getElementById('ads-submenu');
+            
+            // Close sidebar modal first
+            if (sidebarModal.classList.contains('open')) {
+                sidebarModal.classList.remove('open');
+                inSidebarModal = false;
+            }
+            
+            // Close ads submenu
+            if (adsSubmenu.classList.contains('open')) {
+                adsSubmenu.classList.remove('open');
+                inAdsSubmenu = false;
+            }
+            
+            // Open ad upload modal
+            adUploadModal.classList.add('open');
+            inAdUploadModal = true;
+            
+            // Reset form
+            document.getElementById('ad-upload-form').reset();
+            
+            // Scroll to top of modal content
+            setTimeout(() => {
+                const adUploadContent = document.querySelector('.ad-upload-content');
+                if (adUploadContent) {
+                    adUploadContent.scrollTop = 0;
+                }
+            }, 100);
+        };
+        
+        const closeAdUploadModal = () => {
+            const adUploadModal = document.getElementById('ad-upload-modal');
+            adUploadModal.classList.remove('open');
+            inAdUploadModal = false;
+            
+            // Reset form
+            document.getElementById('ad-upload-form').reset();
+        };
+        
+        // Function to toggle the app upload modal
+        const openAppUploadModal = () => {
+            const appUploadModal = document.getElementById('app-upload-modal');
+            const sidebarModal = document.getElementById('sidebar-modal');
+            const appsSubmenu = document.getElementById('apps-submenu');
+            
+            // Close sidebar modal first
+            if (sidebarModal.classList.contains('open')) {
+                sidebarModal.classList.remove('open');
+                inSidebarModal = false;
+            }
+            
+            // Close apps submenu
+            if (appsSubmenu.classList.contains('open')) {
+                appsSubmenu.classList.remove('open');
+                inAppsSubmenu = false;
+            }
+            
+            // Open app upload modal
+            appUploadModal.classList.add('open');
+            inAppUploadModal = true;
+            
+            // Reset form
+            document.getElementById('app-upload-form').reset();
+            
+            // Scroll to top of modal content
+            setTimeout(() => {
+                const appUploadContent = document.querySelector('.app-upload-content');
+                if (appUploadContent) {
+                    appUploadContent.scrollTop = 0;
+                }
+            }, 100);
+        };
+        
+        const closeAppUploadModal = () => {
+            const appUploadModal = document.getElementById('app-upload-modal');
+            appUploadModal.classList.remove('open');
+            inAppUploadModal = false;
+            
+            // Reset form
+            document.getElementById('app-upload-form').reset();
+        };
+        
         // Function to check password before opening upload modal
         const checkUploadPassword = () => {
             const passwordModal = document.getElementById('password-modal');
@@ -2355,14 +2731,54 @@
         
         // Function to open Apps Center
         const openAppsCenter = () => {
-            showNotification("Apps Center - Upload and manage your apps here", "info");
-            // In a real implementation, this would open a modal or navigate to a new page
+            const appsSubmenu = document.getElementById('apps-submenu');
+            const sidebarModal = document.getElementById('sidebar-modal');
+            
+            // Toggle the submenu
+            if (appsSubmenu.classList.contains('open')) {
+                appsSubmenu.classList.remove('open');
+                inAppsSubmenu = false;
+            } else {
+                // Close other submenus first
+                document.getElementById('ads-submenu').classList.remove('open');
+                inAdsSubmenu = false;
+                
+                appsSubmenu.classList.add('open');
+                inAppsSubmenu = true;
+            }
         };
         
         // Function to open Ads Center
         const openAdsCenter = () => {
-            showNotification("Ads Center - Upload and manage your ads here", "info");
+            const adsSubmenu = document.getElementById('ads-submenu');
+            const sidebarModal = document.getElementById('sidebar-modal');
+            
+            // Toggle the submenu
+            if (adsSubmenu.classList.contains('open')) {
+                adsSubmenu.classList.remove('open');
+                inAdsSubmenu = false;
+            } else {
+                // Close other submenus first
+                document.getElementById('apps-submenu').classList.remove('open');
+                inAppsSubmenu = false;
+                
+                adsSubmenu.classList.add('open');
+                inAdsSubmenu = true;
+            }
+        };
+        
+        // Function to view ads
+        const viewAds = () => {
+            showNotification("Viewing all uploaded ads", "info");
             // In a real implementation, this would open a modal or navigate to a new page
+            closeAdsCenter();
+        };
+        
+        // Function to view apps
+        const viewApps = () => {
+            showNotification("Viewing all uploaded apps", "info");
+            // In a real implementation, this would open a modal or navigate to a new page
+            closeAppsCenter();
         };
         
         // Function to toggle series fields based on video type
@@ -2616,6 +3032,148 @@
             }
         });
         
+        // Handle form submission for ad upload
+        document.getElementById('ad-upload-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const title = document.getElementById('ad-title').value;
+            const description = document.getElementById('ad-description').value;
+            const image = document.getElementById('ad-image').value;
+            const link = document.getElementById('ad-link').value;
+            const category = document.getElementById('ad-category').value;
+            const position = document.getElementById('ad-position').value;
+            
+            try {
+                showLoading();
+                
+                // Create ad object
+                const adData = {
+                    title,
+                    description,
+                    image,
+                    link,
+                    category,
+                    position,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    uploadedBy: 'anonymous'
+                };
+                
+                // Add to Firestore
+                const docRef = await db.collection('ads').add(adData);
+                
+                // Show success message
+                showNotification('Ad uploaded successfully!', 'success');
+                
+                // Close modal
+                closeAdUploadModal();
+                
+                // Refresh ads data
+                const newAd = {
+                    id: docRef.id,
+                    ...adData
+                };
+                if (!adsData) {
+                    adsData = [];
+                }
+                adsData.unshift(newAd);
+                
+                // Update ad display
+                updateAdDisplay();
+                
+            } catch (error) {
+                console.error('Error uploading ad:', error);
+                showNotification('Error uploading ad. Please try again.', 'warning');
+            } finally {
+                hideLoading();
+            }
+        });
+        
+        // Handle form submission for app upload
+        document.getElementById('app-upload-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const name = document.getElementById('app-name').value;
+            const description = document.getElementById('app-description').value;
+            const icon = document.getElementById('app-icon').value;
+            const link = document.getElementById('app-link').value;
+            const category = document.getElementById('app-category').value;
+            const rating = parseFloat(document.getElementById('app-rating').value);
+            
+            try {
+                showLoading();
+                
+                // Create app object
+                const appData = {
+                    name,
+                    description,
+                    icon,
+                    link,
+                    category,
+                    rating,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    uploadedBy: 'anonymous'
+                };
+                
+                // Add to Firestore
+                const docRef = await db.collection('apps').add(appData);
+                
+                // Show success message
+                showNotification('App uploaded successfully!', 'success');
+                
+                // Close modal
+                closeAppUploadModal();
+                
+                // Refresh apps data
+                const newApp = {
+                    id: docRef.id,
+                    ...appData
+                };
+                if (!profileApps) {
+                    profileApps = [];
+                }
+                profileApps.unshift(newApp);
+                
+                // Update app display
+                updateAppDisplay();
+                
+            } catch (error) {
+                console.error('Error uploading app:', error);
+                showNotification('Error uploading app. Please try again.', 'warning');
+            } finally {
+                hideLoading();
+            }
+        });
+        
+        // Function to update ad display
+        const updateAdDisplay = () => {
+            // Update notification bar ad
+            const notificationBar = document.getElementById('notification-bar');
+            if (adsData && adsData.length > 0) {
+                const ad = adsData[0];
+                notificationBar.querySelector('img').src = ad.image;
+                notificationBar.querySelector('.notification-text').textContent = ad.title;
+                notificationBar.querySelector('.notification-button').onclick = () => window.open(ad.link, '_blank');
+            }
+        };
+        
+        // Function to update app display
+        const updateAppDisplay = () => {
+            // Update profile section
+            if (inGridView && document.getElementById('grid-container').style.display === 'block') {
+                const gridContainer = document.getElementById('grid-container');
+                gridContainer.innerHTML = '';
+                
+                if (profileApps && Array.isArray(profileApps)) {
+                    profileApps.forEach(item => {
+                        const profileItem = createProfileItem(item);
+                        gridContainer.appendChild(profileItem);
+                    });
+                }
+            }
+        };
+        
         // Function to toggle the sidebar modal
         const toggleSidebarModal = () => {
             const sidebarModal = document.getElementById('sidebar-modal');
@@ -2633,6 +3191,12 @@
                 filterModal.classList.remove('open');
                 inFilterModal = false;
             }
+            
+            // Close submenus
+            document.getElementById('ads-submenu').classList.remove('open');
+            inAdsSubmenu = false;
+            document.getElementById('apps-submenu').classList.remove('open');
+            inAppsSubmenu = false;
             
             // Toggle the sidebar modal
             sidebarModal.classList.toggle('open');
@@ -3149,7 +3713,7 @@
             profileItem.style.padding = '10px';
             profileItem.style.borderBottom = '1px solid #333';
             const icon = document.createElement('img');
-            icon.src = item.icon;
+            icon.src = item.icon || 'https://picsum.photos/seed/app/50/50.jpg';
             icon.alt = item.name;
             icon.style.width = '50px';
             icon.style.height = '50px';
@@ -3173,7 +3737,7 @@
             openButton.style.border = 'none';
             openButton.style.padding = '6px 12px';
             openButton.style.borderRadius = '5px';
-            openButton.style.cursor = pointer;
+            openButton.style.cursor = 'pointer';
             openButton.style.fontSize = '14px';
             openButton.onclick = () => window.open(item.link, '_blank');
             content.appendChild(name);
@@ -4051,6 +4615,19 @@
                     showNotification('No videos available. Please check back later.', 'warning');
                 }
                 
+                // Fetch ads from Firestore
+                const fetchedAds = await fetchAdsFromFirestore();
+                if (fetchedAds.length > 0) {
+                    adsData = fetchedAds;
+                    updateAdDisplay();
+                }
+                
+                // Fetch apps from Firestore
+                const fetchedApps = await fetchAppsFromFirestore();
+                if (fetchedApps.length > 0) {
+                    profileApps = fetchedApps;
+                }
+                
                 hideLoading();
             } catch (error) {
                 console.error("App initialization failed:", error);
@@ -4428,13 +5005,13 @@
             const app = adsData[index];
             adContent.innerHTML = `
                 <div class="app-icon">
-                    <img src="${app.icon}" alt="App Icon" />
+                    <img src="${app.image}" alt="App Icon" />
                 </div>
                 <div class="ad-info">
-                    <div class="app-name">${app.name}</div>
+                    <div class="app-name">${app.title}</div>
                     <div class="ad-meta">
                         <span class="sponsored">Sponsored ·</span>
-                        <span>${app.rating} ★ FREE</span>
+                        <span>${app.category} ★ FREE</span>
                     </div>
                 </div>
             `;
@@ -4506,6 +5083,18 @@
                 }
             });
             
+            document.getElementById('ad-upload-modal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeAdUploadModal();
+                }
+            });
+            
+            document.getElementById('app-upload-modal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeAppUploadModal();
+                }
+            });
+            
             document.getElementById('password-modal').addEventListener('click', function(e) {
                 if (e.target === this) {
                     closePasswordModal();
@@ -4516,6 +5105,12 @@
             document.addEventListener('keydown', function(e) {
                 if (e.key === 'Escape' && inUploadModal) {
                     closeUploadModal();
+                }
+                if (e.key === 'Escape' && inAdUploadModal) {
+                    closeAdUploadModal();
+                }
+                if (e.key === 'Escape' && inAppUploadModal) {
+                    closeAppUploadModal();
                 }
                 if (e.key === 'Escape' && inPasswordModal) {
                     closePasswordModal();
@@ -4564,10 +5159,30 @@
                     document.getElementById('upload-modal').classList.remove('open');
                     inUploadModal = false;
                 }
+                // Handle ad upload modal
+                else if (inAdUploadModal) {
+                    document.getElementById('ad-upload-modal').classList.remove('open');
+                    inAdUploadModal = false;
+                }
+                // Handle app upload modal
+                else if (inAppUploadModal) {
+                    document.getElementById('app-upload-modal').classList.remove('open');
+                    inAppUploadModal = false;
+                }
                 // Handle password modal
                 else if (inPasswordModal) {
                     document.getElementById('password-modal').classList.remove('open');
                     inPasswordModal = false;
+                }
+                // Handle ads submenu
+                else if (inAdsSubmenu) {
+                    document.getElementById('ads-submenu').classList.remove('open');
+                    inAdsSubmenu = false;
+                }
+                // Handle apps submenu
+                else if (inAppsSubmenu) {
+                    document.getElementById('apps-submenu').classList.remove('open');
+                    inAppsSubmenu = false;
                 }
                 // Default to discover if no specific state
                 else {
