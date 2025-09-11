@@ -1747,6 +1747,11 @@
         .delete-btn:hover {
             background-color: #b71c1c;
         }
+        .delete-info {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
     </style>
 </head>
 <body>
@@ -1980,10 +1985,15 @@
                     <h3>Delete Video</h3>
                     <button onclick="toggleDeleteSection()">✖</button>
                 </div>
-                <form class="delete-form" id="delete-form" onsubmit="deleteVideo(event)">
-                    <input type="text" id="delete-video-id" class="delete-input" placeholder="Enter video ID to delete" required>
-                    <button type="submit" class="delete-btn">Delete Video</button>
-                </form>
+                <div id="delete-form-container">
+                    <div id="video-id-input-container" style="display: none;">
+                        <input type="text" id="delete-video-id" class="delete-input" placeholder="Enter video ID to delete">
+                    </div>
+                    <div id="delete-info" class="delete-info" style="display: none;">
+                        Click the delete button below to permanently delete this video.
+                    </div>
+                    <button onclick="deleteVideo(event)" class="delete-btn">Delete Video</button>
+                </div>
             </div>
         </div>
     </div>
@@ -2412,12 +2422,24 @@
         // Function to toggle delete section
         const toggleDeleteSection = () => {
             const deleteSection = document.getElementById('delete-section');
+            const videoIdInputContainer = document.getElementById('video-id-input-container');
+            const deleteInfo = document.getElementById('delete-info');
+            
             if (deleteSection.style.display === 'none') {
                 deleteSection.style.display = 'block';
-                // Focus on delete input
-                setTimeout(() => {
-                    document.getElementById('delete-video-id').focus();
-                }, 100);
+                
+                // Show/hide video ID input based on editing state
+                if (editingVideoId) {
+                    videoIdInputContainer.style.display = 'none';
+                    deleteInfo.style.display = 'block';
+                } else {
+                    videoIdInputContainer.style.display = 'block';
+                    deleteInfo.style.display = 'none';
+                    // Focus on delete input
+                    setTimeout(() => {
+                        document.getElementById('delete-video-id').focus();
+                    }, 100);
+                }
             } else {
                 deleteSection.style.display = 'none';
             }
@@ -2462,6 +2484,10 @@
                     // Show delete section
                     document.getElementById('delete-section').style.display = 'block';
                     
+                    // Configure delete section for editing mode
+                    document.getElementById('video-id-input-container').style.display = 'none';
+                    document.getElementById('delete-info').style.display = 'block';
+                    
                     // If it's a series, populate seasons data
                     if ((videoData.type === 'series' || videoData.type === 'anime') && videoData.seasons) {
                         // Show series fields
@@ -2484,7 +2510,7 @@
                                 addEpisode(currentSeason.id);
                                 
                                 // Update episode data
-                                const currentEpisode = currentSeason.episodes[currentEpisode.episodes.length - 1];
+                                const currentEpisode = currentSeason.episodes[currentSeason.episodes.length - 1];
                                 currentEpisode.title = episodeData.title;
                                 currentEpisode.url = episodeData.url;
                                 
@@ -2535,11 +2561,19 @@
         const deleteVideo = async (event) => {
             event.preventDefault();
             
-            const videoId = document.getElementById('delete-video-id').value.trim();
+            let videoId;
             
-            if (!videoId) {
-                showNotification('Please enter a video ID to delete.', 'warning');
-                return;
+            // Check if we're editing a video (have the video ID)
+            if (editingVideoId) {
+                videoId = editingVideoId;
+            } else {
+                // Get video ID from input field
+                videoId = document.getElementById('delete-video-id').value.trim();
+                
+                if (!videoId) {
+                    showNotification('Please enter a video ID to delete.', 'warning');
+                    return;
+                }
             }
             
             try {
