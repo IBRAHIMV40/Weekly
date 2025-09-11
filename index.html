@@ -1634,6 +1634,119 @@
             font-size: 14px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
         }
+        
+        /* Password Modal */
+        .password-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 4000;
+            justify-content: center;
+            align-items: center;
+        }
+        .password-modal.open {
+            display: flex;
+        }
+        .password-content {
+            background-color: #fff;
+            width: 90%;
+            max-width: 400px;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .password-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .password-header h3 {
+            font-size: 18px;
+            margin: 0;
+            color: #333;
+        }
+        .password-header button {
+            background: none;
+            border: none;
+            color: #333;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .password-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .password-input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .password-submit {
+            background: linear-gradient(to right, #004d00, #00b300);
+            color: #fff;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .password-submit:hover {
+            background: linear-gradient(to right, #003d00, #009900);
+        }
+        
+        /* Delete Video Section */
+        .delete-section {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #fff5f5;
+            border-radius: 8px;
+            border: 1px solid #ffdddd;
+        }
+        .delete-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .delete-header h3 {
+            font-size: 16px;
+            margin: 0;
+            color: #d32f2f;
+        }
+        .delete-form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .delete-input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .delete-btn {
+            background-color: #d32f2f;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .delete-btn:hover {
+            background-color: #b71c1c;
+        }
     </style>
 </head>
 <body>
@@ -1738,7 +1851,7 @@
         
         <div class="sidebar-list" id="sidebar-list">
             <!-- Director Center - Now with upload functionality -->
-            <div class="sidebar-item" onclick="openUploadModal()">
+            <div class="sidebar-item" onclick="openPasswordModal()">
                 <img src="https://cdn-icons-png.flaticon.com/128/18831/18831648.png" alt="Director Center">
                 <span>Director Center</span>
             </div>
@@ -1770,6 +1883,20 @@
         </div>
     </div>
     
+    <!-- Password Modal -->
+    <div class="password-modal" id="password-modal">
+        <div class="password-content">
+            <div class="password-header">
+                <h3>Enter Password</h3>
+                <button onclick="closePasswordModal()">✖</button>
+            </div>
+            <form class="password-form" id="password-form" onsubmit="validatePassword(event)">
+                <input type="password" id="password-input" class="password-input" placeholder="Enter password" required>
+                <button type="submit" class="password-submit">Submit</button>
+            </form>
+        </div>
+    </div>
+    
     <!-- Upload Modal -->
     <div class="upload-modal" id="upload-modal">
         <div class="upload-content">
@@ -1780,7 +1907,7 @@
             <form class="upload-form" id="upload-form">
                 <div class="form-group">
                     <label for="video-title">Video Title</label>
-                    <input type="text" id="video-title" placeholder="Enter video title" required>
+                    <input type="text" id="video-title" placeholder="Enter video title" required oninput="searchVideoByTitle()">
                 </div>
                 <div class="form-group">
                     <label for="video-description">Description</label>
@@ -1846,6 +1973,18 @@
                     <p>Google Drive: https://drive.google.com/file/d/1CWOELtePqeDDI-t07aWB0NAWQXlvH-ul/preview</p>
                 </div>
             </form>
+            
+            <!-- Delete Video Section -->
+            <div class="delete-section" id="delete-section" style="display: none;">
+                <div class="delete-header">
+                    <h3>Delete Video</h3>
+                    <button onclick="toggleDeleteSection()">✖</button>
+                </div>
+                <form class="delete-form" id="delete-form" onsubmit="deleteVideo(event)">
+                    <input type="text" id="delete-video-id" class="delete-input" placeholder="Enter video ID to delete" required>
+                    <button type="submit" class="delete-btn">Delete Video</button>
+                </form>
+            </div>
         </div>
     </div>
     
@@ -2122,6 +2261,9 @@
         // Track if we're currently in the upload modal
         let inUploadModal = false;
         
+        // Track if we're currently in the password modal
+        let inPasswordModal = false;
+        
         // Track current grid data for filtering
         let currentGridData = [];
         
@@ -2138,6 +2280,9 @@
         
         // Track if we're opening a direct video link
         let openingDirectLink = false;
+        
+        // Track if we're editing an existing video
+        let editingVideoId = null;
         
         // Function to show/hide loading spinner
         function showLoading() {
@@ -2160,6 +2305,53 @@
                 return false;
             }
         }
+        
+        // Function to open password modal
+        const openPasswordModal = () => {
+            const passwordModal = document.getElementById('password-modal');
+            const sidebarModal = document.getElementById('sidebar-modal');
+            
+            // Close sidebar modal first
+            if (sidebarModal.classList.contains('open')) {
+                sidebarModal.classList.remove('open');
+                inSidebarModal = false;
+            }
+            
+            // Open password modal
+            passwordModal.classList.add('open');
+            inPasswordModal = true;
+            
+            // Clear password input
+            document.getElementById('password-input').value = '';
+            
+            // Focus on password input
+            setTimeout(() => {
+                document.getElementById('password-input').focus();
+            }, 100);
+        };
+        
+        // Function to close password modal
+        const closePasswordModal = () => {
+            const passwordModal = document.getElementById('password-modal');
+            passwordModal.classList.remove('open');
+            inPasswordModal = false;
+        };
+        
+        // Function to validate password
+        const validatePassword = (event) => {
+            event.preventDefault();
+            
+            const password = document.getElementById('password-input').value;
+            const correctPassword = "Mm&&0220";
+            
+            if (password === correctPassword) {
+                closePasswordModal();
+                openUploadModal();
+            } else {
+                showNotification('Incorrect password. Please try again.', 'error');
+                document.getElementById('password-input').value = '';
+            }
+        };
         
         // Function to toggle the upload modal
         const openUploadModal = () => {
@@ -2187,6 +2379,12 @@
             seasonCounter = 0;
             document.getElementById('seasons-list').innerHTML = '';
             
+            // Hide delete section
+            document.getElementById('delete-section').style.display = 'none';
+            
+            // Reset editing video ID
+            editingVideoId = null;
+            
             // Scroll to top of modal content
             setTimeout(() => {
                 const uploadContent = document.querySelector('.upload-content');
@@ -2203,6 +2401,166 @@
             
             // Reset form
             document.getElementById('upload-form').reset();
+            
+            // Hide delete section
+            document.getElementById('delete-section').style.display = 'none';
+            
+            // Reset editing video ID
+            editingVideoId = null;
+        };
+        
+        // Function to toggle delete section
+        const toggleDeleteSection = () => {
+            const deleteSection = document.getElementById('delete-section');
+            if (deleteSection.style.display === 'none') {
+                deleteSection.style.display = 'block';
+                // Focus on delete input
+                setTimeout(() => {
+                    document.getElementById('delete-video-id').focus();
+                }, 100);
+            } else {
+                deleteSection.style.display = 'none';
+            }
+        };
+        
+        // Function to search video by title
+        const searchVideoByTitle = async () => {
+            const title = document.getElementById('video-title').value.trim();
+            
+            if (title.length < 3) {
+                // Reset form if title is too short
+                resetUploadForm();
+                return;
+            }
+            
+            try {
+                showLoading();
+                
+                // Search for video by title in Firestore
+                const snapshot = await db.collection('videos')
+                    .where('title', '>=', title)
+                    .where('title', '<=', title + '\uf8ff')
+                    .limit(1)
+                    .get();
+                
+                if (!snapshot.empty) {
+                    const videoDoc = snapshot.docs[0];
+                    const videoData = videoDoc.data();
+                    
+                    // Populate form with video data
+                    document.getElementById('video-description').value = videoData.description || '';
+                    document.getElementById('video-type').value = videoData.type || 'movie';
+                    document.getElementById('video-category').value = videoData.category || 'Hollywood';
+                    document.getElementById('video-genre').value = videoData.genre || 'Action';
+                    document.getElementById('video-year').value = videoData.year || new Date().getFullYear();
+                    document.getElementById('video-url').value = videoData.videoUrl || '';
+                    document.getElementById('video-thumbnail').value = videoData.imgUrl || '';
+                    
+                    // Store video ID for editing
+                    editingVideoId = videoDoc.id;
+                    
+                    // Show delete section
+                    document.getElementById('delete-section').style.display = 'block';
+                    
+                    // If it's a series, populate seasons data
+                    if ((videoData.type === 'series' || videoData.type === 'anime') && videoData.seasons) {
+                        // Show series fields
+                        document.getElementById('series-fields').style.display = 'block';
+                        
+                        // Clear existing seasons
+                        seasons = [];
+                        seasonCounter = 0;
+                        document.getElementById('seasons-list').innerHTML = '';
+                        
+                        // Add seasons from video data
+                        videoData.seasons.forEach(seasonData => {
+                            // Add season
+                            addSeason();
+                            
+                            // Add episodes to the season
+                            const currentSeason = seasons[seasons.length - 1];
+                            seasonData.episodes.forEach(episodeData => {
+                                // Add episode
+                                addEpisode(currentSeason.id);
+                                
+                                // Update episode data
+                                const currentEpisode = currentSeason.episodes[currentEpisode.episodes.length - 1];
+                                currentEpisode.title = episodeData.title;
+                                currentEpisode.url = episodeData.url;
+                                
+                                // Update UI
+                                const episodeElement = document.getElementById(currentEpisode.id);
+                                if (episodeElement) {
+                                    episodeElement.querySelector('.episode-title input').value = episodeData.title;
+                                    episodeElement.querySelector('.episode-actions input').value = episodeData.url;
+                                }
+                            });
+                        });
+                    }
+                    
+                    showNotification('Video data loaded. You can now edit it.', 'info');
+                } else {
+                    // Reset form if no video found
+                    resetUploadForm();
+                }
+                
+                hideLoading();
+            } catch (error) {
+                console.error('Error searching video:', error);
+                hideLoading();
+                showNotification('Error searching video. Please try again.', 'error');
+            }
+        };
+        
+        // Function to reset upload form
+        const resetUploadForm = () => {
+            // Keep the title, reset other fields
+            const title = document.getElementById('video-title').value;
+            document.getElementById('upload-form').reset();
+            document.getElementById('video-title').value = title;
+            
+            // Reset seasons data
+            seasons = [];
+            seasonCounter = 0;
+            document.getElementById('seasons-list').innerHTML = '';
+            
+            // Hide delete section
+            document.getElementById('delete-section').style.display = 'none';
+            
+            // Reset editing video ID
+            editingVideoId = null;
+        };
+        
+        // Function to delete video
+        const deleteVideo = async (event) => {
+            event.preventDefault();
+            
+            const videoId = document.getElementById('delete-video-id').value.trim();
+            
+            if (!videoId) {
+                showNotification('Please enter a video ID to delete.', 'warning');
+                return;
+            }
+            
+            try {
+                showLoading();
+                
+                // Delete video from Firestore
+                await db.collection('videos').doc(videoId).delete();
+                
+                showNotification('Video deleted successfully!', 'success');
+                
+                // Close upload modal
+                closeUploadModal();
+                
+                // Refresh the UI
+                initializeApp();
+                
+            } catch (error) {
+                console.error('Error deleting video:', error);
+                hideLoading();
+                showNotification('Error deleting video. Please try again.', 'error');
+            }
         };
         
         // Function to toggle series fields based on video type
@@ -2424,25 +2782,22 @@
                     }
                 }
                 
-                // Add to Firestore
-                const docRef = await db.collection('videos').add(videoData);
-                
-                // Show success message
-                showNotification('Video uploaded successfully!', 'success');
+                // Check if we're editing an existing video
+                if (editingVideoId) {
+                    // Update existing video
+                    await db.collection('videos').doc(editingVideoId).update(videoData);
+                    showNotification('Video updated successfully!', 'success');
+                } else {
+                    // Add new video to Firestore
+                    const docRef = await db.collection('videos').add(videoData);
+                    showNotification('Video uploaded successfully!', 'success');
+                }
                 
                 // Close modal
                 closeUploadModal();
                 
-                // Add the new video to the local data array
-                const newVideo = {
-                    id: docRef.id,
-                    ...videoData
-                };
-                data.unshift(newVideo);
-                
                 // Refresh the UI
-                createDiscoverSection();
-                createCategories();
+                initializeApp();
                 
             } catch (error) {
                 console.error('Error uploading video:', error);
@@ -2556,7 +2911,7 @@
                 
                 if (item.isUpload) {
                     // Director Center with upload functionality
-                    sidebarItem.onclick = openUploadModal;
+                    sidebarItem.onclick = openPasswordModal;
                 } else {
                     sidebarItem.onclick = () => window.open(item.url, '_blank');
                 }
@@ -4379,6 +4734,11 @@
                 else if (inSidebarModal) {
                     document.getElementById('sidebar-modal').classList.remove('open');
                     inSidebarModal = false;
+                }
+                // Handle password modal
+                else if (inPasswordModal) {
+                    document.getElementById('password-modal').classList.remove('open');
+                    inPasswordModal = false;
                 }
                 // Handle upload modal
                 else if (inUploadModal) {
