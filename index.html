@@ -2414,7 +2414,7 @@
     
     <div class="notification-bar" id="notification-bar">
         <img src="https://bit.ly/434z6xR" alt="App Logo">
-        <div class="notification-text">Enjoy more movies download movie nest app.</div>
+        <div class="notification-text">Enjoy more movies download Hausa Movies app.</div>
         <button class="notification-button" onclick="window.open('https://www.appcreator24.com/app3501058-ks4rfa', '_blank')">OPEN</button>
         <button class="close-button" onclick="closeNotification()">✖</button>
     </div>
@@ -5386,6 +5386,14 @@
                             
                             // Open video modal immediately without delay
                             openVideoNav(video.videoUrl, video.title, video);
+                            
+                            // Ensure the Ad container remains visible when opening from a sharing link
+                            setTimeout(() => {
+                                const adContainer = document.getElementById('adContainer');
+                                if (adContainer) {
+                                    adContainer.style.display = 'flex';
+                                }
+                            }, 100);
                         } else {
                             // Video not found
                             directLinkMessage.textContent = 'Video not found. Redirecting to home page...';
@@ -5870,7 +5878,7 @@
             bar.style.opacity = '0';
             bar.style.pointerEvents = 'none'; // Disable interaction immediately
             setTimeout(() => {
-                bar.remove(); // Fully remove from DOM
+                bar.style.display = 'none'; // Hide the element completely
             }, 500); // Allow fade-out to complete
         }
         
