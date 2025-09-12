@@ -301,42 +301,6 @@
             background-color: white;
         }
         
-        /* Categories Section - New section based on screenshot */
-        .categories-section {
-            margin-top: 15px;
-            padding: 0 15px;
-        }
-        .categories-title {
-            font-size: 18px;
-            font-weight: bold;
-            margin-bottom: 15px;
-        }
-        .categories-scroll {
-            display: flex;
-            overflow-x: auto;
-            gap: 8px;
-            padding-bottom: 10px;
-        }
-        .category-btn {
-            flex: 0 0 auto;
-            padding: 8px 16px;
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
-            color: var(--text-color);
-            font-size: 10px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        .category-btn.active {
-            background-color: var(--primary-color);
-            border-color: var(--primary-color);
-        }
-        .category-btn:hover {
-            background-color: var(--primary-color);
-            border-color: var(--primary-color);
-        }
-        
         /* Discover Section */
         .discover-container {
             margin-top: 38px;
@@ -2438,21 +2402,6 @@
         <div class="carousel-container">
             <div class="carousel" id="carousel"></div>
             <div class="dots" id="dots"></div>
-        </div>
-        
-        <!-- Categories Section - New section based on screenshot -->
-        <div class="categories-section">
-            <div class="categories-title">Categories</div>
-            <div class="categories-scroll" id="categories-scroll">
-                <div class="category-btn active" data-category="All">All</div>
-                <div class="category-btn" data-category="Hollywood">Hollywood</div>
-                <div class="category-btn" data-category="Nollywood">Nollywood</div>
-                <div class="category-btn" data-category="Bollywood">Bollywood</div>
-                <div class="category-btn" data-category="Kannywood">Kannywood</div>
-                <div class="category-btn" data-category="Action">Action</div>
-                <div class="category-btn" data-category="Drama">Drama</div>
-                <div class="category-btn" data-category="Comedy">Comedy</div>
-            </div>
         </div>
         
         <div class="discover-scroll" id="discover-scroll"></div>
@@ -5827,68 +5776,6 @@
                 hideLoading();
             }
         }
-        
-        // Add category button click handlers
-        document.addEventListener('DOMContentLoaded', () => {
-            const categoryButtons = document.querySelectorAll('.category-btn');
-            categoryButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    // Remove active class from all buttons
-                    categoryButtons.forEach(btn => btn.classList.remove('active'));
-                    // Add active class to clicked button
-                    this.classList.add('active');
-                    
-                    // Filter content based on selected category
-                    const selectedCategory = this.dataset.category;
-                    if (selectedCategory === 'All') {
-                        createDiscoverSection();
-                    } else {
-                        filterContentByCategory(selectedCategory);
-                    }
-                });
-            });
-        });
-        
-        // Function to filter content by category
-        const filterContentByCategory = (category) => {
-            const discoverScroll = document.getElementById('discover-scroll');
-            discoverScroll.innerHTML = '';
-            
-            // Filter data by category
-            const filteredData = data.filter(item => {
-                // Check if item matches the selected category
-                if (category === 'Hollywood') return item.category === 'Hollywood';
-                if (category === 'Nollywood') return item.category === 'Nollywood';
-                if (category === 'Bollywood') return item.category === 'Bollywood';
-                if (category === 'Kannywood') return item.category === 'Kannywood';
-                if (category === 'Action') return item.genre === 'Action';
-                if (category === 'Drama') return item.genre === 'Drama';
-                if (category === 'Comedy') return item.genre === 'Comedy';
-                return true;
-            });
-            
-            // Add filtered items to discover section
-            filteredData.forEach(item => {
-                const discoverItem = document.createElement('div');
-                discoverItem.className = 'discover-item';
-                const img = document.createElement('img');
-                img.src = item.imgUrl;
-                img.alt = item.title;
-                const content = document.createElement('div');
-                content.className = 'content';
-                content.innerHTML = `
-                    <h2>${item.title}</h2>
-                    <p>${item.description}</p>
-                `;
-                
-                // Add click event to the entire discover item
-                discoverItem.onclick = () => openVideoNav(item.videoUrl, item.title, item);
-                
-                discoverItem.appendChild(img);
-                discoverItem.appendChild(content);
-                discoverScroll.appendChild(discoverItem);
-            });
-        };
         
         let lastScrollTop = 0;
         window.addEventListener('scroll', () => {
