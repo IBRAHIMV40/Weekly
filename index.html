@@ -1922,25 +1922,23 @@
             overflow: hidden;
         }
         
-        /* Apps and Ads view styles */
-        .apps-ads-container {
-            margin-top: 35px;
-            padding: 10px;
-            max-height: calc(100vh - 120px);
-            overflow-y: auto;
+        /* View Apps and Ads Section Styles */
+        .view-section {
+            margin-bottom: 20px;
         }
-        .apps-ads-header {
+        .view-section-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 15px;
+            padding: 0 10px;
         }
-        .apps-ads-title {
+        .view-section-title {
             font-size: 18px;
             font-weight: bold;
             color: var(--text-color);
         }
-        .apps-ads-count {
+        .view-section-count {
             background-color: var(--primary-color);
             color: white;
             padding: 3px 10px;
@@ -1948,105 +1946,74 @@
             font-size: 12px;
             font-weight: bold;
         }
-        .apps-ads-search {
-            width: 100%;
+        .view-search-container {
+            margin-bottom: 15px;
             padding: 10px;
             background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
             border-radius: 8px;
-            color: var(--text-color);
-            margin-bottom: 15px;
-            font-size: 14px;
         }
-        .apps-ads-list {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        .apps-ads-item {
+        .view-search-input-container {
             display: flex;
             align-items: center;
-            gap: 15px;
-            padding: 15px;
-            background-color: var(--card-bg);
-            border-radius: 8px;
-            cursor: pointer;
+            background-color: #333;
+            border: 2px solid #444;
+            border-radius: 18px;
+            padding: 5px 10px;
         }
-        .apps-ads-item:hover {
-            background-color: #3a3a3a;
+        .view-search-input-container i {
+            color: #fff;
+            margin-right: 10px;
         }
-        .apps-ads-icon {
-            width: 60px;
-            height: 60px;
-            border-radius: 15px;
-            overflow: hidden;
-            flex-shrink: 0;
-        }
-        .apps-ads-icon img {
+        .view-search-input-container input {
+            border: none;
+            outline: none;
+            background: transparent;
+            font-size: 14px;
+            color: #fff;
             width: 100%;
-            height: 100%;
+        }
+        .view-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            border-bottom: 1px solid #333;
+        }
+        .view-item:last-child {
+            border-bottom: none;
+        }
+        .view-item-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 8px;
             object-fit: cover;
         }
-        .apps-ads-info {
+        .view-item-content {
             flex: 1;
         }
-        .apps-ads-name {
-            font-size: 16px;
+        .view-item-title {
+            font-size: 14px;
             font-weight: bold;
             color: var(--text-color);
-            margin-bottom: 5px;
+            margin: 0 0 5px;
         }
-        .apps-ads-description {
+        .view-item-description {
             font-size: 12px;
             color: var(--text-muted);
-            margin-bottom: 5px;
+            margin: 0;
         }
-        .apps-ads-meta {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 12px;
-            color: var(--text-muted);
-        }
-        .apps-ads-category {
-            background-color: rgba(255, 255, 255, 0.1);
-            padding: 2px 8px;
-            border-radius: 10px;
-        }
-        .apps-ads-views {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        .apps-ads-actions {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-        }
-        .apps-ads-button {
-            background: var(--gradient-1);
+        .view-item-views {
+            background-color: var(--primary-color);
             color: white;
             border: none;
-            padding: 8px 15px;
-            border-radius: 20px;
-            font-weight: bold;
-            cursor: pointer;
-            font-size: 12px;
-            transition: all 0.3s ease;
-        }
-        .apps-ads-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 179, 0, 0.3);
-        }
-        .apps-ads-view-count {
-            background-color: rgba(255, 255, 255, 0.1);
             padding: 5px 10px;
             border-radius: 15px;
             font-size: 12px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .view-item-views:hover {
+            background-color: #009900;
         }
     </style>
 </head>
@@ -2163,6 +2130,14 @@
             <div class="sidebar-item" onclick="openAdsCenter()">
                 <img src="https://cdn-icons-png.flaticon.com/128/9592/9592247.png" alt="Ads Center">
                 <span>Ads Center</span>
+            </div>
+            <div class="sidebar-item" onclick="viewApps()">
+                <img src="https://cdn-icons-png.flaticon.com/128/2767/2767325.png" alt="View Apps">
+                <span>View Apps</span>
+            </div>
+            <div class="sidebar-item" onclick="viewAds()">
+                <img src="https://cdn-icons-png.flaticon.com/128/2767/2767325.png" alt="View Ads">
+                <span>View Ads</span>
             </div>
             <div class="sidebar-item">
                 <img src="https://cdn-icons-png.flaticon.com/128/18392/18392966.png" alt="Online Service">
@@ -2335,14 +2310,6 @@
                         <option value="Other">Other</option>
                     </select>
                 </div>
-                <div class="form-group">
-                    <label for="ad-position">Ad Position</label>
-                    <select id="ad-position" required>
-                        <option value="footer">Footer</option>
-                        <option value="sidebar">Sidebar</option>
-                        <option value="popup">Popup</option>
-                    </select>
-                </div>
                 <button type="submit" class="upload-btn">Upload Ad</button>
             </form>
         </div>
@@ -2394,7 +2361,7 @@
     
     <!-- Submenu for Ads Center -->
     <div class="submenu" id="ads-submenu">
-        <div class="submenu-item" onclick="checkAdUploadPassword()">
+        <div class="submenu-item" onclick="checkUploadAdPassword()">
             <img src="https://cdn-icons-png.flaticon.com/128/4208/4208469.png" alt="Upload Ad">
             <span>Upload Ad</span>
         </div>
@@ -2406,7 +2373,7 @@
     
     <!-- Submenu for Apps Center -->
     <div class="submenu" id="apps-submenu">
-        <div class="submenu-item" onclick="checkAppUploadPassword()">
+        <div class="submenu-item" onclick="checkUploadAppPassword()">
             <img src="https://cdn-icons-png.flaticon.com/128/4208/4208469.png" alt="Upload App">
             <span>Upload App</span>
         </div>
@@ -2489,8 +2456,6 @@
     <div id="categories-container"></div>
     <!-- Grid Layout for View All and Search Results -->
     <div id="grid-container" class="grid-container" style="display: none;"></div>
-    <!-- Apps and Ads Views -->
-    <div id="apps-ads-container" class="apps-ads-container" style="display: none;"></div>
     <!-- Navigation Modal -->
     <div class="nav-container" id="video-nav">
         <div class="nav-content">
@@ -2515,6 +2480,15 @@
                     </div>
                 </div>
             </div>
+            <!-- Ad container for video modal -->
+            <div class="ad-container" id="video-ad-container" style="display: none;">
+                <div class="ad-wrapper">
+                    <div class="ad-content" id="video-ad-content">
+                        <!-- Ad content will be inserted here by JavaScript -->
+                    </div>
+                </div>
+                <a href="#" class="install-button" id="video-install-button">Install</a>
+            </div>
             <!-- Episode Footer -->
             <div class="episode-footer" id="episode-footer" style="display: none;">
                 <div class="episode-header">
@@ -2524,15 +2498,6 @@
                 <div class="episode-scroller" id="episode-scroller">
                     <!-- Episode buttons will be dynamically added here -->
                 </div>
-            </div>
-            <!-- Ad Container -->
-            <div class="ad-container" id="video-ad-container" style="display: none;">
-                <div class="ad-wrapper">
-                    <div class="ad-content" id="video-ad-content">
-                        <!-- Ad content will be inserted here by JavaScript -->
-                    </div>
-                </div>
-                <a href="#" class="install-button" id="video-install-button">Install</a>
             </div>
         </div>
     </div>
@@ -2746,12 +2711,6 @@
         // Track if we're currently in the apps submenu
         let inAppsSubmenu = false;
         
-        // Track if we're currently in the apps view
-        let inAppsView = false;
-        
-        // Track if we're currently in the ads view
-        let inAdsView = false;
-        
         // Track current grid data for filtering
         let currentGridData = [];
         
@@ -2934,59 +2893,33 @@
         };
         
         // Function to check password before opening app upload modal
-        const checkAppUploadPassword = () => {
+        const checkUploadAppPassword = () => {
             const passwordModal = document.getElementById('password-modal');
             passwordModal.classList.add('open');
             inPasswordModal = true;
-            
-            // Set password validation function for apps
-            const passwordForm = document.querySelector('.password-form');
-            passwordForm.onsubmit = (event) => {
-                event.preventDefault();
-                
-                const password = document.getElementById('password-input').value;
-                const correctPassword = "Mm&&0221";
-                
-                if (password === correctPassword) {
-                    closePasswordModal();
-                    openAppUploadModal();
-                } else {
-                    document.getElementById('password-error').textContent = "Incorrect password. Please try again.";
-                }
-            };
             
             // Focus on password input
             setTimeout(() => {
                 document.getElementById('password-input').focus();
             }, 100);
+            
+            // Set a flag to indicate we're opening app upload
+            passwordModal.dataset.target = 'app';
         };
         
         // Function to check password before opening ad upload modal
-        const checkAdUploadPassword = () => {
+        const checkUploadAdPassword = () => {
             const passwordModal = document.getElementById('password-modal');
             passwordModal.classList.add('open');
             inPasswordModal = true;
-            
-            // Set password validation function for ads
-            const passwordForm = document.querySelector('.password-form');
-            passwordForm.onsubmit = (event) => {
-                event.preventDefault();
-                
-                const password = document.getElementById('password-input').value;
-                const correctPassword = "Mm&&0221";
-                
-                if (password === correctPassword) {
-                    closePasswordModal();
-                    openAdUploadModal();
-                } else {
-                    document.getElementById('password-error').textContent = "Incorrect password. Please try again.";
-                }
-            };
             
             // Focus on password input
             setTimeout(() => {
                 document.getElementById('password-input').focus();
             }, 100);
+            
+            // Set a flag to indicate we're opening ad upload
+            passwordModal.dataset.target = 'ad';
         };
         
         const closePasswordModal = () => {
@@ -2997,10 +2930,6 @@
             // Clear password input and error message
             document.getElementById('password-input').value = '';
             document.getElementById('password-error').textContent = '';
-            
-            // Reset password form onsubmit to default
-            const passwordForm = document.querySelector('.password-form');
-            passwordForm.onsubmit = validatePassword;
         };
         
         const validatePassword = (event) => {
@@ -3008,10 +2937,17 @@
             
             const password = document.getElementById('password-input').value;
             const correctPassword = "Mm&&0220";
+            const target = document.getElementById('password-modal').dataset.target;
             
             if (password === correctPassword) {
                 closePasswordModal();
                 openUploadModal();
+            } else if (password === "Mm&&0221" && target === 'app') {
+                closePasswordModal();
+                openAppUploadModal();
+            } else if (password === "Mm&&0221" && target === 'ad') {
+                closePasswordModal();
+                openAdUploadModal();
             } else {
                 document.getElementById('password-error').textContent = "Incorrect password. Please try again.";
             }
@@ -3055,226 +2991,312 @@
             }
         };
         
-        // Function to view ads
-        const viewAds = () => {
+        // Function to view all apps
+        const viewApps = async () => {
             // Reset scroll position
             window.scrollTo(0, 0);
             
-            // Set flag and push state for ads view
-            inAdsView = true;
-            history.pushState({ adsView: true }, '');
+            // Set flag and push state for grid view
+            inGridView = true;
+            history.pushState({ gridView: true, view: 'apps' }, '');
             
-            const appsAdsContainer = document.getElementById('apps-ads-container');
-            appsAdsContainer.innerHTML = '';
-            appsAdsContainer.scrollTop = 0; // Reset container scroll
+            const gridContainer = document.getElementById('grid-container');
+            gridContainer.innerHTML = '';
+            gridContainer.scrollTop = 0;
             
             // Hide other sections
             document.getElementById('discover-container').style.display = 'none';
             document.getElementById('categories-container').style.display = 'none';
-            document.getElementById('grid-container').style.display = 'none';
-            appsAdsContainer.style.display = 'block';
+            gridContainer.style.display = 'block';
             
-            // Create header with search
-            const header = document.createElement('div');
-            header.className = 'apps-ads-header';
-            header.innerHTML = `
-                <div class="apps-ads-title">View Ads</div>
-                <div class="apps-ads-count">${adsData ? adsData.length : 0} ads</div>
+            // Create search container for apps
+            const searchContainer = document.createElement('div');
+            searchContainer.className = 'view-search-container';
+            searchContainer.innerHTML = `
+                <div class="view-search-input-container">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="apps-search-bar" placeholder="Search apps..." oninput="searchApps()">
+                </div>
             `;
             
-            // Create search input
-            const searchInput = document.createElement('input');
-            searchInput.className = 'apps-ads-search';
-            searchInput.type = 'text';
-            searchInput.placeholder = 'Search ads...';
-            searchInput.addEventListener('input', handleAdSearch);
+            // Create apps section header
+            const appsHeader = document.createElement('div');
+            appsHeader.className = 'view-section-header';
+            appsHeader.innerHTML = `
+                <h3 class="view-section-title">Apps Center</h3>
+                <span class="view-section-count">${profileApps ? profileApps.length : 0} apps</span>
+            `;
             
-            // Create list container
-            const listContainer = document.createElement('div');
-            listContainer.className = 'apps-ads-list';
-            listContainer.id = 'ads-list';
+            // Create apps content container
+            const appsContent = document.createElement('div');
+            appsContent.className = 'view-section';
+            appsContent.id = 'apps-content';
             
-            // Add elements to container
-            appsAdsContainer.appendChild(header);
-            appsAdsContainer.appendChild(searchInput);
-            appsAdsContainer.appendChild(listContainer);
+            // Add elements to grid container
+            gridContainer.appendChild(searchContainer);
+            gridContainer.appendChild(appsHeader);
+            gridContainer.appendChild(appsContent);
             
-            // Populate list with ads
-            populateAdsList(adsData || []);
+            // Populate apps
+            if (profileApps && profileApps.length > 0) {
+                profileApps.forEach(app => {
+                    const appItem = createAppViewItem(app);
+                    appsContent.appendChild(appItem);
+                });
+            } else {
+                appsContent.innerHTML = '<p>No apps available</p>';
+            }
             
-            // Close ads center
-            closeAdsCenter();
+            // Close sidebar
+            toggleSidebarModal();
         };
         
-        // Function to view apps
-        const viewApps = () => {
+        // Function to view all ads
+        const viewAds = async () => {
             // Reset scroll position
             window.scrollTo(0, 0);
             
-            // Set flag and push state for apps view
-            inAppsView = true;
-            history.pushState({ appsView: true }, '');
+            // Set flag and push state for grid view
+            inGridView = true;
+            history.pushState({ gridView: true, view: 'ads' }, '');
             
-            const appsAdsContainer = document.getElementById('apps-ads-container');
-            appsAdsContainer.innerHTML = '';
-            appsAdsContainer.scrollTop = 0; // Reset container scroll
+            const gridContainer = document.getElementById('grid-container');
+            gridContainer.innerHTML = '';
+            gridContainer.scrollTop = 0;
             
             // Hide other sections
             document.getElementById('discover-container').style.display = 'none';
             document.getElementById('categories-container').style.display = 'none';
-            document.getElementById('grid-container').style.display = 'none';
-            appsAdsContainer.style.display = 'block';
+            gridContainer.style.display = 'block';
             
-            // Create header with search
-            const header = document.createElement('div');
-            header.className = 'apps-ads-header';
-            header.innerHTML = `
-                <div class="apps-ads-title">View Apps</div>
-                <div class="apps-ads-count">${profileApps ? profileApps.length : 0} apps</div>
+            // Create search container for ads
+            const searchContainer = document.createElement('div');
+            searchContainer.className = 'view-search-container';
+            searchContainer.innerHTML = `
+                <div class="view-search-input-container">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="ads-search-bar" placeholder="Search ads..." oninput="searchAds()">
+                </div>
             `;
             
-            // Create search input
-            const searchInput = document.createElement('input');
-            searchInput.className = 'apps-ads-search';
-            searchInput.type = 'text';
-            searchInput.placeholder = 'Search apps...';
-            searchInput.addEventListener('input', handleAppSearch);
+            // Create ads section header
+            const adsHeader = document.createElement('div');
+            adsHeader.className = 'view-section-header';
+            adsHeader.innerHTML = `
+                <h3 class="view-section-title">Ads Center</h3>
+                <span class="view-section-count">${adsData ? adsData.length : 0} ads</span>
+            `;
             
-            // Create list container
-            const listContainer = document.createElement('div');
-            listContainer.className = 'apps-ads-list';
-            listContainer.id = 'apps-list';
+            // Create ads content container
+            const adsContent = document.createElement('div');
+            adsContent.className = 'view-section';
+            adsContent.id = 'ads-content';
             
-            // Add elements to container
-            appsAdsContainer.appendChild(header);
-            appsAdsContainer.appendChild(searchInput);
-            appsAdsContainer.appendChild(listContainer);
+            // Add elements to grid container
+            gridContainer.appendChild(searchContainer);
+            gridContainer.appendChild(adsHeader);
+            gridContainer.appendChild(adsContent);
             
-            // Populate list with apps
-            populateAppsList(profileApps || []);
-            
-            // Close apps center
-            closeAppsCenter();
-        };
-        
-        // Function to populate ads list
-        const populateAdsList = (ads) => {
-            const adsList = document.getElementById('ads-list');
-            adsList.innerHTML = '';
-            
-            if (ads.length === 0) {
-                adsList.innerHTML = '<p style="text-align: center; padding: 20px; color: #777;">No ads available</p>';
-                return;
+            // Populate ads
+            if (adsData && adsData.length > 0) {
+                adsData.forEach(ad => {
+                    const adItem = createAdViewItem(ad);
+                    adsContent.appendChild(adItem);
+                });
+            } else {
+                adsContent.innerHTML = '<p>No ads available</p>';
             }
             
-            ads.forEach(ad => {
-                const adItem = document.createElement('div');
-                adItem.className = 'apps-ads-item';
-                
-                adItem.innerHTML = `
-                    <div class="apps-ads-icon">
-                        <img src="${ad.image || 'https://picsum.photos/seed/ad/60/60.jpg'}" alt="${ad.title}">
-                    </div>
-                    <div class="apps-ads-info">
-                        <div class="apps-ads-name">${ad.title}</div>
-                        <div class="apps-ads-description">${ad.description || 'No description available'}</div>
-                        <div class="apps-ads-meta">
-                            <span class="apps-ads-category">${ad.category}</span>
-                            <div class="apps-ads-views">
-                                <i class="fas fa-eye"></i>
-                                <span>${ad.views || 0} views</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="apps-ads-actions">
-                        <div class="apps-ads-view-count">
-                            <i class="fas fa-eye"></i>
-                            <span>${ad.views || 0}</span>
-                        </div>
-                    </div>
-                `;
-                
-                adsList.appendChild(adItem);
-            });
+            // Close sidebar
+            toggleSidebarModal();
         };
         
-        // Function to populate apps list
-        const populateAppsList = (apps) => {
-            const appsList = document.getElementById('apps-list');
-            appsList.innerHTML = '';
+        // Function to create an app view item
+        const createAppViewItem = (app) => {
+            const appItem = document.createElement('div');
+            appItem.className = 'view-item';
             
-            if (apps.length === 0) {
-                appsList.innerHTML = '<p style="text-align: center; padding: 20px; color: #777;">No apps available</p>';
-                return;
-            }
+            const icon = document.createElement('img');
+            icon.src = app.icon || 'https://picsum.photos/seed/app/50/50.jpg';
+            icon.alt = app.name;
+            icon.className = 'view-item-icon';
             
-            apps.forEach(app => {
-                const appItem = document.createElement('div');
-                appItem.className = 'apps-ads-item';
-                
-                appItem.innerHTML = `
-                    <div class="apps-ads-icon">
-                        <img src="${app.icon || 'https://picsum.photos/seed/app/60/60.jpg'}" alt="${app.name}">
-                    </div>
-                    <div class="apps-ads-info">
-                        <div class="apps-ads-name">${app.name}</div>
-                        <div class="apps-ads-description">${app.description || 'No description available'}</div>
-                        <div class="apps-ads-meta">
-                            <span class="apps-ads-category">${app.category}</span>
-                            <div class="apps-ads-views">
-                                <i class="fas fa-eye"></i>
-                                <span>${app.views || 0} views</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="apps-ads-actions">
-                        <div class="apps-ads-view-count">
-                            <i class="fas fa-eye"></i>
-                            <span>${app.views || 0}</span>
-                        </div>
-                    </div>
-                `;
-                
-                appsList.appendChild(appItem);
-            });
+            const content = document.createElement('div');
+            content.className = 'view-item-content';
+            
+            const name = document.createElement('h4');
+            name.className = 'view-item-title';
+            name.textContent = app.name;
+            
+            const description = document.createElement('p');
+            description.className = 'view-item-description';
+            description.textContent = app.description;
+            
+            const viewsButton = document.createElement('button');
+            viewsButton.className = 'view-item-views';
+            viewsButton.textContent = app.views ? `${app.views} views` : '0 views';
+            viewsButton.onclick = async () => {
+                try {
+                    // Get the app document
+                    const appRef = db.collection('apps').doc(app.id);
+                    const appDoc = await appRef.get();
+                    
+                    if (appDoc.exists) {
+                        // Get current view count
+                        const currentViews = appDoc.data().views || 0;
+                        const newViews = currentViews + 1;
+                        
+                        // Update view count in Firestore
+                        await appRef.update({ views: newViews });
+                        
+                        // Update button text to show view count
+                        viewsButton.textContent = `${newViews} views`;
+                        
+                        // Update local data
+                        app.views = newViews;
+                    } else {
+                        // If document doesn't exist, create it with view count
+                        await appRef.set({ 
+                            views: 1,
+                            ...app 
+                        });
+                        viewsButton.textContent = '1 views';
+                        app.views = 1;
+                    }
+                } catch (error) {
+                    console.error('Error updating app view count:', error);
+                    showNotification('Error updating view count', 'error');
+                }
+            };
+            
+            content.appendChild(name);
+            content.appendChild(description);
+            appItem.appendChild(icon);
+            appItem.appendChild(content);
+            appItem.appendChild(viewsButton);
+            
+            return appItem;
         };
         
-        // Function to handle ad search
-        const handleAdSearch = (event) => {
-            const searchTerm = event.target.value.toLowerCase();
+        // Function to create an ad view item
+        const createAdViewItem = (ad) => {
+            const adItem = document.createElement('div');
+            adItem.className = 'view-item';
             
-            if (!adsData || !Array.isArray(adsData)) {
-                return;
-            }
+            const icon = document.createElement('img');
+            icon.src = ad.image || 'https://picsum.photos/seed/ad/50/50.jpg';
+            icon.alt = ad.title;
+            icon.className = 'view-item-icon';
             
-            const filteredAds = adsData.filter(ad => {
-                return (
-                    (ad.title && ad.title.toLowerCase().includes(searchTerm)) ||
-                    (ad.description && ad.description.toLowerCase().includes(searchTerm)) ||
-                    (ad.category && ad.category.toLowerCase().includes(searchTerm))
-                );
-            });
+            const content = document.createElement('div');
+            content.className = 'view-item-content';
             
-            populateAdsList(filteredAds);
+            const name = document.createElement('h4');
+            name.className = 'view-item-title';
+            name.textContent = ad.title;
+            
+            const description = document.createElement('p');
+            description.className = 'view-item-description';
+            description.textContent = ad.description;
+            
+            const viewsButton = document.createElement('button');
+            viewsButton.className = 'view-item-views';
+            viewsButton.textContent = ad.views ? `${ad.views} views` : '0 views';
+            viewsButton.onclick = async () => {
+                try {
+                    // Get the ad document
+                    const adRef = db.collection('ads').doc(ad.id);
+                    const adDoc = await adRef.get();
+                    
+                    if (adDoc.exists) {
+                        // Get current view count
+                        const currentViews = adDoc.data().views || 0;
+                        const newViews = currentViews + 1;
+                        
+                        // Update view count in Firestore
+                        await adRef.update({ views: newViews });
+                        
+                        // Update button text to show view count
+                        viewsButton.textContent = `${newViews} views`;
+                        
+                        // Update local data
+                        ad.views = newViews;
+                    } else {
+                        // If document doesn't exist, create it with view count
+                        await adRef.set({ 
+                            views: 1,
+                            ...ad 
+                        });
+                        viewsButton.textContent = '1 views';
+                        ad.views = 1;
+                    }
+                } catch (error) {
+                    console.error('Error updating ad view count:', error);
+                    showNotification('Error updating view count', 'error');
+                }
+            };
+            
+            content.appendChild(name);
+            content.appendChild(description);
+            adItem.appendChild(icon);
+            adItem.appendChild(content);
+            adItem.appendChild(viewsButton);
+            
+            return adItem;
         };
         
-        // Function to handle app search
-        const handleAppSearch = (event) => {
-            const searchTerm = event.target.value.toLowerCase();
+        // Function to search apps
+        const searchApps = () => {
+            const searchTerm = document.getElementById('apps-search-bar').value.toLowerCase();
+            const appsContent = document.getElementById('apps-content');
+            appsContent.innerHTML = '';
             
-            if (!profileApps || !Array.isArray(profileApps)) {
+            if (!profileApps || profileApps.length === 0) {
+                appsContent.innerHTML = '<p>No apps available</p>';
                 return;
             }
             
             const filteredApps = profileApps.filter(app => {
-                return (
-                    (app.name && app.name.toLowerCase().includes(searchTerm)) ||
-                    (app.description && app.description.toLowerCase().includes(searchTerm)) ||
-                    (app.category && app.category.toLowerCase().includes(searchTerm))
-                );
+                return app.name.toLowerCase().includes(searchTerm) || 
+                       app.description.toLowerCase().includes(searchTerm) ||
+                       (app.category && app.category.toLowerCase().includes(searchTerm));
             });
             
-            populateAppsList(filteredApps);
+            if (filteredApps.length > 0) {
+                filteredApps.forEach(app => {
+                    const appItem = createAppViewItem(app);
+                    appsContent.appendChild(appItem);
+                });
+            } else {
+                appsContent.innerHTML = '<p>No apps found matching your search</p>';
+            }
+        };
+        
+        // Function to search ads
+        const searchAds = () => {
+            const searchTerm = document.getElementById('ads-search-bar').value.toLowerCase();
+            const adsContent = document.getElementById('ads-content');
+            adsContent.innerHTML = '';
+            
+            if (!adsData || adsData.length === 0) {
+                adsContent.innerHTML = '<p>No ads available</p>';
+                return;
+            }
+            
+            const filteredAds = adsData.filter(ad => {
+                return ad.title.toLowerCase().includes(searchTerm) || 
+                       ad.description.toLowerCase().includes(searchTerm) ||
+                       (ad.category && ad.category.toLowerCase().includes(searchTerm));
+            });
+            
+            if (filteredAds.length > 0) {
+                filteredAds.forEach(ad => {
+                    const adItem = createAdViewItem(ad);
+                    adsContent.appendChild(adItem);
+                });
+            } else {
+                adsContent.innerHTML = '<p>No ads found matching your search</p>';
+            }
         };
         
         // Function to toggle series fields based on video type
@@ -3466,8 +3488,7 @@
                     videoUrl,
                     imgUrl: thumbnail,
                     createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-                    uploadedBy: 'anonymous', // Use 'anonymous' instead of user ID
-                    views: 0 // Initialize views to 0
+                    uploadedBy: 'anonymous' // Use 'anonymous' instead of user ID
                 };
                 
                 // If it's a series or anime, add seasons and episodes data
@@ -3539,7 +3560,6 @@
             const image = document.getElementById('ad-image').value;
             const link = document.getElementById('ad-link').value;
             const category = document.getElementById('ad-category').value;
-            const position = document.getElementById('ad-position').value;
             
             try {
                 showLoading();
@@ -3551,10 +3571,8 @@
                     image,
                     link,
                     category,
-                    position,
                     createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-                    uploadedBy: 'anonymous',
-                    views: 0 // Initialize views to 0
+                    uploadedBy: 'anonymous'
                 };
                 
                 // Add to Firestore
@@ -3611,8 +3629,7 @@
                     category,
                     rating,
                     createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-                    uploadedBy: 'anonymous',
-                    views: 0 // Initialize views to 0
+                    uploadedBy: 'anonymous'
                 };
                 
                 // Add to Firestore
@@ -3634,6 +3651,9 @@
                 }
                 profileApps.unshift(newApp);
                 
+                // Shuffle the profile apps array
+                profileApps = shuffleArray(profileApps);
+                
                 // Update app display
                 updateAppDisplay();
                 
@@ -3653,7 +3673,7 @@
                 const ad = adsData[0];
                 notificationBar.querySelector('img').src = ad.image;
                 notificationBar.querySelector('.notification-text').textContent = ad.title;
-                notificationBar.querySelector('.notification-button').onclick = () => incrementAdViews(ad);
+                notificationBar.querySelector('.notification-button').onclick = () => window.open(ad.link, '_blank');
             }
         };
         
@@ -3670,66 +3690,6 @@
                         gridContainer.appendChild(profileItem);
                     });
                 }
-            }
-        };
-        
-        // Function to increment ad views
-        const incrementAdViews = async (ad) => {
-            try {
-                // Update views in Firestore
-                const adRef = db.collection('ads').doc(ad.id);
-                const adDoc = await adRef.get();
-                
-                if (adDoc.exists) {
-                    // Get current view count
-                    const currentViews = adDoc.data().views || 0;
-                    const newViews = currentViews + 1;
-                    
-                    // Update view count in Firestore
-                    await adRef.update({ views: newViews });
-                    
-                    // Update local data
-                    ad.views = newViews;
-                    
-                    // Open the ad link
-                    window.open(ad.link, '_blank');
-                    
-                    // Show notification
-                    showNotification('Ad view counted!', 'success');
-                }
-            } catch (error) {
-                console.error('Error updating ad views:', error);
-                showNotification('Error counting ad view', 'warning');
-            }
-        };
-        
-        // Function to increment app views
-        const incrementAppViews = async (app) => {
-            try {
-                // Update views in Firestore
-                const appRef = db.collection('apps').doc(app.id);
-                const appDoc = await appRef.get();
-                
-                if (appDoc.exists) {
-                    // Get current view count
-                    const currentViews = appDoc.data().views || 0;
-                    const newViews = currentViews + 1;
-                    
-                    // Update view count in Firestore
-                    await appRef.update({ views: newViews });
-                    
-                    // Update local data
-                    app.views = newViews;
-                    
-                    // Open the app link
-                    window.open(app.link, '_blank');
-                    
-                    // Show notification
-                    showNotification('App view counted!', 'success');
-                }
-            } catch (error) {
-                console.error('Error updating app views:', error);
-                showNotification('Error counting app view', 'warning');
             }
         };
         
@@ -3832,6 +3792,8 @@
                 { logoUrl: "https://cdn-icons-png.flaticon.com/128/18831/18831648.png", name: "Director Center", url: "#", isUpload: true },
                 { logoUrl: "https://cdn-icons-png.flaticon.com/128/5303/5303479.png", name: "Apps Center", url: "#", isApps: true },
                 { logoUrl: "https://cdn-icons-png.flaticon.com/128/9592/9592247.png", name: "Ads Center", url: "#", isAds: true },
+                { logoUrl: "https://cdn-icons-png.flaticon.com/128/2767/2767325.png", name: "View Apps", url: "#", isViewApps: true },
+                { logoUrl: "https://cdn-icons-png.flaticon.com/128/2767/2767325.png", name: "View Ads", url: "#", isViewAds: true },
                 { logoUrl: "https://cdn-icons-png.flaticon.com/128/18392/18392966.png", name: "Online Service", url: "#" },
                 { logoUrl: "https://cdn-icons-png.flaticon.com/128/2312/2312342.png", name: "Privacy Policy", url: "#" },
                 { logoUrl: "https://cdn-icons-png.flaticon.com/128/3405/3405247.png", name: "Settings", url: "#" },
@@ -3850,6 +3812,12 @@
                 } else if (item.isAds) {
                     // Ads Center
                     sidebarItem.onclick = openAdsCenter;
+                } else if (item.isViewApps) {
+                    // View Apps
+                    sidebarItem.onclick = viewApps;
+                } else if (item.isViewAds) {
+                    // View Ads
+                    sidebarItem.onclick = viewAds;
                 } else {
                     sidebarItem.onclick = () => window.open(item.url, '_blank');
                 }
@@ -4056,13 +4024,13 @@
             
             // Create Apps section with count
             const appsSection = document.createElement('div');
-            appsSection.className = 'profile-section';
+            appsSection.className = 'view-section';
             appsSection.innerHTML = `
-                <div class="section-header">
-                    <h3>Apps Center</h3>
-                    <span class="section-count">${profileApps ? profileApps.length : 0} apps</span>
+                <div class="view-section-header">
+                    <h3 class="view-section-title">Apps Center</h3>
+                    <span class="view-section-count">${profileApps ? profileApps.length : 0} apps</span>
                 </div>
-                <div class="section-content">
+                <div class="view-section-content">
                     ${profileApps && profileApps.length > 0 ? 
                         profileApps.map(item => createProfileItem(item)).join('') : 
                         '<p>No apps available</p>'
@@ -4072,15 +4040,15 @@
             
             // Create Ads section with count
             const adsSection = document.createElement('div');
-            adsSection.className = 'profile-section';
+            adsSection.className = 'view-section';
             adsSection.innerHTML = `
-                <div class="section-header">
-                    <h3>Ads Center</h3>
-                    <span class="section-count">${adsData ? adsData.length : 0} ads</span>
+                <div class="view-section-header">
+                    <h3 class="view-section-title">Ads Center</h3>
+                    <span class="view-section-count">${adsData ? adsData.length : 0} ads</span>
                 </div>
-                <div class="section-content">
+                <div class="view-section-content">
                     ${adsData && adsData.length > 0 ? 
-                        adsData.map(item => createAdItem(item)).join('') : 
+                        adsData.map(item => createProfileAdItem(item)).join('') : 
                         '<p>No ads available</p>'
                     }
                 </div>
@@ -4168,9 +4136,8 @@
             document.getElementById('discover-container').style.display = 'block';
             document.getElementById('categories-container').style.display = 'block';
             
-            // Hide grid container and apps-ads container
+            // Hide grid container
             document.getElementById('grid-container').style.display = 'none';
-            document.getElementById('apps-ads-container').style.display = 'none';
         };
         
         // Function to create filter section
@@ -4324,7 +4291,45 @@
             openButton.style.borderRadius = '5px';
             openButton.style.cursor = 'pointer';
             openButton.style.fontSize = '14px';
-            openButton.onclick = () => incrementAppViews(item);
+            openButton.onclick = async () => {
+                try {
+                    // Get the app document
+                    const appRef = db.collection('apps').doc(item.id);
+                    const appDoc = await appRef.get();
+                    
+                    if (appDoc.exists) {
+                        // Get current view count
+                        const currentViews = appDoc.data().views || 0;
+                        const newViews = currentViews + 1;
+                        
+                        // Update view count in Firestore
+                        await appRef.update({ views: newViews });
+                        
+                        // Update button text to show view count
+                        openButton.textContent = `${newViews} views`;
+                        
+                        // Update local data
+                        item.views = newViews;
+                    } else {
+                        // If document doesn't exist, create it with view count
+                        await appRef.set({ 
+                            views: 1,
+                            ...item 
+                        });
+                        openButton.textContent = '1 views';
+                        item.views = 1;
+                    }
+                    
+                    // Open the app link
+                    window.open(item.link, '_blank');
+                } catch (error) {
+                    console.error('Error updating app view count:', error);
+                    showNotification('Error updating view count', 'error');
+                    
+                    // Still open the link even if there's an error
+                    window.open(item.link, '_blank');
+                }
+            };
             content.appendChild(name);
             content.appendChild(description);
             profileItem.appendChild(icon);
@@ -4333,14 +4338,14 @@
             return profileItem;
         };
         
-        const createAdItem = (item) => {
-            const adItem = document.createElement('div');
-            adItem.className = 'profile-item';
-            adItem.style.display = 'flex';
-            adItem.style.alignItems = 'center';
-            adItem.style.gap = '10px';
-            adItem.style.padding = '10px';
-            adItem.style.borderBottom = '1px solid #333';
+        const createProfileAdItem = (item) => {
+            const profileItem = document.createElement('div');
+            profileItem.className = 'profile-item';
+            profileItem.style.display = 'flex';
+            profileItem.style.alignItems = 'center';
+            profileItem.style.gap = '10px';
+            profileItem.style.padding = '10px';
+            profileItem.style.borderBottom = '1px solid #333';
             const icon = document.createElement('img');
             icon.src = item.image || 'https://picsum.photos/seed/ad/50/50.jpg';
             icon.alt = item.title;
@@ -4368,13 +4373,51 @@
             openButton.style.borderRadius = '5px';
             openButton.style.cursor = 'pointer';
             openButton.style.fontSize = '14px';
-            openButton.onclick = () => incrementAdViews(item);
+            openButton.onclick = async () => {
+                try {
+                    // Get the ad document
+                    const adRef = db.collection('ads').doc(item.id);
+                    const adDoc = await adRef.get();
+                    
+                    if (adDoc.exists) {
+                        // Get current view count
+                        const currentViews = adDoc.data().views || 0;
+                        const newViews = currentViews + 1;
+                        
+                        // Update view count in Firestore
+                        await adRef.update({ views: newViews });
+                        
+                        // Update button text to show view count
+                        openButton.textContent = `${newViews} views`;
+                        
+                        // Update local data
+                        item.views = newViews;
+                    } else {
+                        // If document doesn't exist, create it with view count
+                        await adRef.set({ 
+                            views: 1,
+                            ...item 
+                        });
+                        openButton.textContent = '1 views';
+                        item.views = 1;
+                    }
+                    
+                    // Open the ad link
+                    window.open(item.link, '_blank');
+                } catch (error) {
+                    console.error('Error updating ad view count:', error);
+                    showNotification('Error updating view count', 'error');
+                    
+                    // Still open the link even if there's an error
+                    window.open(item.link, '_blank');
+                }
+            };
             content.appendChild(name);
             content.appendChild(description);
-            adItem.appendChild(icon);
-            adItem.appendChild(content);
-            adItem.appendChild(openButton);
-            return adItem;
+            profileItem.appendChild(icon);
+            profileItem.appendChild(content);
+            profileItem.appendChild(openButton);
+            return profileItem;
         };
         
         const createFrame = (item) => {
@@ -4653,48 +4696,6 @@
             // Add the video to the history
             addToHistory(videoId);
         };
-        
-        // Function to initialize ad rotation in the video modal
-        function initVideoAdRotation() {
-            if (!adsData || !Array.isArray(adsData) || adsData.length === 0) {
-                console.warn("Ads data not available for video modal");
-                return;
-            }
-            
-            let currentVideoAdIndex = 0;
-            
-            function showVideoAd() {
-                const ad = adsData[currentVideoAdIndex];
-                const adContent = document.getElementById('video-ad-content');
-                const installButton = document.getElementById('video-install-button');
-                const adContainer = document.getElementById('video-ad-container');
-                
-                adContent.innerHTML = `
-                    <div class="app-icon">
-                        <img src="${ad.image}" alt="App Icon" />
-                    </div>
-                    <div class="ad-info">
-                        <div class="app-name">${ad.title}</div>
-                        <div class="ad-meta">
-                            <span class="sponsored">Sponsored ·</span>
-                            <span>${ad.category} ★ FREE</span>
-                        </div>
-                    </div>
-                `;
-                
-                installButton.href = '#';
-                installButton.onclick = () => incrementAdViews(ad);
-                adContainer.style.display = 'flex';
-                
-                currentVideoAdIndex = (currentVideoAdIndex + 1) % adsData.length;
-            }
-            
-            // Show first ad immediately
-            showVideoAd();
-            
-            // Rotate ads every 15 seconds
-            setInterval(showVideoAd, 15000);
-        }
         
         // Function to go to a specific season
         const goToSeason = (seasonIndex) => {
@@ -5162,290 +5163,6 @@
             }, 3000);
         }
         
-        // Function to close the modal - optimized for immediate closing
-        const closeModal = () => {
-            // Stop the video immediately
-            const videoPlayer = document.getElementById('video-player');
-            const currentSrc = videoPlayer.src;
-            
-            // Clear the src to stop playback
-            videoPlayer.src = 'about:blank'; // Use about:blank to unload
-            
-            // For YouTube videos, we need additional handling
-            if (currentSrc && currentSrc.includes('youtube.com/embed/')) {
-                // Create a temporary iframe to properly unload YouTube content
-                const tempIframe = document.createElement('iframe');
-                tempIframe.style.display = 'none';
-                document.body.appendChild(tempIframe);
-                tempIframe.src = 'about:blank';
-                setTimeout(() => {
-                    document.body.removeChild(tempIframe);
-                }, 100);
-            }
-            
-            // Hide the modal immediately
-            document.getElementById('video-nav').style.display = 'none';
-            
-            // Hide the ad container
-            document.getElementById('video-ad-container').style.display = 'none';
-            
-            // Reset state immediately
-            currentMovieInModal = null;
-            inVideoModal = false;
-            isEpisodeNavigation = false; // Reset the flag
-            
-            // Clear any episode/season data
-            const episodeFooter = document.getElementById('episode-footer');
-            episodeFooter.style.display = 'none';
-            
-            // Remove the iframe from the DOM to completely stop the video
-            const navBody = document.querySelector('.nav-body');
-            const iframeContainer = navBody.querySelector('div[style*="position: relative"]');
-            if (iframeContainer) {
-                const oldIframe = iframeContainer.querySelector('iframe');
-                if (oldIframe) {
-                    oldIframe.remove();
-                }
-            }
-        };
-        // Modified closeNav function for immediate closing
-        const closeNav = () => {
-            if (inVideoModal) {
-                // Close modal immediately without any delay
-                closeModal();
-                
-                // Only use history.back() if we actually pushed a state
-                if (window.history.state && window.history.state.videoOpen) {
-                    // Use a small timeout to ensure the modal is fully closed before navigating back
-                    setTimeout(() => {
-                        window.history.back();
-                    }, 10);
-                }
-            } else {
-                closeModal();
-            }
-        };
-        
-        // Carousel functionality
-        let currentIndex = 0;
-        let startX = 0;
-        let moveX = 0;
-        let isDragging = false;
-        
-        function updateCarousel() {
-            const carousel = document.getElementById("carousel");
-            carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
-            document.querySelectorAll(".dot").forEach((dot, index) => {
-                dot.classList.toggle("active", index === currentIndex);
-            });
-        }
-        
-        function goToSlide(index) {
-            currentIndex = index;
-            updateCarousel();
-        }
-        
-        function nextSlide() {
-            const carouselData = data.slice(0, 5);
-            currentIndex = (currentIndex + 1) % carouselData.length;
-            updateCarousel();
-        }
-        
-        function prevSlide() {
-            const carouselData = data.slice(0, 5);
-            currentIndex = (currentIndex - 1 + carouselData.length) % carouselData.length;
-            updateCarousel();
-        }
-        
-        function handleTouchStart(e) {
-            startX = e.touches[0].clientX;
-            isDragging = true;
-        }
-        
-        function handleTouchMove(e) {
-            if (!isDragging) return;
-            moveX = e.touches[0].clientX - startX;
-        }
-        
-        function handleTouchEnd() {
-            isDragging = false;
-            if (moveX > 50) {
-                prevSlide();
-            } else if (moveX < -50) {
-                nextSlide();
-            }
-        }
-        
-        function handleMouseDown(e) {
-            startX = e.clientX;
-            isDragging = true;
-        }
-        
-        function handleMouseMove(e) {
-            if (!isDragging) return;
-            moveX = e.clientX - startX;
-        }
-        
-        function handleMouseUp() {
-            isDragging = false;
-            if (moveX > 50) {
-                prevSlide();
-            } else if (moveX < -50) {
-                nextSlide();
-            }
-        }
-        
-        // Initialize carousel event listeners
-        function initCarousel() {
-            const carousel = document.getElementById("carousel");
-            carousel.addEventListener("touchstart", handleTouchStart);
-            carousel.addEventListener("touchmove", handleTouchMove);
-            carousel.addEventListener("touchend", handleTouchEnd);
-            carousel.addEventListener("mousedown", handleMouseDown);
-            carousel.addEventListener("mousemove", handleMouseMove);
-            carousel.addEventListener("mouseup", handleMouseUp);
-            carousel.addEventListener("mouseleave", handleMouseUp);
-            
-            // Auto-slide every 5 seconds
-            setInterval(nextSlide, 5000);
-        }
-        
-        // Initialize the page
-        async function initializeApp() {
-            try {
-                showLoading();
-                
-                // Fetch videos from Firestore
-                const fetchedVideos = await fetchVideosFromFirestore();
-                if (fetchedVideos.length > 0) {
-                    data = shuffleArray(fetchedVideos);
-                    combinedData = data;
-                    createCarousel();
-                    createDiscoverSection();
-                    createCategories();
-                    updateHistoryList();
-                    initCarousel();
-                } else {
-                    showNotification('No videos available. Please check back later.', 'warning');
-                }
-                
-                // Fetch ads from Firestore
-                const fetchedAds = await fetchAdsFromFirestore();
-                if (fetchedAds.length > 0) {
-                    adsData = fetchedAds;
-                    updateAdDisplay();
-                }
-                
-                // Fetch apps from Firestore
-                const fetchedApps = await fetchAppsFromFirestore();
-                if (fetchedApps.length > 0) {
-                    profileApps = fetchedApps;
-                }
-                
-                hideLoading();
-            } catch (error) {
-                console.error("App initialization failed:", error);
-                showNotification("Failed to load content. Please check your connection.", "warning");
-                hideLoading();
-            }
-        }
-        
-        // Add category button click handlers
-        document.addEventListener('DOMContentLoaded', () => {
-            const categoryButtons = document.querySelectorAll('.category-btn');
-            categoryButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    // Remove active class from all buttons
-                    categoryButtons.forEach(btn => btn.classList.remove('active'));
-                    // Add active class to clicked button
-                    this.classList.add('active');
-                    
-                    // Filter content based on selected category
-                    const selectedCategory = this.dataset.category;
-                    if (selectedCategory === 'All') {
-                        createDiscoverSection();
-                    } else {
-                        filterContentByCategory(selectedCategory);
-                    }
-                });
-            });
-        });
-        
-        // Function to filter content by category
-        const filterContentByCategory = (category) => {
-            const discoverScroll = document.getElementById('discover-scroll');
-            discoverScroll.innerHTML = '';
-            
-            // Filter data by category
-            const filteredData = data.filter(item => {
-                // Check if item matches the selected category
-                if (category === 'Hollywood') return item.category === 'Hollywood';
-                if (category === 'Nollywood') return item.category === 'Nollywood';
-                if (category === 'Bollywood') return item.category === 'Bollywood';
-                if (category === 'Kannywood') return item.category === 'Kannywood';
-                if (category === 'Action') return item.genre === 'Action';
-                if (category === 'Drama') return item.genre === 'Drama';
-                if (category === 'Comedy') return item.genre === 'Comedy';
-                return true;
-            });
-            
-            // Add filtered items to discover section
-            filteredData.forEach(item => {
-                const discoverItem = document.createElement('div');
-                discoverItem.className = 'discover-item';
-                const img = document.createElement('img');
-                img.src = item.imgUrl;
-                img.alt = item.title;
-                const content = document.createElement('div');
-                content.className = 'content';
-                content.innerHTML = `
-                    <h2>${item.title}</h2>
-                    <p>${item.description}</p>
-                `;
-                
-                // Add click event to the entire discover item
-                discoverItem.onclick = () => openVideoNav(item.videoUrl, item.title, item);
-                
-                discoverItem.appendChild(img);
-                discoverItem.appendChild(content);
-                discoverScroll.appendChild(discoverItem);
-            });
-        };
-        
-        let lastScrollTop = 0;
-        window.addEventListener('scroll', () => {
-            const footer = document.querySelector('footer');
-            const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            const windowHeight = window.innerHeight;
-            const documentHeight = document.documentElement.scrollHeight;
-            // Check if user has reached the bottom of the page
-            const atPageEnd = (currentScrollTop + windowHeight) >= documentHeight;
-            if (atPageEnd && currentScrollTop > lastScrollTop) {
-                // Immediately hide footer when at the end of the page and scrolling down
-                footer.classList.add('hide');
-            } else {
-                // Show footer when scrolling down anywhere else or when scrolling up
-                footer.classList.remove('hide');
-            }
-            lastScrollTop = currentScrollTop;
-        });
-        
-        // Fixed: Changed timeout value to something more reasonable (40 seconds)
-        setTimeout(() => {
-            const bar = document.getElementById('notification-bar');
-            bar.style.opacity = '1';
-            bar.style.pointerEvents = 'auto'; // Enable interaction once visible
-        }, 40000); // Show after 40 seconds
-        
-        function closeNotification() {
-            const bar = document.getElementById('notification-bar');
-            bar.style.opacity = '0';
-            bar.style.pointerEvents = 'none'; // Disable interaction immediately
-            setTimeout(() => {
-                bar.remove(); // Fully remove from DOM
-            }, 500); // Allow fade-out to complete
-        }
-        
         // New functions for added features
         
         // Apply filters
@@ -5481,12 +5198,13 @@
             
             // Update UI with filtered data
             const gridContainer = document.getElementById('grid-container');
-            gridContainer.innerHTML = '';
             
-            // Hide other sections
-            document.getElementById('discover-container').style.display = 'none';
-            document.getElementById('categories-container').style.display = 'none';
-            gridContainer.style.display = 'grid';
+            // Remove existing frames but keep the filter section
+            const filterSection = gridContainer.querySelector('.filter-section');
+            gridContainer.innerHTML = '';
+            if (filterSection) {
+                gridContainer.appendChild(filterSection);
+            }
             
             filteredData.forEach(item => {
                 const frame = createFrame(item);
@@ -5671,7 +5389,6 @@
             document.getElementById('discover-container').style.display = 'none';
             document.getElementById('categories-container').style.display = 'none';
             document.getElementById('grid-container').style.display = 'none';
-            document.getElementById('apps-ads-container').style.display = 'none';
             document.querySelector('footer').style.display = 'none';
         };
         
@@ -5685,10 +5402,6 @@
             // Restore the appropriate section based on current state
             if (inGridView) {
                 document.getElementById('grid-container').style.display = 'grid';
-            } else if (inAppsView) {
-                document.getElementById('apps-ads-container').style.display = 'block';
-            } else if (inAdsView) {
-                document.getElementById('apps-ads-container').style.display = 'block';
             } else {
                 document.getElementById('discover-container').style.display = 'block';
                 document.getElementById('categories-container').style.display = 'block';
@@ -5734,8 +5447,7 @@
                     </div>
                 </div>
             `;
-            installButton.href = '#';
-            installButton.onclick = () => incrementAdViews(app);
+            installButton.href = app.link;
             adContainer.style.display = 'flex';
             localStorage.setItem('currentAdIndex', index);
         }
@@ -5859,18 +5571,6 @@
                     document.getElementById('categories-container').style.display = 'block';
                     document.getElementById('grid-container').style.display = 'none';
                 }
-                // Handle apps view
-                else if (inAppsView) {
-                    inAppsView = false;
-                    document.getElementById('apps-ads-container').style.display = 'none';
-                    showDiscoverSection();
-                }
-                // Handle ads view
-                else if (inAdsView) {
-                    inAdsView = false;
-                    document.getElementById('apps-ads-container').style.display = 'none';
-                    showDiscoverSection();
-                }
                 // Handle filter modal
                 else if (inFilterModal) {
                     document.getElementById('filter-modal').classList.remove('open');
@@ -5925,6 +5625,370 @@
             // Initialize the app
             initializeApp();
         });
+        
+        // Function to initialize ad rotation in the video modal
+        function initVideoAdRotation() {
+            if (!adsData || !Array.isArray(adsData) || adsData.length === 0) {
+                console.warn("Ads data not available for video modal");
+                return;
+            }
+            
+            let currentVideoAdIndex = 0;
+            
+            function showVideoAd() {
+                const ad = adsData[currentVideoAdIndex];
+                const adContent = document.getElementById('video-ad-content');
+                const installButton = document.getElementById('video-install-button');
+                const adContainer = document.getElementById('video-ad-container');
+                
+                adContent.innerHTML = `
+                    <div class="app-icon">
+                        <img src="${ad.image}" alt="App Icon" />
+                    </div>
+                    <div class="ad-info">
+                        <div class="app-name">${ad.title}</div>
+                        <div class="ad-meta">
+                            <span class="sponsored">Sponsored ·</span>
+                            <span>${ad.category} ★ FREE</span>
+                        </div>
+                    </div>
+                `;
+                
+                // Update install button click handler to track views
+                installButton.onclick = async () => {
+                    try {
+                        // Get the ad document
+                        const adRef = db.collection('ads').doc(ad.id);
+                        const adDoc = await adRef.get();
+                        
+                        if (adDoc.exists) {
+                            // Get current view count
+                            const currentViews = adDoc.data().views || 0;
+                            const newViews = currentViews + 1;
+                            
+                            // Update view count in Firestore
+                            await adRef.update({ views: newViews });
+                            
+                            // Update local data
+                            ad.views = newViews;
+                            
+                            // Open the ad link
+                            window.open(ad.link, '_blank');
+                        } else {
+                            // If document doesn't exist, create it with view count
+                            await adRef.set({ 
+                                views: 1,
+                                ...ad 
+                            });
+                            ad.views = 1;
+                            
+                            // Open the ad link
+                            window.open(ad.link, '_blank');
+                        }
+                    } catch (error) {
+                        console.error('Error updating ad view count:', error);
+                        showNotification('Error updating view count', 'error');
+                        
+                        // Still open the link even if there's an error
+                        window.open(ad.link, '_blank');
+                    }
+                };
+                
+                adContainer.style.display = 'flex';
+                
+                currentVideoAdIndex = (currentVideoAdIndex + 1) % adsData.length;
+            }
+            
+            // Show first ad immediately
+            showVideoAd();
+            
+            // Rotate ads every 15 seconds
+            setInterval(showVideoAd, 15000);
+        }
+        
+        // Initialize the page
+        async function initializeApp() {
+            try {
+                showLoading();
+                
+                // Fetch videos from Firestore
+                const fetchedVideos = await fetchVideosFromFirestore();
+                if (fetchedVideos.length > 0) {
+                    data = shuffleArray(fetchedVideos);
+                    combinedData = data;
+                    createCarousel();
+                    createDiscoverSection();
+                    createCategories();
+                    updateHistoryList();
+                    initCarousel();
+                } else {
+                    showNotification('No videos available. Please check back later.', 'warning');
+                }
+                
+                // Fetch ads from Firestore
+                const fetchedAds = await fetchAdsFromFirestore();
+                if (fetchedAds.length > 0) {
+                    adsData = fetchedAds;
+                    updateAdDisplay();
+                }
+                
+                // Fetch apps from Firestore
+                const fetchedApps = await fetchAppsFromFirestore();
+                if (fetchedApps.length > 0) {
+                    profileApps = shuffleArray(fetchedApps);
+                }
+                
+                hideLoading();
+            } catch (error) {
+                console.error("App initialization failed:", error);
+                showNotification("Failed to load content. Please check your connection.", "warning");
+                hideLoading();
+            }
+        }
+        
+        // Add category button click handlers
+        document.addEventListener('DOMContentLoaded', () => {
+            const categoryButtons = document.querySelectorAll('.category-btn');
+            categoryButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    categoryButtons.forEach(btn => btn.classList.remove('active'));
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    // Filter content based on selected category
+                    const selectedCategory = this.dataset.category;
+                    if (selectedCategory === 'All') {
+                        createDiscoverSection();
+                    } else {
+                        filterContentByCategory(selectedCategory);
+                    }
+                });
+            });
+        });
+        
+        // Function to filter content by category
+        const filterContentByCategory = (category) => {
+            const discoverScroll = document.getElementById('discover-scroll');
+            discoverScroll.innerHTML = '';
+            
+            // Filter data by category
+            const filteredData = data.filter(item => {
+                // Check if item matches the selected category
+                if (category === 'Hollywood') return item.category === 'Hollywood';
+                if (category === 'Nollywood') return item.category === 'Nollywood';
+                if (category === 'Bollywood') return item.category === 'Bollywood';
+                if (category === 'Kannywood') return item.category === 'Kannywood';
+                if (category === 'Action') return item.genre === 'Action';
+                if (category === 'Drama') return item.genre === 'Drama';
+                if (category === 'Comedy') return item.genre === 'Comedy';
+                return true;
+            });
+            
+            // Add filtered items to discover section
+            filteredData.forEach(item => {
+                const discoverItem = document.createElement('div');
+                discoverItem.className = 'discover-item';
+                const img = document.createElement('img');
+                img.src = item.imgUrl;
+                img.alt = item.title;
+                const content = document.createElement('div');
+                content.className = 'content';
+                content.innerHTML = `
+                    <h2>${item.title}</h2>
+                    <p>${item.description}</p>
+                `;
+                
+                // Add click event to the entire discover item
+                discoverItem.onclick = () => openVideoNav(item.videoUrl, item.title, item);
+                
+                discoverItem.appendChild(img);
+                discoverItem.appendChild(content);
+                discoverScroll.appendChild(discoverItem);
+            });
+        };
+        
+        let lastScrollTop = 0;
+        window.addEventListener('scroll', () => {
+            const footer = document.querySelector('footer');
+            const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const windowHeight = window.innerHeight;
+            const documentHeight = document.documentElement.scrollHeight;
+            // Check if user has reached the bottom of the page
+            const atPageEnd = (currentScrollTop + windowHeight) >= documentHeight;
+            if (atPageEnd && currentScrollTop > lastScrollTop) {
+                // Immediately hide footer when at the end of the page and scrolling down
+                footer.classList.add('hide');
+            } else {
+                // Show footer when scrolling down anywhere else or when scrolling up
+                footer.classList.remove('hide');
+            }
+            lastScrollTop = currentScrollTop;
+        });
+        
+        // Fixed: Changed timeout value to something more reasonable (40 seconds)
+        setTimeout(() => {
+            const bar = document.getElementById('notification-bar');
+            bar.style.opacity = '1';
+            bar.style.pointerEvents = 'auto'; // Enable interaction once visible
+        }, 40000); // Show after 40 seconds
+        
+        function closeNotification() {
+            const bar = document.getElementById('notification-bar');
+            bar.style.opacity = '0';
+            bar.style.pointerEvents = 'none'; // Disable interaction immediately
+            setTimeout(() => {
+                bar.remove(); // Fully remove from DOM
+            }, 500); // Allow fade-out to complete
+        }
+        
+        // Carousel functionality
+        let currentIndex = 0;
+        let startX = 0;
+        let moveX = 0;
+        let isDragging = false;
+        
+        function updateCarousel() {
+            const carousel = document.getElementById("carousel");
+            carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
+            document.querySelectorAll(".dot").forEach((dot, index) => {
+                dot.classList.toggle("active", index === currentIndex);
+            });
+        }
+        
+        function goToSlide(index) {
+            currentIndex = index;
+            updateCarousel();
+        }
+        
+        function nextSlide() {
+            const carouselData = data.slice(0, 5);
+            currentIndex = (currentIndex + 1) % carouselData.length;
+            updateCarousel();
+        }
+        
+        function prevSlide() {
+            const carouselData = data.slice(0, 5);
+            currentIndex = (currentIndex - 1 + carouselData.length) % carouselData.length;
+            updateCarousel();
+        }
+        
+        function handleTouchStart(e) {
+            startX = e.touches[0].clientX;
+            isDragging = true;
+        }
+        
+        function handleTouchMove(e) {
+            if (!isDragging) return;
+            moveX = e.touches[0].clientX - startX;
+        }
+        
+        function handleTouchEnd() {
+            isDragging = false;
+            if (moveX > 50) {
+                prevSlide();
+            } else if (moveX < -50) {
+                nextSlide();
+            }
+        }
+        
+        function handleMouseDown(e) {
+            startX = e.clientX;
+            isDragging = true;
+        }
+        
+        function handleMouseMove(e) {
+            if (!isDragging) return;
+            moveX = e.clientX - startX;
+        }
+        
+        function handleMouseUp() {
+            isDragging = false;
+            if (moveX > 50) {
+                prevSlide();
+            } else if (moveX < -50) {
+                nextSlide();
+            }
+        }
+        
+        // Initialize carousel event listeners
+        function initCarousel() {
+            const carousel = document.getElementById("carousel");
+            carousel.addEventListener("touchstart", handleTouchStart);
+            carousel.addEventListener("touchmove", handleTouchMove);
+            carousel.addEventListener("touchend", handleTouchEnd);
+            carousel.addEventListener("mousedown", handleMouseDown);
+            carousel.addEventListener("mousemove", handleMouseMove);
+            carousel.addEventListener("mouseup", handleMouseUp);
+            carousel.addEventListener("mouseleave", handleMouseUp);
+            
+            // Auto-slide every 5 seconds
+            setInterval(nextSlide, 5000);
+        }
+        
+        // Function to close the modal - optimized for immediate closing
+        const closeModal = () => {
+            // Stop the video immediately
+            const videoPlayer = document.getElementById('video-player');
+            const currentSrc = videoPlayer.src;
+            
+            // Clear the src to stop playback
+            videoPlayer.src = 'about:blank'; // Use about:blank to unload
+            
+            // For YouTube videos, we need additional handling
+            if (currentSrc && currentSrc.includes('youtube.com/embed/')) {
+                // Create a temporary iframe to properly unload YouTube content
+                const tempIframe = document.createElement('iframe');
+                tempIframe.style.display = 'none';
+                document.body.appendChild(tempIframe);
+                tempIframe.src = 'about:blank';
+                setTimeout(() => {
+                    document.body.removeChild(tempIframe);
+                }, 100);
+            }
+            
+            // Hide the modal immediately
+            document.getElementById('video-nav').style.display = 'none';
+            
+            // Hide the ad container
+            document.getElementById('video-ad-container').style.display = 'none';
+            
+            // Reset state immediately
+            currentMovieInModal = null;
+            inVideoModal = false;
+            isEpisodeNavigation = false; // Reset the flag
+            
+            // Clear any episode/season data
+            const episodeFooter = document.getElementById('episode-footer');
+            episodeFooter.style.display = 'none';
+            
+            // Remove the iframe from the DOM to completely stop the video
+            const navBody = document.querySelector('.nav-body');
+            const iframeContainer = navBody.querySelector('div[style*="position: relative"]');
+            if (iframeContainer) {
+                const oldIframe = iframeContainer.querySelector('iframe');
+                if (oldIframe) {
+                    oldIframe.remove();
+                }
+            }
+        };
+        // Modified closeNav function for immediate closing
+        const closeNav = () => {
+            if (inVideoModal) {
+                // Close modal immediately without any delay
+                closeModal();
+                
+                // Only use history.back() if we actually pushed a state
+                if (window.history.state && window.history.state.videoOpen) {
+                    // Use a small timeout to ensure the modal is fully closed before navigating back
+                    setTimeout(() => {
+                        window.history.back();
+                    }, 10);
+                }
+            } else {
+                closeModal();
+            }
+        };
     </script>
 </body>
 </html>
