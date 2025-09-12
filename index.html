@@ -2252,6 +2252,11 @@
                     <label for="video-thumbnail">Thumbnail URL</label>
                     <input type="url" id="video-thumbnail" placeholder="https://example.com/thumbnail.jpg">
                 </div>
+                <div class="form-group">
+                    <label for="video-carousel-thumbnail">Carousel Thumbnail URL (Optional)</label>
+                    <input type="url" id="video-carousel-thumbnail" placeholder="https://example.com/carousel-thumbnail.jpg">
+                    <small style="color: #666; font-size: 12px;">If not provided, the regular thumbnail will be used</small>
+                </div>
                 
                 <!-- Series-specific fields - initially hidden -->
                 <div id="series-fields" style="display: none;">
@@ -3303,12 +3308,9 @@
         const toggleSeriesFields = () => {
             const videoType = document.getElementById('video-type').value;
             const seriesFields = document.getElementById('series-fields');
-            const videoUrlInput = document.getElementById('video-url');
             
             if (videoType === 'series' || videoType === 'anime') {
                 seriesFields.style.display = 'block';
-                videoUrlInput.removeAttribute('required');
-                videoUrlInput.placeholder = "Optional: Trailer URL";
                 
                 // Add at least one season if none exist
                 if (seasons.length === 0) {
@@ -3316,13 +3318,6 @@
                 }
             } else {
                 seriesFields.style.display = 'none';
-                videoUrlInput.setAttribute('required', '');
-                videoUrlInput.placeholder = "https://www.youtube.com/embed/VIDEO_ID or https://drive.google.com/file/d/FILE_ID/preview";
-                
-                // Clear seasons data when switching to movie
-                seasons = [];
-                seasonCounter = 0;
-                document.getElementById('seasons-list').innerHTML = '';
             }
         };
         
@@ -3399,11 +3394,11 @@
                 <div class="episode-info">
                     <div class="episode-number">Episode ${episodeNumber}</div>
                     <div class="episode-title">
-                        <input type="text" placeholder="Episode title" value="${episodeData.title}" onchange="updateEpisodeTitle('${episodeId}', this.value)" required>
+                        <input type="text" placeholder="Episode title" value="${episodeData.title}" onchange="updateEpisodeTitle('${episodeId}', this.value)">
                     </div>
                 </div>
                 <div class="episode-actions">
-                    <input type="url" placeholder="Episode URL" style="width: 200px; padding: 5px; margin-right: 10px;" onchange="updateEpisodeUrl('${episodeId}', this.value)" required>
+                    <input type="url" placeholder="Episode URL" style="width: 200px; padding: 5px; margin-right: 10px;" onchange="updateEpisodeUrl('${episodeId}', this.value)">
                     <button type="button" class="episode-btn remove" onclick="removeEpisode('${seasonId}', '${episodeId}')">
                         <i class="fas fa-trash"></i>
                     </button>
@@ -3475,9 +3470,10 @@
             const trending = document.getElementById('video-trending').checked;
             const videoUrl = document.getElementById('video-url').value;
             const thumbnail = document.getElementById('video-thumbnail').value || `https://picsum.photos/seed/${Math.random().toString(36).substring(7)}/300/450.jpg`;
+            const carouselThumbnail = document.getElementById('video-carousel-thumbnail').value;
             
-            // Validate URL format - only for movies
-            if (type === 'movie' && !isValidVideoUrl(videoUrl)) {
+            // Validate URL format
+            if (!isValidVideoUrl(videoUrl)) {
                 showNotification('Please enter a valid YouTube embed or Google Drive preview URL', 'warning');
                 return;
             }
@@ -3497,6 +3493,7 @@
                     trending,
                     videoUrl,
                     imgUrl: thumbnail,
+                    carouselCover: carouselThumbnail || thumbnail, // Use carousel thumbnail if provided, otherwise use regular thumbnail
                     createdAt: firebase.firestore.FieldValue.serverTimestamp(),
                     uploadedBy: 'anonymous' // Use 'anonymous' instead of user ID
                 };
@@ -3872,8 +3869,11 @@
                 // Format tags for display
                 const tagsDisplay = item.tags ? item.tags.join(" • ") : "";
                 
+                // Use carouselCover if available, otherwise fall back to imgUrl
+                const carouselImage = item.carouselCover || item.imgUrl;
+                
                 slide.innerHTML = `
-                    <img src="${item.carouselCover || item.imgUrl}" alt="${item.title}">
+                    <img src="${carouselImage}" alt="${item.title}">
                     <div class="overlay"></div>
                     <div class="video-title">${item.title}</div>
                     <div class="video-info">${item.type || 'Movie'} | ${item.year || '2025'} | ${tagsDisplay}</div>
