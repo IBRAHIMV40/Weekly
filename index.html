@@ -3303,9 +3303,12 @@
         const toggleSeriesFields = () => {
             const videoType = document.getElementById('video-type').value;
             const seriesFields = document.getElementById('series-fields');
+            const videoUrlInput = document.getElementById('video-url');
             
             if (videoType === 'series' || videoType === 'anime') {
                 seriesFields.style.display = 'block';
+                videoUrlInput.removeAttribute('required');
+                videoUrlInput.placeholder = "Optional: Trailer URL";
                 
                 // Add at least one season if none exist
                 if (seasons.length === 0) {
@@ -3313,6 +3316,13 @@
                 }
             } else {
                 seriesFields.style.display = 'none';
+                videoUrlInput.setAttribute('required', '');
+                videoUrlInput.placeholder = "https://www.youtube.com/embed/VIDEO_ID or https://drive.google.com/file/d/FILE_ID/preview";
+                
+                // Clear seasons data when switching to movie
+                seasons = [];
+                seasonCounter = 0;
+                document.getElementById('seasons-list').innerHTML = '';
             }
         };
         
@@ -3389,11 +3399,11 @@
                 <div class="episode-info">
                     <div class="episode-number">Episode ${episodeNumber}</div>
                     <div class="episode-title">
-                        <input type="text" placeholder="Episode title" value="${episodeData.title}" onchange="updateEpisodeTitle('${episodeId}', this.value)">
+                        <input type="text" placeholder="Episode title" value="${episodeData.title}" onchange="updateEpisodeTitle('${episodeId}', this.value)" required>
                     </div>
                 </div>
                 <div class="episode-actions">
-                    <input type="url" placeholder="Episode URL" style="width: 200px; padding: 5px; margin-right: 10px;" onchange="updateEpisodeUrl('${episodeId}', this.value)">
+                    <input type="url" placeholder="Episode URL" style="width: 200px; padding: 5px; margin-right: 10px;" onchange="updateEpisodeUrl('${episodeId}', this.value)" required>
                     <button type="button" class="episode-btn remove" onclick="removeEpisode('${seasonId}', '${episodeId}')">
                         <i class="fas fa-trash"></i>
                     </button>
@@ -3466,8 +3476,8 @@
             const videoUrl = document.getElementById('video-url').value;
             const thumbnail = document.getElementById('video-thumbnail').value || `https://picsum.photos/seed/${Math.random().toString(36).substring(7)}/300/450.jpg`;
             
-            // Validate URL format
-            if (!isValidVideoUrl(videoUrl)) {
+            // Validate URL format - only for movies
+            if (type === 'movie' && !isValidVideoUrl(videoUrl)) {
                 showNotification('Please enter a valid YouTube embed or Google Drive preview URL', 'warning');
                 return;
             }
