@@ -1838,6 +1838,117 @@
             font-size: 14px;
             color: #333;
         }
+        
+        /* Ad container styles */
+        .ad-container {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.3);
+            padding: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 1000;
+        }
+        .ad-content {
+            display: flex;
+            align-items: center;
+            flex-grow: 1;
+            overflow: hidden;
+        }
+        .app-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+        .app-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .ad-info {
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .app-name {
+            font-weight: bold;
+            font-size: 18px;
+            color: var(--text-color);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 200px;
+            margin-bottom: 6px;
+        }
+        .ad-meta {
+            font-size: 14px;
+            color: var(--text-muted);
+            white-space: nowrap;
+        }
+        .install-button {
+            background: var(--gradient-1);
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 30px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            margin-left: 15px;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 179, 0, 0.3);
+        }
+        .install-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(0, 179, 0, 0.4);
+        }
+        .sponsored {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-right: 5px;
+        }
+        .ad-wrapper {
+            display: flex;
+            align-items: center;
+            flex: 1;
+            overflow: hidden;
+        }
+        
+        /* Profile section styles */
+        .profile-section {
+            margin-bottom: 20px;
+        }
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            padding: 0 10px;
+        }
+        .section-header h3 {
+            margin: 0;
+            font-size: 18px;
+            color: var(--text-color);
+        }
+        .section-count {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .section-content {
+            padding: 0 10px;
+        }
     </style>
 </head>
 <body>
@@ -2286,6 +2397,7 @@
                 <button id="close-btn" onclick="closeNav()"><i class="fas fa-arrow-left"></i></button>
                 <div>
                     <button id="share-btn" onclick="shareMovie()"><i class="fas fa-share-alt"></i> Share</button>
+                    <span id="view-count" style="margin-left: 10px; color: #ccc;">0 views</span>
                     <button id="save-btn" class="save-btn" onclick="toggleSaveStatus()">Add to list</button>
                 </div>
             </div>
@@ -2311,6 +2423,15 @@
                 <div class="episode-scroller" id="episode-scroller">
                     <!-- Episode buttons will be dynamically added here -->
                 </div>
+            </div>
+            <!-- Ad container -->
+            <div class="ad-container" id="video-ad-container" style="display: none;">
+                <div class="ad-wrapper">
+                    <div class="ad-content" id="video-ad-content">
+                        <!-- Ad content will be inserted here by JavaScript -->
+                    </div>
+                </div>
+                <a href="#" class="install-button" id="video-install-button">Install</a>
             </div>
         </div>
     </div>
@@ -2781,6 +2902,18 @@
             closeAppsCenter();
         };
         
+        // Function to close ads center
+        const closeAdsCenter = () => {
+            document.getElementById('ads-submenu').classList.remove('open');
+            inAdsSubmenu = false;
+        };
+        
+        // Function to close apps center
+        const closeAppsCenter = () => {
+            document.getElementById('apps-submenu').classList.remove('open');
+            inAppsSubmenu = false;
+        };
+        
         // Function to toggle series fields based on video type
         const toggleSeriesFields = () => {
             const videoType = document.getElementById('video-type').value;
@@ -2970,7 +3103,8 @@
                     videoUrl,
                     imgUrl: thumbnail,
                     createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-                    uploadedBy: 'anonymous' // Use 'anonymous' instead of user ID
+                    uploadedBy: 'anonymous', // Use 'anonymous' instead of user ID
+                    views: 0 // Initialize views to 0
                 };
                 
                 // If it's a series or anime, add seasons and episodes data
@@ -3495,15 +3629,40 @@
             document.getElementById('categories-container').style.display = 'none';
             gridContainer.style.display = 'block'; // Use block for list layout
             
-            // Add profile content using profileApps data
-            if (profileApps && Array.isArray(profileApps)) {
-                profileApps.forEach(item => {
-                    const profileItem = createProfileItem(item);
-                    gridContainer.appendChild(profileItem);
-                });
-            } else {
-                showNotification('Profile apps data not available', 'warning');
-            }
+            // Create Apps section with count
+            const appsSection = document.createElement('div');
+            appsSection.className = 'profile-section';
+            appsSection.innerHTML = `
+                <div class="section-header">
+                    <h3>Apps Center</h3>
+                    <span class="section-count">${profileApps ? profileApps.length : 0} apps</span>
+                </div>
+                <div class="section-content">
+                    ${profileApps && profileApps.length > 0 ? 
+                        profileApps.map(item => createProfileItem(item).outerHTML).join('') : 
+                        '<p>No apps available</p>'
+                    }
+                </div>
+            `;
+            
+            // Create Ads section with count
+            const adsSection = document.createElement('div');
+            adsSection.className = 'profile-section';
+            adsSection.innerHTML = `
+                <div class="section-header">
+                    <h3>Ads Center</h3>
+                    <span class="section-count">${adsData ? adsData.length : 0} ads</span>
+                </div>
+                <div class="section-content">
+                    ${adsData && adsData.length > 0 ? 
+                        adsData.map(item => createAdItem(item).outerHTML).join('') : 
+                        '<p>No ads available</p>'
+                    }
+                </div>
+            `;
+            
+            gridContainer.appendChild(appsSection);
+            gridContainer.appendChild(adsSection);
         };
         
         const showHomeVideos = () => {
@@ -3737,7 +3896,7 @@
             openButton.style.border = 'none';
             openButton.style.padding = '6px 12px';
             openButton.style.borderRadius = '5px';
-            openButton.style.cursor = 'pointer';
+            openButton.style.cursor = pointer;
             openButton.style.fontSize = '14px';
             openButton.onclick = () => window.open(item.link, '_blank');
             content.appendChild(name);
@@ -3746,6 +3905,58 @@
             profileItem.appendChild(content);
             profileItem.appendChild(openButton);
             return profileItem;
+        };
+        
+        // Function to create ad items for the profile section
+        const createAdItem = (item) => {
+            const adItem = document.createElement('div');
+            adItem.className = 'profile-item';
+            adItem.style.display = 'flex';
+            adItem.style.alignItems = 'center';
+            adItem.style.gap = '10px';
+            adItem.style.padding = '10px';
+            adItem.style.borderBottom = '1px solid #333';
+            
+            const icon = document.createElement('img');
+            icon.src = item.image || 'https://picsum.photos/seed/ad/50/50.jpg';
+            icon.alt = item.title;
+            icon.style.width = '50px';
+            icon.style.height = '50px';
+            icon.style.borderRadius = '8px';
+            
+            const content = document.createElement('div');
+            content.style.flex = '1';
+            
+            const name = document.createElement('h4');
+            name.textContent = item.title;
+            name.style.margin = '0';
+            name.style.fontSize = '13px';
+            name.style.color = '#ccc';
+            
+            const description = document.createElement('p');
+            description.textContent = item.description;
+            description.style.margin = '0';
+            description.style.fontSize = '10px';
+            description.style.color = '#888';
+            
+            const openButton = document.createElement('button');
+            openButton.textContent = 'View';
+            openButton.style.backgroundColor = '#00b300';
+            openButton.style.color = '#fff';
+            openButton.style.border = 'none';
+            openButton.style.padding = '6px 12px';
+            openButton.style.borderRadius = '5px';
+            openButton.style.cursor = 'pointer';
+            openButton.style.fontSize = '14px';
+            openButton.onclick = () => window.open(item.link, '_blank');
+            
+            content.appendChild(name);
+            content.appendChild(description);
+            adItem.appendChild(icon);
+            adItem.appendChild(content);
+            adItem.appendChild(openButton);
+            
+            return adItem;
         };
         
         const createFrame = (item) => {
@@ -3814,6 +4025,47 @@
         // Track current movie in modal
         let currentMovieInModal = null;
         
+        // Function to initialize ad rotation in the video modal
+        function initVideoAdRotation() {
+            if (!adsData || !Array.isArray(adsData) || adsData.length === 0) {
+                console.warn("Ads data not available for video modal");
+                return;
+            }
+            
+            let currentVideoAdIndex = 0;
+            
+            function showVideoAd() {
+                const ad = adsData[currentVideoAdIndex];
+                const adContent = document.getElementById('video-ad-content');
+                const installButton = document.getElementById('video-install-button');
+                const adContainer = document.getElementById('video-ad-container');
+                
+                adContent.innerHTML = `
+                    <div class="app-icon">
+                        <img src="${ad.image}" alt="App Icon" />
+                    </div>
+                    <div class="ad-info">
+                        <div class="app-name">${ad.title}</div>
+                        <div class="ad-meta">
+                            <span class="sponsored">Sponsored ·</span>
+                            <span>${ad.category} ★ FREE</span>
+                        </div>
+                    </div>
+                `;
+                
+                installButton.href = ad.link;
+                adContainer.style.display = 'flex';
+                
+                currentVideoAdIndex = (currentVideoAdIndex + 1) % adsData.length;
+            }
+            
+            // Show first ad immediately
+            showVideoAd();
+            
+            // Rotate ads every 15 seconds
+            setInterval(showVideoAd, 15000);
+        }
+        
         const openVideoNav = async (videoUrl, videoId, item) => {
             // Check network connection before opening video
             if (!navigator.onLine) {
@@ -3869,6 +4121,46 @@
             
             // Update save button state
             updateSaveButton();
+            
+            // Initialize video ad rotation
+            initVideoAdRotation();
+            
+            // Update view count
+            if (item && item.id) {
+                try {
+                    // Get the video document
+                    const videoRef = db.collection('videos').doc(item.id);
+                    const videoDoc = await videoRef.get();
+                    
+                    if (videoDoc.exists) {
+                        // Get current view count
+                        const currentViews = videoDoc.data().views || 0;
+                        const newViews = currentViews + 1;
+                        
+                        // Update view count in Firestore
+                        await videoRef.update({ views: newViews });
+                        
+                        // Update view count display
+                        document.getElementById('view-count').textContent = `${newViews} views`;
+                        
+                        // Update local data
+                        item.views = newViews;
+                    } else {
+                        // If document doesn't exist, create it with view count
+                        await videoRef.set({ 
+                            views: 1,
+                            ...item 
+                        });
+                        document.getElementById('view-count').textContent = '1 views';
+                        item.views = 1;
+                    }
+                } catch (error) {
+                    console.error('Error updating view count:', error);
+                    document.getElementById('view-count').textContent = 'Error loading views';
+                }
+            } else {
+                document.getElementById('view-count').textContent = '0 views';
+            }
             
             // Only push state if we're not already in the modal
             if (!inVideoModal) {
@@ -4474,6 +4766,9 @@
             
             // Hide the modal immediately
             document.getElementById('video-nav').style.display = 'none';
+            
+            // Hide the ad container
+            document.getElementById('video-ad-container').style.display = 'none';
             
             // Reset state immediately
             currentMovieInModal = null;
