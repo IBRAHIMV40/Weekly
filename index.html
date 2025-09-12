@@ -4030,11 +4030,8 @@
                     <h3 class="view-section-title">Apps Center</h3>
                     <span class="view-section-count">${profileApps ? profileApps.length : 0} apps</span>
                 </div>
-                <div class="view-section-content">
-                    ${profileApps && profileApps.length > 0 ? 
-                        profileApps.map(item => createProfileItem(item)).join('') : 
-                        '<p>No apps available</p>'
-                    }
+                <div class="view-section-content" id="apps-section-content">
+                    <!-- Apps will be added here -->
                 </div>
             `;
             
@@ -4046,16 +4043,35 @@
                     <h3 class="view-section-title">Ads Center</h3>
                     <span class="view-section-count">${adsData ? adsData.length : 0} ads</span>
                 </div>
-                <div class="view-section-content">
-                    ${adsData && adsData.length > 0 ? 
-                        adsData.map(item => createProfileAdItem(item)).join('') : 
-                        '<p>No ads available</p>'
-                    }
+                <div class="view-section-content" id="ads-section-content">
+                    <!-- Ads will be added here -->
                 </div>
             `;
             
             gridContainer.appendChild(appsSection);
             gridContainer.appendChild(adsSection);
+            
+            // Add apps to the apps section
+            const appsContent = document.getElementById('apps-section-content');
+            if (profileApps && profileApps.length > 0) {
+                profileApps.forEach(item => {
+                    const appItem = createProfileItem(item);
+                    appsContent.appendChild(appItem);
+                });
+            } else {
+                appsContent.innerHTML = '<p>No apps available</p>';
+            }
+            
+            // Add ads to the ads section
+            const adsContent = document.getElementById('ads-section-content');
+            if (adsData && adsData.length > 0) {
+                adsData.forEach(item => {
+                    const adItem = createProfileAdItem(item);
+                    adsContent.appendChild(adItem);
+                });
+            } else {
+                adsContent.innerHTML = '<p>No ads available</p>';
+            }
         };
         
         const showHomeVideos = () => {
@@ -4264,24 +4280,29 @@
             profileItem.style.gap = '10px';
             profileItem.style.padding = '10px';
             profileItem.style.borderBottom = '1px solid #333';
+            
             const icon = document.createElement('img');
             icon.src = item.icon || 'https://picsum.photos/seed/app/50/50.jpg';
             icon.alt = item.name;
             icon.style.width = '50px';
             icon.style.height = '50px';
             icon.style.borderRadius = '8px';
+            
             const content = document.createElement('div');
             content.style.flex = '1';
+            
             const name = document.createElement('h4');
             name.textContent = item.name;
             name.style.margin = '0';
             name.style.fontSize = '13px';
             name.style.color = '#ccc';
+            
             const description = document.createElement('p');
             description.textContent = item.description;
             description.style.margin = '0';
             description.style.fontSize = '10px';
             description.style.color = '#888';
+            
             const openButton = document.createElement('button');
             openButton.textContent = 'Install';
             openButton.style.backgroundColor = '#00b300';
@@ -4291,6 +4312,7 @@
             openButton.style.borderRadius = '5px';
             openButton.style.cursor = 'pointer';
             openButton.style.fontSize = '14px';
+            
             openButton.onclick = async () => {
                 try {
                     // Get the app document
@@ -4330,11 +4352,13 @@
                     window.open(item.link, '_blank');
                 }
             };
+            
             content.appendChild(name);
             content.appendChild(description);
             profileItem.appendChild(icon);
             profileItem.appendChild(content);
             profileItem.appendChild(openButton);
+            
             return profileItem;
         };
         
@@ -4346,24 +4370,29 @@
             profileItem.style.gap = '10px';
             profileItem.style.padding = '10px';
             profileItem.style.borderBottom = '1px solid #333';
+            
             const icon = document.createElement('img');
             icon.src = item.image || 'https://picsum.photos/seed/ad/50/50.jpg';
             icon.alt = item.title;
             icon.style.width = '50px';
             icon.style.height = '50px';
             icon.style.borderRadius = '8px';
+            
             const content = document.createElement('div');
             content.style.flex = '1';
+            
             const name = document.createElement('h4');
             name.textContent = item.title;
             name.style.margin = '0';
             name.style.fontSize = '13px';
             name.style.color = '#ccc';
+            
             const description = document.createElement('p');
             description.textContent = item.description;
             description.style.margin = '0';
             description.style.fontSize = '10px';
             description.style.color = '#888';
+            
             const openButton = document.createElement('button');
             openButton.textContent = 'Install';
             openButton.style.backgroundColor = '#00b300';
@@ -4373,6 +4402,7 @@
             openButton.style.borderRadius = '5px';
             openButton.style.cursor = 'pointer';
             openButton.style.fontSize = '14px';
+            
             openButton.onclick = async () => {
                 try {
                     // Get the ad document
@@ -4412,11 +4442,13 @@
                     window.open(item.link, '_blank');
                 }
             };
+            
             content.appendChild(name);
             content.appendChild(description);
             profileItem.appendChild(icon);
             profileItem.appendChild(content);
             profileItem.appendChild(openButton);
+            
             return profileItem;
         };
         
