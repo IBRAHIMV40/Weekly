@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Movie Nest</title>
+    <title>Arewatv</title>
     <!-- Add Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <!-- Firebase SDK -->
@@ -2031,135 +2031,6 @@
         .view-item-views:hover {
             background-color: #009900;
         }
-        
-        /* Statistics Modal Styles */
-        .statistics-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            z-index: 3000;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-        .statistics-modal.open {
-            display: flex;
-        }
-        .statistics-content {
-            background-color: #fff;
-            width: 100%;
-            max-width: 400px;
-            border-radius: 12px;
-            padding: 20px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-            overflow: hidden;
-        }
-        .statistics-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid #eee;
-        }
-        .statistics-header h3 {
-            font-size: 20px;
-            margin: 0;
-            color: #333;
-        }
-        .statistics-header button {
-            background: none;
-            border: none;
-            color: #777;
-            font-size: 18px;
-            cursor: pointer;
-            padding: 5px;
-            border-radius: 50%;
-            transition: all 0.3s ease;
-        }
-        .statistics-header button:hover {
-            background-color: #f0f0f0;
-            color: #333;
-        }
-        .statistics-body {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-        .stat-item {
-            display: flex;
-            align-items: center;
-            padding: 15px;
-            background-color: #f9f9f9;
-            border-radius: 10px;
-            transition: all 0.3s ease;
-        }
-        .stat-item:hover {
-            background-color: #f0f0f0;
-            transform: translateY(-2px);
-        }
-        .stat-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: linear-gradient(to right, #004d00, #00b300);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-right: 15px;
-            flex-shrink: 0;
-        }
-        .stat-icon i {
-            color: white;
-            font-size: 18px;
-        }
-        .stat-info {
-            flex: 1;
-        }
-        .stat-label {
-            font-size: 14px;
-            color: #777;
-            margin-bottom: 5px;
-        }
-        .stat-value {
-            font-size: 20px;
-            font-weight: bold;
-            color: #333;
-        }
-        .statistics-footer {
-            display: flex;
-            justify-content: center;
-            padding-top: 15px;
-            border-top: 1px solid #eee;
-        }
-        .refresh-btn {
-            background: linear-gradient(to right, #004d00, #00b300);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 30px;
-            cursor: pointer;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.3s ease;
-        }
-        .refresh-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 179, 0, 0.3);
-        }
-        .refresh-btn i {
-            transition: transform 0.5s ease;
-        }
-        .refresh-btn:hover i {
-            transform: rotate(180deg);
-        }
     </style>
 </head>
 <body>
@@ -2284,10 +2155,6 @@
                 <img src="https://cdn-icons-png.flaticon.com/128/2767/2767325.png" alt="View Ads">
                 <span>View Ads</span>
             </div>
-            <div class="sidebar-item" onclick="showStatistics()">
-                <img src="https://cdn-icons-png.flaticon.com/128/3405/3405247.png" alt="Statistics">
-                <span>Statistics</span>
-            </div>
             <div class="sidebar-item">
                 <img src="https://cdn-icons-png.flaticon.com/128/18392/18392966.png" alt="Online Service">
                 <span>Online Service</span>
@@ -2323,59 +2190,6 @@
         </div>
     </div>
     
-    <!-- Statistics Modal -->
-    <div class="statistics-modal" id="statistics-modal">
-        <div class="statistics-content">
-            <div class="statistics-header">
-                <h3>App Statistics</h3>
-                <button onclick="closeStatisticsModal()">✖</button>
-            </div>
-            <div class="statistics-body">
-                <div class="stat-item">
-                    <div class="stat-icon">
-                        <i class="fas fa-eye"></i>
-                    </div>
-                    <div class="stat-info">
-                        <div class="stat-label">Total Viewers</div>
-                        <div class="stat-value" id="stat-total-viewers">0</div>
-                    </div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-icon">
-                        <i class="fas fa-share-alt"></i>
-                    </div>
-                    <div class="stat-info">
-                        <div class="stat-label">Total Sharings</div>
-                        <div class="stat-value" id="stat-total-sharings">0</div>
-                    </div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-icon">
-                        <i class="fas fa-users"></i>
-                    </div>
-                    <div class="stat-info">
-                        <div class="stat-label">Daily Users</div>
-                        <div class="stat-value" id="stat-daily-users">0</div>
-                    </div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-icon">
-                        <i class="fas fa-user-check"></i>
-                    </div>
-                    <div class="stat-info">
-                        <div class="stat-label">Online Viewers</div>
-                        <div class="stat-value" id="stat-online-viewers">0</div>
-                    </div>
-                </div>
-            </div>
-            <div class="statistics-footer">
-                <button class="refresh-btn" onclick="refreshStatistics()">
-                    <i class="fas fa-sync-alt"></i> Refresh
-                </button>
-            </div>
-        </div>
-    </div>
-    
     <!-- Upload Modal -->
     <div class="upload-modal" id="upload-modal">
         <div class="upload-content">
@@ -2403,7 +2217,7 @@
                 <div class="form-group">
                     <label for="video-category">Category</label>
                     <select id="video-category" required>
-                        <option value="Hollywood">Hollywood</option>
+                        <option value="Algaita Dub-Studio">Algaita Dub-Studio</option>
                         <option value="Nollywood">Nollywood</option>
                         <option value="Bollywood">Bollywood</option>
                         <option value="Kannywood">Kannywood</option>
@@ -2653,7 +2467,7 @@
             <div class="categories-title">Categories</div>
             <div class="categories-scroll" id="categories-scroll">
                 <div class="category-btn active" data-category="All">All</div>
-                <div class="category-btn" data-category="Hollywood">Hollywood</div>
+                <div class="category-btn" data-category="Algaita Dub-Studio">Algaita Dub-Studio</div>
                 <div class="category-btn" data-category="Nollywood">Nollywood</div>
                 <div class="category-btn" data-category="Bollywood">Bollywood</div>
                 <div class="category-btn" data-category="Kannywood">Kannywood</div>
@@ -2774,12 +2588,12 @@
     <script>
         // Initialize Firebase with your configuration
         const firebaseConfig = {
-            apiKey: "AIzaSyA9JK8BX2pAXpmW_d6GpXRZjFpTLkso1KI",
-            authDomain: "movie-nest-77e6b.firebaseapp.com",
-            projectId: "movie-nest-77e6b",
-            storageBucket: "movie-nest-77e6b.firebasestorage.app",
-            messagingSenderId: "513317696448",
-            appId: "1:513317696448:web:c70c566151226ef55bce25"
+            apiKey: "AIzaSyARFUQJo32JwHMzPmlgz-1pOOINzkdZTH8",
+            authDomain: "arewatv-d151b.firebaseapp.com",
+            projectId: "arewatv-d151b",
+            storageBucket: "arewatv-d151b.firebasestorage.app",
+            messagingSenderId: "1051914778796",
+            appId: "1:1051914778796:web:173a5e42dc3dc4da1a0709"
         };
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
@@ -2852,7 +2666,7 @@
                 description: "A sample movie for testing",
                 imgUrl: "https://picsum.photos/seed/movie1/300/450.jpg",
                 videoUrl: "https://www.youtube.com/embed/MN4hHqWWpwU",
-                category: "Hollywood",
+                category: "Algaita Dub-Studio",
                 genre: "Action",
                 year: 2023,
                 type: "Movie"
@@ -2927,9 +2741,6 @@
         
         // Track if we're currently in the apps submenu
         let inAppsSubmenu = false;
-        
-        // Track if we're currently in the statistics modal
-        let inStatisticsModal = false;
         
         // Track current grid data for filtering
         let currentGridData = [];
@@ -3519,6 +3330,410 @@
             }
         };
         
+        // Function to toggle series fields based on video type
+        const toggleSeriesFields = () => {
+            const videoType = document.getElementById('video-type').value;
+            const seriesFields = document.getElementById('series-fields');
+            
+            if (videoType === 'series' || videoType === 'anime') {
+                seriesFields.style.display = 'block';
+                
+                // Add at least one season if none exist
+                if (seasons.length === 0) {
+                    addSeason();
+                }
+            } else {
+                seriesFields.style.display = 'none';
+            }
+        };
+        
+        // Function to add a new season
+        const addSeason = () => {
+            seasonCounter++;
+            const seasonId = `season-${seasonCounter}`;
+            
+            const seasonData = {
+                id: seasonId,
+                seasonNumber: seasonCounter,
+                episodes: []
+            };
+            
+            seasons.push(seasonData);
+            
+            const seasonElement = document.createElement('div');
+            seasonElement.className = 'seasons-container';
+            seasonElement.id = seasonId;
+            seasonElement.innerHTML = `
+                <div class="season-header">
+                    <div class="season-title">Season ${seasonCounter}</div>
+                    <div class="season-actions">
+                        <button type="button" class="season-btn" onclick="addEpisode('${seasonId}')">Add Episode</button>
+                        <button type="button" class="season-btn remove" onclick="removeSeason('${seasonId}')">Remove</button>
+                    </div>
+                </div>
+                <div class="episodes-container" id="${seasonId}-episodes">
+                    <!-- Episodes will be added here dynamically -->
+                </div>
+            `;
+            
+            document.getElementById('seasons-list').appendChild(seasonElement);
+            
+            // Add at least one episode to the new season
+            addEpisode(seasonId);
+        };
+        
+        // Function to remove a season
+        const removeSeason = (seasonId) => {
+            // Remove from data array
+            seasons = seasons.filter(season => season.id !== seasonId);
+            
+            // Remove from DOM
+            document.getElementById(seasonId).remove();
+            
+            // If no seasons left, reset counter
+            if (seasons.length === 0) {
+                seasonCounter = 0;
+            }
+        };
+        
+        // Function to add a new episode to a season
+        const addEpisode = (seasonId) => {
+            const season = seasons.find(s => s.id === seasonId);
+            if (!season) return;
+            
+            const episodeNumber = season.episodes.length + 1;
+            const episodeId = `${seasonId}-episode-${episodeNumber}`;
+            
+            const episodeData = {
+                id: episodeId,
+                number: episodeNumber,
+                title: `Episode ${episodeNumber}`,
+                url: ''
+            };
+            
+            season.episodes.push(episodeData);
+            
+            const episodeElement = document.createElement('div');
+            episodeElement.className = 'episode-item';
+            episodeElement.id = episodeId;
+            episodeElement.innerHTML = `
+                <div class="episode-info">
+                    <div class="episode-number">Episode ${episodeNumber}</div>
+                    <div class="episode-title">
+                        <input type="text" placeholder="Episode title" value="${episodeData.title}" onchange="updateEpisodeTitle('${episodeId}', this.value)">
+                    </div>
+                </div>
+                <div class="episode-actions">
+                    <input type="url" placeholder="Episode URL" style="width: 200px; padding: 5px; margin-right: 10px;" onchange="updateEpisodeUrl('${episodeId}', this.value)">
+                    <button type="button" class="episode-btn remove" onclick="removeEpisode('${seasonId}', '${episodeId}')">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            `;
+            
+            document.getElementById(`${seasonId}-episodes`).appendChild(episodeElement);
+        };
+        
+        // Function to remove an episode
+        const removeEpisode = (seasonId, episodeId) => {
+            const season = seasons.find(s => s.id === seasonId);
+            if (!season) return;
+            
+            // Remove from data array
+            season.episodes = season.episodes.filter(episode => episode.id !== episodeId);
+            
+            // Remove from DOM
+            document.getElementById(episodeId).remove();
+            
+            // Renumber remaining episodes
+            season.episodes.forEach((episode, index) => {
+                episode.number = index + 1;
+                episode.title = episode.title.replace(/Episode \d+/, `Episode ${index + 1}`);
+                
+                // Update DOM
+                const episodeElement = document.getElementById(episode.id);
+                if (episodeElement) {
+                    episodeElement.querySelector('.episode-number').textContent = `Episode ${index + 1}`;
+                    episodeElement.querySelector('.episode-title input').value = episode.title;
+                }
+            });
+        };
+        
+        // Function to update episode title
+        const updateEpisodeTitle = (episodeId, title) => {
+            for (const season of seasons) {
+                const episode = season.episodes.find(e => e.id === episodeId);
+                if (episode) {
+                    episode.title = title;
+                    break;
+                }
+            }
+        };
+        
+        // Function to update episode URL
+        const updateEpisodeUrl = (episodeId, url) => {
+            for (const season of seasons) {
+                const episode = season.episodes.find(e => e.id === episodeId);
+                if (episode) {
+                    episode.url = url;
+                    break;
+                }
+            }
+        };
+        
+        // Handle form submission for video upload - Enhanced for series
+        document.getElementById('upload-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const title = document.getElementById('video-title').value;
+            const description = document.getElementById('video-description').value;
+            const type = document.getElementById('video-type').value;
+            const category = document.getElementById('video-category').value;
+            const genre = document.getElementById('video-genre').value;
+            const country = document.getElementById('video-country').value;
+            const year = document.getElementById('video-year').value;
+            const trending = document.getElementById('video-trending').checked;
+            const videoUrl = document.getElementById('video-url').value;
+            const downloadUrl = document.getElementById('video-download-url').value;
+            const thumbnail = document.getElementById('video-thumbnail').value || `https://picsum.photos/seed/${Math.random().toString(36).substring(7)}/300/450.jpg`;
+            const carouselThumbnail = document.getElementById('video-carousel-thumbnail').value;
+            
+            // Validate URL format
+            if (!isValidVideoUrl(videoUrl)) {
+                showNotification('Please enter a valid YouTube embed or Google Drive preview URL', 'warning');
+                return;
+            }
+            
+            // If it's a Google Drive video, download URL is required
+            if (videoUrl.includes('drive.google.com') && !downloadUrl) {
+                showNotification('Please provide a download URL for Google Drive videos', 'warning');
+                return;
+            }
+            
+            try {
+                showLoading();
+                
+                // Create video object
+                const videoData = {
+                    title,
+                    description,
+                    type,
+                    category,
+                    genre,
+                    country,
+                    year: parseInt(year),
+                    trending,
+                    videoUrl,
+                    downloadUrl: downloadUrl || null,
+                    imgUrl: thumbnail,
+                    carouselCover: carouselThumbnail || thumbnail, // Use carousel thumbnail if provided, otherwise use regular thumbnail
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    uploadedBy: 'anonymous' // Use 'anonymous' instead of user ID
+                };
+                
+                // If it's a series or anime, add seasons and episodes data
+                if ((type === 'series' || type === 'anime') && seasons.length > 0) {
+                    videoData.isSeries = true;
+                    videoData.seasons = seasons.map(season => ({
+                        seasonNumber: season.seasonNumber,
+                        episodes: season.episodes.map(episode => ({
+                            number: episode.number,
+                            title: episode.title,
+                            url: episode.url
+                        }))
+                    }));
+                    
+                    // Validate that all episodes have URLs
+                    let allEpisodesHaveUrls = true;
+                    for (const season of videoData.seasons) {
+                        for (const episode of season.episodes) {
+                            if (!episode.url || !isValidVideoUrl(episode.url)) {
+                                allEpisodesHaveUrls = false;
+                                break;
+                            }
+                        }
+                        if (!allEpisodesHaveUrls) break;
+                    }
+                    
+                    if (!allEpisodesHaveUrls) {
+                        showNotification('Please provide valid URLs for all episodes', 'warning');
+                        hideLoading();
+                        return;
+                    }
+                }
+                
+                // Add to Firestore
+                const docRef = await db.collection('videos').add(videoData);
+                
+                // Show success message
+                showNotification('Video uploaded successfully!', 'success');
+                
+                // Close modal
+                closeUploadModal();
+                
+                // Add the new video to the local data array
+                const newVideo = {
+                    id: docRef.id,
+                    ...videoData
+                };
+                data.unshift(newVideo);
+                
+                // Refresh the UI
+                createDiscoverSection();
+                createCategories();
+                
+            } catch (error) {
+                console.error('Error uploading video:', error);
+                showNotification('Error uploading video. Please try again.', 'warning');
+            } finally {
+                hideLoading();
+            }
+        });
+        
+        // Handle form submission for ad upload
+        document.getElementById('ad-upload-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const title = document.getElementById('ad-title').value;
+            const description = document.getElementById('ad-description').value;
+            const image = document.getElementById('ad-image').value;
+            const link = document.getElementById('ad-link').value;
+            const category = document.getElementById('ad-category').value;
+            
+            try {
+                showLoading();
+                
+                // Create ad object
+                const adData = {
+                    title,
+                    description,
+                    image,
+                    link,
+                    category,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    uploadedBy: 'anonymous'
+                };
+                
+                // Add to Firestore
+                const docRef = await db.collection('ads').add(adData);
+                
+                // Show success message
+                showNotification('Ad uploaded successfully!', 'success');
+                
+                // Close modal
+                closeAdUploadModal();
+                
+                // Refresh ads data
+                const newAd = {
+                    id: docRef.id,
+                    ...adData
+                };
+                if (!adsData) {
+                    adsData = [];
+                }
+                adsData.unshift(newAd);
+                
+                // Update ad display
+                updateAdDisplay();
+                
+            } catch (error) {
+                console.error('Error uploading ad:', error);
+                showNotification('Error uploading ad. Please try again.', 'warning');
+            } finally {
+                hideLoading();
+            }
+        });
+        
+        // Handle form submission for app upload
+        document.getElementById('app-upload-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const name = document.getElementById('app-name').value;
+            const description = document.getElementById('app-description').value;
+            const icon = document.getElementById('app-icon').value;
+            const link = document.getElementById('app-link').value;
+            const category = document.getElementById('app-category').value;
+            const rating = parseFloat(document.getElementById('app-rating').value);
+            
+            try {
+                showLoading();
+                
+                // Create app object
+                const appData = {
+                    name,
+                    description,
+                    icon,
+                    link,
+                    category,
+                    rating,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    uploadedBy: 'anonymous'
+                };
+                
+                // Add to Firestore
+                const docRef = await db.collection('apps').add(appData);
+                
+                // Show success message
+                showNotification('App uploaded successfully!', 'success');
+                
+                // Close modal
+                closeAppUploadModal();
+                
+                // Refresh apps data
+                const newApp = {
+                    id: docRef.id,
+                    ...appData
+                };
+                if (!profileApps) {
+                    profileApps = [];
+                }
+                profileApps.unshift(newApp);
+                
+                // Shuffle the profile apps array
+                profileApps = shuffleArray(profileApps);
+                
+                // Update app display
+                updateAppDisplay();
+                
+            } catch (error) {
+                console.error('Error uploading app:', error);
+                showNotification('Error uploading app. Please try again.', 'warning');
+            } finally {
+                hideLoading();
+            }
+        });
+        
+        // Function to update ad display
+        const updateAdDisplay = () => {
+            // Update notification bar ad
+            const notificationBar = document.getElementById('notification-bar');
+            if (adsData && adsData.length > 0) {
+                const ad = adsData[0];
+                notificationBar.querySelector('img').src = ad.image;
+                notificationBar.querySelector('.notification-text').textContent = ad.title;
+                notificationBar.querySelector('.notification-button').onclick = () => window.open(ad.link, '_blank');
+            }
+        };
+        
+        // Function to update app display
+        const updateAppDisplay = () => {
+            // Update profile section
+            if (inGridView && document.getElementById('grid-container').style.display === 'block') {
+                const gridContainer = document.getElementById('grid-container');
+                gridContainer.innerHTML = '';
+                
+                if (profileApps && Array.isArray(profileApps)) {
+                    profileApps.forEach(item => {
+                        const profileItem = createProfileItem(item);
+                        gridContainer.appendChild(profileItem);
+                    });
+                }
+            }
+        };
+        
         // Function to toggle the sidebar modal
         const toggleSidebarModal = () => {
             const sidebarModal = document.getElementById('sidebar-modal');
@@ -3620,7 +3835,6 @@
                 { logoUrl: "https://cdn-icons-png.flaticon.com/128/9592/9592247.png", name: "Ads Center", url: "#", isAds: true },
                 { logoUrl: "https://cdn-icons-png.flaticon.com/128/2767/2767325.png", name: "View Apps", url: "#", isViewApps: true },
                 { logoUrl: "https://cdn-icons-png.flaticon.com/128/2767/2767325.png", name: "View Ads", url: "#", isViewAds: true },
-                { logoUrl: "https://cdn-icons-png.flaticon.com/128/3405/3405247.png", name: "Statistics", url: "#", isStatistics: true },
                 { logoUrl: "https://cdn-icons-png.flaticon.com/128/18392/18392966.png", name: "Online Service", url: "#" },
                 { logoUrl: "https://cdn-icons-png.flaticon.com/128/2312/2312342.png", name: "Privacy Policy", url: "#" },
                 { logoUrl: "https://cdn-icons-png.flaticon.com/128/3405/3405247.png", name: "Settings", url: "#" },
@@ -3645,9 +3859,6 @@
                 } else if (item.isViewAds) {
                     // View Ads
                     sidebarItem.onclick = viewAds;
-                } else if (item.isStatistics) {
-                    // Statistics
-                    sidebarItem.onclick = showStatistics;
                 } else {
                     sidebarItem.onclick = () => window.open(item.url, '_blank');
                 }
@@ -4143,7 +4354,7 @@
             openButton.style.border = 'none';
             openButton.style.padding = '6px 12px';
             openButton.style.borderRadius = '5px';
-            openButton.style.cursor = pointer;
+            openButton.style.cursor = 'pointer';
             openButton.style.fontSize = '14px';
             
             openButton.onclick = async () => {
@@ -4233,7 +4444,7 @@
             openButton.style.border = 'none';
             openButton.style.padding = '6px 12px';
             openButton.style.borderRadius = '5px';
-            openButton.style.cursor = pointer;
+            openButton.style.cursor = 'pointer';
             openButton.style.fontSize = '14px';
             
             openButton.onclick = async () => {
@@ -5444,12 +5655,6 @@
                 }
             });
             
-            document.getElementById('statistics-modal').addEventListener('click', function(e) {
-                if (e.target === this) {
-                    closeStatisticsModal();
-                }
-            });
-            
             // Add keyboard event to close modal with Escape key
             document.addEventListener('keydown', function(e) {
                 if (e.key === 'Escape' && inUploadModal) {
@@ -5463,9 +5668,6 @@
                 }
                 if (e.key === 'Escape' && inPasswordModal) {
                     closePasswordModal();
-                }
-                if (e.key === 'Escape' && inStatisticsModal) {
-                    closeStatisticsModal();
                 }
             });
             
@@ -5525,11 +5727,6 @@
                 else if (inPasswordModal) {
                     document.getElementById('password-modal').classList.remove('open');
                     inPasswordModal = false;
-                }
-                // Handle statistics modal
-                else if (inStatisticsModal) {
-                    document.getElementById('statistics-modal').classList.remove('open');
-                    inStatisticsModal = false;
                 }
                 // Handle ads submenu
                 else if (inAdsSubmenu) {
@@ -5739,7 +5936,7 @@
             // Filter data by category
             const filteredData = data.filter(item => {
                 // Check if item matches the selected category
-                if (category === 'Hollywood') return item.category === 'Hollywood';
+                if (category === 'Algaita Dub-Studio') return item.category === 'Algaita Dub-Studio';
                 if (category === 'Nollywood') return item.category === 'Nollywood';
                 if (category === 'Bollywood') return item.category === 'Bollywood';
                 if (category === 'Kannywood') return item.category === 'Kannywood';
@@ -5952,254 +6149,6 @@
             } else {
                 closeModal();
             }
-        };
-        
-        // Function to show statistics modal
-        function showStatistics() {
-            const modal = document.getElementById('statistics-modal');
-            modal.classList.add('open');
-            inStatisticsModal = true;
-            
-            // Close sidebar
-            toggleSidebarModal();
-            
-            // Fetch statistics
-            fetchStatistics();
-        }
-        
-        // Function to close statistics modal
-        function closeStatisticsModal() {
-            const modal = document.getElementById('statistics-modal');
-            modal.classList.remove('open');
-            inStatisticsModal = false;
-        }
-        
-        // Function to fetch statistics from Firebase
-        async function fetchStatistics() {
-            try {
-                showLoading();
-                
-                // Get statistics document
-                const statsRef = db.collection('statistics').doc('global_stats');
-                const doc = await statsRef.get();
-                
-                if (doc.exists) {
-                    const stats = doc.data();
-                    
-                    // Update UI with statistics
-                    document.getElementById('stat-total-viewers').textContent = stats.totalViewers || 0;
-                    document.getElementById('stat-total-sharings').textContent = stats.totalSharings || 0;
-                    document.getElementById('stat-daily-users').textContent = stats.dailyUsers || 0;
-                    document.getElementById('stat-online-viewers').textContent = stats.onlineViewers || 0;
-                } else {
-                    // Initialize statistics document if it doesn't exist
-                    await statsRef.set({
-                        totalViewers: 0,
-                        totalSharings: 0,
-                        dailyUsers: 0,
-                        onlineViewers: 0,
-                        lastUpdated: firebase.firestore.FieldValue.serverTimestamp()
-                    });
-                    
-                    // Set initial values
-                    document.getElementById('stat-total-viewers').textContent = '0';
-                    document.getElementById('stat-total-sharings').textContent = '0';
-                    document.getElementById('stat-daily-users').textContent = '0';
-                    document.getElementById('stat-online-viewers').textContent = '0';
-                }
-                
-                hideLoading();
-            } catch (error) {
-                console.error('Error fetching statistics:', error);
-                hideLoading();
-                showNotification('Error loading statistics', 'error');
-            }
-        }
-        
-        // Function to refresh statistics
-        function refreshStatistics() {
-            fetchStatistics();
-            showNotification('Statistics refreshed', 'success');
-        }
-        
-        // Function to update statistics when a video is viewed
-        async function updateStatisticsOnView() {
-            try {
-                const statsRef = db.collection('statistics').doc('global_stats');
-                
-                // Update statistics using a transaction to ensure consistency
-                await db.runTransaction(async (transaction) => {
-                    const doc = await transaction.get(statsRef);
-                    
-                    if (!doc.exists) {
-                        // Initialize document if it doesn't exist
-                        transaction.set(statsRef, {
-                            totalViewers: 1,
-                            totalSharings: 0,
-                            dailyUsers: 1,
-                            onlineViewers: 1,
-                            lastUpdated: firebase.firestore.FieldValue.serverTimestamp()
-                        });
-                    } else {
-                        const data = doc.data();
-                        
-                        // Get today's date string
-                        const today = new Date().toISOString().split('T')[0];
-                        
-                        // Check if we already counted this user today
-                        const deviceId = getDeviceId();
-                        const lastViewDate = localStorage.getItem('lastViewDate');
-                        const isNewDay = lastViewDate !== today;
-                        
-                        // Update statistics
-                        const updates = {
-                            totalViewers: firebase.firestore.FieldValue.increment(1),
-                            onlineViewers: firebase.firestore.FieldValue.increment(1),
-                            lastUpdated: firebase.firestore.FieldValue.serverTimestamp()
-                        };
-                        
-                        // Only increment daily users if it's a new day or first view today
-                        if (isNewDay) {
-                            updates.dailyUsers = firebase.firestore.FieldValue.increment(1);
-                            localStorage.setItem('lastViewDate', today);
-                        }
-                        
-                        transaction.update(statsRef, updates);
-                    }
-                });
-            } catch (error) {
-                console.error('Error updating statistics on view:', error);
-            }
-        }
-        
-        // Function to update statistics when a video is shared
-        async function updateStatisticsOnShare() {
-            try {
-                const statsRef = db.collection('statistics').doc('global_stats');
-                
-                // Update total sharings
-                await statsRef.update({
-                    totalSharings: firebase.firestore.FieldValue.increment(1),
-                    lastUpdated: firebase.firestore.FieldValue.serverTimestamp()
-                });
-            } catch (error) {
-                console.error('Error updating statistics on share:', error);
-            }
-        }
-        
-        // Function to update online viewers count
-        async function updateOnlineViewers() {
-            try {
-                const statsRef = db.collection('statistics').doc('global_stats');
-                
-                // Get current statistics
-                const doc = await statsRef.get();
-                if (doc.exists) {
-                    const data = doc.data();
-                    const currentOnline = data.onlineViewers || 0;
-                    
-                    // Update online viewers count
-                    await statsRef.update({
-                        onlineViewers: currentOnline + 1,
-                        lastUpdated: firebase.firestore.FieldValue.serverTimestamp()
-                    });
-                }
-            } catch (error) {
-                console.error('Error updating online viewers:', error);
-            }
-        }
-        
-        // Function to decrement online viewers when user leaves
-        async function decrementOnlineViewers() {
-            try {
-                const statsRef = db.collection('statistics').doc('global_stats');
-                
-                // Get current statistics
-                const doc = await statsRef.get();
-                if (doc.exists) {
-                    const data = doc.data();
-                    const currentOnline = data.onlineViewers || 0;
-                    
-                    // Ensure online viewers doesn't go below 0
-                    const newOnline = Math.max(0, currentOnline - 1);
-                    
-                    // Update online viewers count
-                    await statsRef.update({
-                        onlineViewers: newOnline,
-                        lastUpdated: firebase.firestore.FieldValue.serverTimestamp()
-                    });
-                }
-            } catch (error) {
-                console.error('Error decrementing online viewers:', error);
-            }
-        }
-        
-        // Initialize online viewers tracking
-        function initializeOnlineViewersTracking() {
-            // Update online viewers when user comes online
-            updateOnlineViewers();
-            
-            // Set up beforeunload event to decrement online viewers
-            window.addEventListener('beforeunload', () => {
-                decrementOnlineViewers();
-            });
-            
-            // Set up visibility change event to track when user leaves/returns to tab
-            document.addEventListener('visibilitychange', () => {
-                if (document.visibilityState === 'visible') {
-                    updateOnlineViewers();
-                } else {
-                    decrementOnlineViewers();
-                }
-            });
-            
-            // Set up periodic heartbeat to ensure user is still online
-            setInterval(() => {
-                if (document.visibilityState === 'visible') {
-                    updateOnlineViewers();
-                }
-            }, 60000); // Every minute
-        }
-        
-        // Function to get device ID for tracking
-        function getDeviceId() {
-            let deviceId = localStorage.getItem('deviceId');
-            if (!deviceId) {
-                // Generate a unique device ID
-                deviceId = 'device_' + Math.random().toString(36).substr(2, 9);
-                localStorage.setItem('deviceId', deviceId);
-            }
-            return deviceId;
-        }
-        
-        // Add this to your window.onload event listener
-        window.addEventListener('load', () => {
-            // ... existing code ...
-            
-            // Initialize online viewers tracking
-            initializeOnlineViewersTracking();
-            
-            // ... existing code ...
-        });
-        
-        // Modify your openVideoNav function to include statistics update
-        const openVideoNav = async (videoUrl, videoId, item) => {
-            // ... existing code ...
-            
-            // Update statistics when a video is viewed
-            updateStatisticsOnView();
-            
-            // ... existing code ...
-        };
-        
-        // Modify your shareMovie function to include statistics update
-        const shareMovie = async () => {
-            // ... existing code ...
-            
-            // Update statistics when a video is shared
-            updateStatisticsOnShare();
-            
-            // ... existing code ...
         };
     </script>
 </body>
