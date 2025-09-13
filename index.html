@@ -304,7 +304,7 @@
         /* Categories Section - New section based on screenshot */
         .categories-section {
             margin-top: 15px;
-            padding: 0 15px;
+            padding: 0 8px;
         }
         .categories-title {
             font-size: 18px;
@@ -315,7 +315,7 @@
             display: flex;
             overflow-x: auto;
             gap: 8px;
-            padding-bottom: 10px;
+            padding-bottom: 12px;
         }
         .category-btn {
             flex: 0 0 auto;
@@ -324,7 +324,7 @@
             border: 1px solid var(--border-color);
             border-radius: 20px;
             color: var(--text-color);
-            font-size: 10px;
+            font-size: 13px;
             cursor: pointer;
             transition: all 0.3s ease;
         }
@@ -1029,21 +1029,21 @@
         /* Video quality selector - Changed to download button */
         .download-btn {
             position: absolute;
-            top: 10px;
-            right: 10px;
-            background-color: #00b300;
+            top: 5px;
+            right: 5px;
+            background: rgba(0,0,0,0.5);
             color: white;
             border: none;
             padding: 8px 12px;
-            border-radius: 4px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 12px;
+            font-size: 10px;
             z-index: 100;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            width: 80px;
+            width: 65px;
             height: 60px;
         }
         .download-btn i {
@@ -1054,7 +1054,7 @@
             font-size: 10px;
         }
         .download-btn:hover {
-            background-color: #009900;
+            background: rgba(0,0,0,0.5);
         }
         
         /* User profile section */
@@ -3912,7 +3912,7 @@
                     <div class="video-title">${item.title}</div>
                     <div class="video-info">${item.type || 'Movie'} | ${item.year || '2025'} | ${tagsDisplay}</div>
                     <button class="download-btn">
-                        <i class="fas fa-play"></i> Watch
+                        <i class="fas fa-download"></i> Download
                     </button>
                 `;
                 
