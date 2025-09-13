@@ -17,11 +17,11 @@
             --text-color: #ffffff;
             --card-bg: #2c2c2c;
             --border-color: #444;
-            --primary-color: #FFC107; /* Changed from green to logo yellow */
+            --primary-color: #00b300;
             --light-bg: #2c2c2c;
-            --gradient-3: linear-gradient(to right, #FF8F00, #FFC107); /* Changed to yellow gradient */
+            --gradient-3: linear-gradient(to right, #004d00, #00b300);
             --text-muted: #aaaaaa;
-            --gradient-1: linear-gradient(to right, #FF8F00, #FFC107); /* Changed to yellow gradient */
+            --gradient-1: linear-gradient(to right, #004d00, #00b300);
         }
         
         /* Hide all scrollbars globally */
@@ -106,7 +106,7 @@
             position: relative;
         }
         .history-icon:hover {
-            color: #FFC107; /* Changed to logo yellow */
+            color: #00b300;
         }
         /* Notification Badge */
         .notification-badge {
@@ -158,7 +158,7 @@
             cursor: pointer;
         }
         .history-modal-header button:hover {
-            color: #FFC107; /* Changed to logo yellow */
+            color: #007bff';
         }
         .history-list {
             max-height: 300px;
@@ -196,7 +196,7 @@
         }
         .clear-history-button {
             width: 100%;
-            background: linear-gradient(to right, #FF8F00, #FFC107); /* Changed to yellow gradient */
+            background: linear-gradient(to right, #004d00, #00b300);
             color: #fff;
             border: none;
             padding: 10px;
@@ -205,7 +205,7 @@
             margin-top: 10px;
         }
         .clear-history-button:hover {
-            background-color: #FFC107; /* Changed to logo yellow */
+            background-color: #00b300;
         }
         
         /* Carousel Styles - Updated to match screenshot */
@@ -266,7 +266,7 @@
             position: absolute;
             bottom: 15px;
             right: 15px;
-            background-color: #FFC107; /* Changed to logo yellow */
+            background-color: #00b300;
             color: white;
             font-size: 12px;
             padding: 8px 12px;
@@ -299,6 +299,42 @@
         }
         .dot.active {
             background-color: white;
+        }
+        
+        /* Categories Section - New section based on screenshot */
+        .categories-section {
+            margin-top: 15px;
+            padding: 0 15px;
+        }
+        .categories-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        .categories-scroll {
+            display: flex;
+            overflow-x: auto;
+            gap: 8px;
+            padding-bottom: 10px;
+        }
+        .category-btn {
+            flex: 0 0 auto;
+            padding: 8px 16px;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            color: var(--text-color);
+            font-size: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .category-btn.active {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        .category-btn:hover {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
         }
         
         /* Discover Section */
@@ -473,7 +509,7 @@
         }
         
         .filter-button:hover {
-            background-color: #FFA000; /* Darker yellow for hover */
+            background-color: #009900;
         }
         
         /* Navigation Modal Styles */
@@ -524,7 +560,7 @@
             color: #fff;
         }
         .save-btn {
-            background-color: #FFC107; /* Changed to logo yellow */
+            background-color: #00b300;
             color: white;
             border: none;
             padding: 5px 10px;
@@ -609,7 +645,7 @@
             border-color: white;
             transform: scale(1.1);
             color: white;
-            box-shadow: 0 0 20px rgba(255, 193, 7, 0.4); /* Changed to yellow glow */
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
         }
         .episode-btn .ep-num {
             font-size: 12px;
@@ -658,7 +694,7 @@
         
         .season-nav-btn:hover {
             transform: scale(1.1);
-            box-shadow: 0 0 20px rgba(255, 193, 7, 0.5); /* Changed to yellow glow */
+            box-shadow: 0 0 20px rgba(255, 77, 77, 0.5);
         }
         
         .season-nav-btn.prev-season {
@@ -738,7 +774,7 @@
             width: 30px;
             height: 30px;
             border-radius: 50%;
-            background: linear-gradient(to right, #FF8F00, #FFC107); /* Changed to yellow gradient */
+            background: linear-gradient(to right, #004d00, #00b300);
             color: white;
             font-size: 18px;
             cursor: pointer;
@@ -746,7 +782,7 @@
             transition: background-color 0.3s ease;
         }
         .social-icon:hover {
-            background-color: #FFA000; /* Darker yellow for hover */
+            background-color: #555;
         }
         .notification-bar {
             position: fixed;
@@ -755,7 +791,7 @@
             transform: translateX(-50%);
             width: 90%;
             max-width: 400px;
-            background: linear-gradient(to right, #FF8F00, #FFC107); /* Changed to yellow gradient */
+            background: linear-gradient(to right, #004d00, #00b300);
             color: white;
             padding: 10px;
             border-radius: 8px;
@@ -814,7 +850,7 @@
         }
         .sidebar-modal-header {
             display: flex;
-            background: linear-gradient(to right, #FF8F00, #FFC107); /* Changed to yellow gradient */
+            background: linear-gradient(to right, #004d00, #00b300);
             justify-content: space-between;
             align-items: center;
             padding: 6px;
@@ -837,7 +873,7 @@
             cursor: pointer;
         }
         .sidebar-modal-header button:hover {
-            color: #FFC107; /* Changed to logo yellow */
+            color: #007bff';
         }
         .sidebar-list {
             display: flex;
@@ -870,7 +906,7 @@
             margin-left: 15px;
         }
         .bars-icon:hover {
-            color: #FFC107; /* Changed to logo yellow */
+            color: #00b300;
         }
         
         /* Bottom Navigation Bar */
@@ -907,7 +943,7 @@
         }
         footer .nav-icon.active,
         footer .nav-icon:hover {
-            color: #FFC107; /* Changed to logo yellow */
+            color: #00b300;
         }
         footer .nav-icon.active i,
         footer .nav-icon:hover i {
@@ -976,12 +1012,12 @@
             cursor: pointer;
         }
         .filter-option.active {
-            background-color: #FFC107; /* Changed to logo yellow */
+            background-color: #00b300;
             color: white;
         }
         .apply-filter-btn {
             width: 100%;
-            background: linear-gradient(to right, #FF8F00, #FFC107); /* Changed to yellow gradient */
+            background: linear-gradient(to right, #004d00, #00b300);
             color: #fff;
             border: none;
             padding: 10px;
@@ -990,19 +1026,35 @@
             margin-top: 10px;
         }
         
-        /* Video quality selector */
-        .quality-selector {
+        /* Video quality selector - Changed to download button */
+        .download-btn {
             position: absolute;
             top: 10px;
             right: 10px;
-            background-color: rgba(0, 0, 0, 0.7);
+            background-color: #00b300;
             color: white;
             border: none;
-            padding: 5px 10px;
+            padding: 8px 12px;
             border-radius: 4px;
             cursor: pointer;
             font-size: 12px;
             z-index: 100;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 80px;
+            height: 60px;
+        }
+        .download-btn i {
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+        .download-btn span {
+            font-size: 10px;
+        }
+        .download-btn:hover {
+            background-color: #009900;
         }
         
         /* User profile section */
@@ -1017,7 +1069,7 @@
             width: 80px;
             height: 80px;
             border-radius: 50%;
-            background-color: #FFC107; /* Changed to logo yellow */
+            background-color: #00b300;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1045,7 +1097,7 @@
             text-align: center;
         }
         .edit-profile-btn {
-            background-color: #FFC107; /* Changed to logo yellow */
+            background-color: #00b300;
             color: white;
             border: none;
             padding: 5px 15px;
@@ -1092,7 +1144,7 @@
             top: 0;
             left: 0;
             height: 100%;
-            background-color: #FFC107; /* Changed to logo yellow */
+            background-color: #00b300;
             width: 0%;
         }
         
@@ -1153,7 +1205,7 @@
             overflow: hidden;
         }
         .avatar-option.selected {
-            border-color: #FFC107; /* Changed to logo yellow */
+            border-color: #00b300;
         }
         .avatar-option img {
             width: 100%;
@@ -1178,7 +1230,7 @@
         }
         .save-profile-btn {
             width: 100%;
-            background: linear-gradient(to right, #FF8F00, #FFC107); /* Changed to yellow gradient */
+            background: linear-gradient(to right, #004d00, #00b300);
             color: #fff;
             border: none;
             padding: 10px;
@@ -1255,8 +1307,8 @@
         .form-group textarea:focus,
         .form-group select:focus {
             outline: none;
-            border-color: #FFC107; /* Changed to logo yellow */
-            box-shadow: 0 0 0 2px rgba(255, 193, 7, 0.2); /* Changed to yellow glow */
+            border-color: #00b300;
+            box-shadow: 0 0 0 2px rgba(0, 179, 0, 0.2);
         }
         .form-group textarea {
             resize: vertical;
@@ -1264,7 +1316,7 @@
             max-height: 150px; /* Limit textarea height */
         }
         .upload-btn {
-            background: linear-gradient(to right, #FF8F00, #FFC107); /* Changed to yellow gradient */
+            background: linear-gradient(to right, #004d00, #00b300);
             color: #fff;
             border: none;
             padding: 12px 20px;
@@ -1276,7 +1328,7 @@
             margin-top: 10px;
         }
         .upload-btn:hover {
-            background: linear-gradient(to right, #FF8F00, #FFA000); /* Changed to darker yellow gradient */
+            background: linear-gradient(to right, #003d00, #009900);
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
@@ -1289,7 +1341,7 @@
             background-color: #f5f5f5;
             border-radius: 4px;
             font-size: 12px;
-            border-left: 4px solid #FFC107; /* Changed to logo yellow */
+            border-left: 4px solid #00b300;
         }
         .upload-example h4 {
             margin: 0 0 8px;
@@ -1354,7 +1406,7 @@
             text-align: center;
         }
         .network-warning-retry {
-            background-color: #FFC107; /* Changed to logo yellow */
+            background-color: #00b300;
             color: white;
             border: none;
             padding: 12px 30px;
@@ -1365,7 +1417,7 @@
             transition: background-color 0.3s ease;
         }
         .network-warning-retry:hover {
-            background-color: #FFA000; /* Darker yellow for hover */
+            background-color: #009900;
         }
         
         /* Search Suggestions */
@@ -1419,7 +1471,7 @@
             width: 50px;
             height: 50px;
             border: 5px solid #f3f3f3;
-            border-top: 5px solid #FFC107; /* Changed to logo yellow */
+            border-top: 5px solid #00b300;
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
@@ -1485,7 +1537,7 @@
         }
         
         .season-btn {
-            background-color: #FFC107; /* Changed to logo yellow */
+            background-color: #00b300;
             color: white;
             border: none;
             padding: 5px 10px;
@@ -1590,7 +1642,7 @@
             top: 0;
             left: 0;
             width: 100%;
-            background-color: rgba(255, 193, 7, 0.9); /* Changed to logo yellow */
+            background-color: rgba(0, 179, 0, 0.9);
             color: white;
             padding: 10px;
             text-align: center;
@@ -1654,7 +1706,7 @@
             text-align: center;
         }
         .password-submit {
-            background: linear-gradient(to right, #FF8F00, #FFC107); /* Changed to yellow gradient */
+            background: linear-gradient(to right, #004d00, #00b300);
             color: #fff;
             border: none;
             padding: 12px 20px;
@@ -1868,11 +1920,11 @@
             margin-left: 15px;
             flex-shrink: 0;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 12px rgba(255, 193, 7, 0.3); /* Changed to yellow glow */
+            box-shadow: 0 4px 12px rgba(0, 179, 0, 0.3);
         }
         .install-button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 16px rgba(255, 193, 7, 0.4); /* Changed to yellow glow */
+            box-shadow: 0 8px 16px rgba(0, 179, 0, 0.4);
         }
         .sponsored {
             font-size: 12px;
@@ -1977,7 +2029,7 @@
             font-weight: bold;
         }
         .view-item-views:hover {
-            background-color: #FFA000; /* Darker yellow for hover */
+            background-color: #009900;
         }
     </style>
 </head>
@@ -2013,7 +2065,7 @@
             </div>
             <!-- Logo as Image -->
             <div class="logo">
-                <img src="https://z-cdn-media.chatglm.cn/files/c3edf5f8-4cf0-47af-b2d6-2d1f701794a7_3691099_ico.png" alt="Movie Nest Logo" />
+                <img src="https://ucarecdn.com/cee71935-3e43-44cb-a532-f962e8a311d1/-/preview/1000x1000/" alt="Movie Nest Logo" />
             </div>
             <!-- History Icon -->
             <div class="history-icon" onclick="toggleHistoryModal()">
@@ -2213,6 +2265,11 @@
                     <input type="url" id="video-url" placeholder="https://www.youtube.com/embed/VIDEO_ID or https://drive.google.com/file/d/FILE_ID/preview" required>
                 </div>
                 <div class="form-group">
+                    <label for="video-download-url">Download URL (For Google Drive videos only)</label>
+                    <input type="url" id="video-download-url" placeholder="https://drive.google.com/uc?export=download&id=FILE_ID">
+                    <small style="color: #666; font-size: 12px;">Only required for Google Drive videos if you want to enable download</small>
+                </div>
+                <div class="form-group">
                     <label for="video-thumbnail">Thumbnail URL</label>
                     <input type="url" id="video-thumbnail" placeholder="https://example.com/thumbnail.jpg">
                 </div>
@@ -2240,6 +2297,7 @@
                     <h4>Example URLs:</h4>
                     <p>YouTube: https://www.youtube.com/embed/MN4hHqWWpwU</p>
                     <p>Google Drive: https://drive.google.com/file/d/1CWOELtePqeDDI-t07aWB0NAWQXlvH-ul/preview</p>
+                    <p>Google Drive Download: https://drive.google.com/uc?export=download&id=1CWOELtePqeDDI-t07aWB0NAWQXlvH-ul</p>
                 </div>
             </form>
         </div>
@@ -2404,6 +2462,21 @@
             <div class="dots" id="dots"></div>
         </div>
         
+        <!-- Categories Section - New section based on screenshot -->
+        <div class="categories-section">
+            <div class="categories-title">Categories</div>
+            <div class="categories-scroll" id="categories-scroll">
+                <div class="category-btn active" data-category="All">All</div>
+                <div class="category-btn" data-category="Hollywood">Hollywood</div>
+                <div class="category-btn" data-category="Nollywood">Nollywood</div>
+                <div class="category-btn" data-category="Bollywood">Bollywood</div>
+                <div class="category-btn" data-category="Kannywood">Kannywood</div>
+                <div class="category-btn" data-category="Action">Action</div>
+                <div class="category-btn" data-category="Drama">Drama</div>
+                <div class="category-btn" data-category="Comedy">Comedy</div>
+            </div>
+        </div>
+        
         <div class="discover-scroll" id="discover-scroll"></div>
     </div>        
     <!-- Categories Section -->
@@ -2423,7 +2496,11 @@
             </div>
             <div class="nav-body">
                 <div style="position: relative; width: 100%; height: 100%;">
-                    <button class="quality-selector">HD <i class="fas fa-chevron-down"></i></button>
+                    <!-- Download button (only shown for Google Drive videos) -->
+                    <button class="download-btn" id="video-download-btn" style="display: none;" onclick="downloadVideo()">
+                        <i class="fas fa-download"></i>
+                        <span>Download</span>
+                    </button>
                     <iframe id="video-player" src="" frameborder="0" allowfullscreen style="width: 100%; height: 100%;"></iframe>
                     <div class="player-controls">
                         <button><i class="fas fa-backward"></i></button>
@@ -3418,12 +3495,19 @@
             const year = document.getElementById('video-year').value;
             const trending = document.getElementById('video-trending').checked;
             const videoUrl = document.getElementById('video-url').value;
+            const downloadUrl = document.getElementById('video-download-url').value;
             const thumbnail = document.getElementById('video-thumbnail').value || `https://picsum.photos/seed/${Math.random().toString(36).substring(7)}/300/450.jpg`;
             const carouselThumbnail = document.getElementById('video-carousel-thumbnail').value;
             
             // Validate URL format
             if (!isValidVideoUrl(videoUrl)) {
                 showNotification('Please enter a valid YouTube embed or Google Drive preview URL', 'warning');
+                return;
+            }
+            
+            // If it's a Google Drive video, download URL is required
+            if (videoUrl.includes('drive.google.com') && !downloadUrl) {
+                showNotification('Please provide a download URL for Google Drive videos', 'warning');
                 return;
             }
             
@@ -3441,6 +3525,7 @@
                     year: parseInt(year),
                     trending,
                     videoUrl,
+                    downloadUrl: downloadUrl || null,
                     imgUrl: thumbnail,
                     carouselCover: carouselThumbnail || thumbnail, // Use carousel thumbnail if provided, otherwise use regular thumbnail
                     createdAt: firebase.firestore.FieldValue.serverTimestamp(),
@@ -4264,7 +4349,7 @@
             
             const openButton = document.createElement('button');
             openButton.textContent = 'Install';
-            openButton.style.backgroundColor = '#FFC107; /* Changed to logo yellow */';
+            openButton.style.backgroundColor = '#00b300';
             openButton.style.color = '#fff';
             openButton.style.border = 'none';
             openButton.style.padding = '6px 12px';
@@ -4354,7 +4439,7 @@
             
             const openButton = document.createElement('button');
             openButton.textContent = 'Install';
-            openButton.style.backgroundColor = '#FFC107; /* Changed to logo yellow */';
+            openButton.style.backgroundColor = '#00b300';
             openButton.style.color = '#fff';
             openButton.style.border = 'none';
             openButton.style.padding = '6px 12px';
@@ -4595,6 +4680,17 @@
             // Update save button state
             updateSaveButton();
             
+            // Show/hide download button based on video source
+            const downloadBtn = document.getElementById('video-download-btn');
+            if (videoUrl.includes('drive.google.com') && item.downloadUrl) {
+                // Show download button for Google Drive videos with download URL
+                downloadBtn.style.display = 'flex';
+                downloadBtn.onclick = () => downloadVideo(item.downloadUrl);
+            } else {
+                // Hide download button for YouTube videos or Google Drive videos without download URL
+                downloadBtn.style.display = 'none';
+            }
+            
             // Ensure ads data is available before initializing ad rotation
             if (!adsData || adsData.length === 0) {
                 try {
@@ -4763,6 +4859,20 @@
             addToHistory(videoId);
         };
         
+        // Function to download video
+        const downloadVideo = (downloadUrl) => {
+            if (!downloadUrl) {
+                showNotification('Download URL not available', 'warning');
+                return;
+            }
+            
+            // Open the download URL in a new tab
+            window.open(downloadUrl, '_blank');
+            
+            // Show notification
+            showNotification('Download started', 'success');
+        };
+        
         // Function to go to a specific season
         const goToSeason = (seasonIndex) => {
             if (!currentMovieInModal || !currentMovieInModal.isSeries || !currentMovieInModal.seasons) return;
@@ -4885,7 +4995,7 @@
                 saveBtn.style.backgroundColor = '#ff0000';
             } else {
                 saveBtn.textContent = 'Add to list';
-                saveBtn.style.backgroundColor = '#FFC107; /* Changed to logo yellow */';
+                saveBtn.style.backgroundColor = '#00b300';
             }
         };
         
@@ -4900,7 +5010,7 @@
                 // Remove from saved list
                 savedMovies = savedMovies.filter(title => title !== movieTitle);
                 saveBtn.textContent = 'Add to list';
-                saveBtn.style.backgroundColor = '#FFC107; /* Changed to logo yellow */';
+                saveBtn.style.backgroundColor = '#00b300';
                 showNotification('Removed from My List', 'success');
             } else {
                 // Add to saved list
@@ -5636,6 +5746,26 @@
             
             // Initialize the app
             initializeApp();
+            
+            // Add category button click handlers
+            const categoryButtons = document.querySelectorAll('.category-btn');
+            categoryButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    categoryButtons.forEach(btn => btn.classList.remove('active'));
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    // Filter content based on selected category
+                    const selectedCategory = this.dataset.category;
+                    if (selectedCategory === 'All') {
+                        // Show all discover videos when "All" category is selected
+                        createDiscoverSection();
+                    } else {
+                        filterContentByCategory(selectedCategory);
+                    }
+                });
+            });
         });
         
         // Function to initialize ad rotation in the video modal
@@ -5776,6 +5906,68 @@
                 hideLoading();
             }
         }
+        
+        // Add category button click handlers
+        document.addEventListener('DOMContentLoaded', () => {
+            const categoryButtons = document.querySelectorAll('.category-btn');
+            categoryButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    categoryButtons.forEach(btn => btn.classList.remove('active'));
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    // Filter content based on selected category
+                    const selectedCategory = this.dataset.category;
+                    if (selectedCategory === 'All') {
+                        createDiscoverSection();
+                    } else {
+                        filterContentByCategory(selectedCategory);
+                    }
+                });
+            });
+        });
+        
+        // Function to filter content by category
+        const filterContentByCategory = (category) => {
+            const discoverScroll = document.getElementById('discover-scroll');
+            discoverScroll.innerHTML = '';
+            
+            // Filter data by category
+            const filteredData = data.filter(item => {
+                // Check if item matches the selected category
+                if (category === 'Hollywood') return item.category === 'Hollywood';
+                if (category === 'Nollywood') return item.category === 'Nollywood';
+                if (category === 'Bollywood') return item.category === 'Bollywood';
+                if (category === 'Kannywood') return item.category === 'Kannywood';
+                if (category === 'Action') return item.genre === 'Action';
+                if (category === 'Drama') return item.genre === 'Drama';
+                if (category === 'Comedy') return item.genre === 'Comedy';
+                return true;
+            });
+            
+            // Add filtered items to discover section
+            filteredData.forEach(item => {
+                const discoverItem = document.createElement('div');
+                discoverItem.className = 'discover-item';
+                const img = document.createElement('img');
+                img.src = item.imgUrl;
+                img.alt = item.title;
+                const content = document.createElement('div');
+                content.className = 'content';
+                content.innerHTML = `
+                    <h2>${item.title}</h2>
+                    <p>${item.description}</p>
+                `;
+                
+                // Add click event to the entire discover item
+                discoverItem.onclick = () => openVideoNav(item.videoUrl, item.title, item);
+                
+                discoverItem.appendChild(img);
+                discoverItem.appendChild(content);
+                discoverScroll.appendChild(discoverItem);
+            });
+        };
         
         let lastScrollTop = 0;
         window.addEventListener('scroll', () => {
