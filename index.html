@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arewatv</title>
+    <title>Movie Nest</title>
     <!-- Add Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <!-- Firebase SDK -->
@@ -304,7 +304,7 @@
         /* Categories Section - New section based on screenshot */
         .categories-section {
             margin-top: 15px;
-            padding: 0 8px;
+            padding: 0 15px;
         }
         .categories-title {
             font-size: 18px;
@@ -315,7 +315,7 @@
             display: flex;
             overflow-x: auto;
             gap: 8px;
-            padding-bottom: 12px;
+            padding-bottom: 10px;
         }
         .category-btn {
             flex: 0 0 auto;
@@ -324,7 +324,7 @@
             border: 1px solid var(--border-color);
             border-radius: 20px;
             color: var(--text-color);
-            font-size: 13px;
+            font-size: 10px;
             cursor: pointer;
             transition: all 0.3s ease;
         }
@@ -1029,21 +1029,21 @@
         /* Video quality selector - Changed to download button */
         .download-btn {
             position: absolute;
-            top: 5px;
-            right: 5px;
-            background: rgba(0,0,0,0.5);
+            top: 10px;
+            right: 10px;
+            background-color: #00b300;
             color: white;
             border: none;
             padding: 8px 12px;
-            border-radius: 8px;
+            border-radius: 4px;
             cursor: pointer;
-            font-size: 10px;
+            font-size: 12px;
             z-index: 100;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            width: 65px;
+            width: 80px;
             height: 60px;
         }
         .download-btn i {
@@ -1054,7 +1054,7 @@
             font-size: 10px;
         }
         .download-btn:hover {
-            background: rgba(0,0,0,0.5);
+            background-color: #009900;
         }
         
         /* User profile section */
@@ -1483,15 +1483,17 @@
         /* Improved Notifications */
         .notification {
             position: fixed;
-            top: 20px;
+            top: 50%;
             left: 50%;
-            transform: translateX(-50%);
+            transform: translate(-50%, -50%);
             padding: 15px 25px;
             border-radius: 8px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
             z-index: 10000;
             font-weight: 500;
             transition: opacity 0.5s ease;
+            max-width: 80%;
+            text-align: center;
         }
         .notification.success {
             background-color: #4CAF50;
@@ -2217,7 +2219,7 @@
                 <div class="form-group">
                     <label for="video-category">Category</label>
                     <select id="video-category" required>
-                        <option value="Algaita Dub-Studio">Algaita Dub-Studio</option>
+                        <option value="Hollywood">Hollywood</option>
                         <option value="Nollywood">Nollywood</option>
                         <option value="Bollywood">Bollywood</option>
                         <option value="Kannywood">Kannywood</option>
@@ -2261,13 +2263,14 @@
                     </label>
                 </div>
                 <div class="form-group">
-                    <label for="video-url">Video URL (YouTube embed or Google Drive preview)</label>
-                    <input type="url" id="video-url" placeholder="https://www.youtube.com/embed/VIDEO_ID or https://drive.google.com/file/d/FILE_ID/preview" required>
+                    <label for="video-url">Video URL</label>
+                    <input type="url" id="video-url" placeholder="https://example.com/video" required>
+                    <small style="color: #666; font-size: 12px;">Enter any valid video URL</small>
                 </div>
                 <div class="form-group">
-                    <label for="video-download-url">Download URL (For Google Drive videos only)</label>
-                    <input type="url" id="video-download-url" placeholder="https://drive.google.com/uc?export=download&id=FILE_ID">
-                    <small style="color: #666; font-size: 12px;">Only required for Google Drive videos if you want to enable download</small>
+                    <label for="video-download-url">Download URL (Optional)</label>
+                    <input type="url" id="video-download-url" placeholder="https://example.com/download">
+                    <small style="color: #666; font-size: 12px;">Required for Google Drive videos if you want to enable download</small>
                 </div>
                 <div class="form-group">
                     <label for="video-thumbnail">Thumbnail URL</label>
@@ -2298,6 +2301,7 @@
                     <p>YouTube: https://www.youtube.com/embed/MN4hHqWWpwU</p>
                     <p>Google Drive: https://drive.google.com/file/d/1CWOELtePqeDDI-t07aWB0NAWQXlvH-ul/preview</p>
                     <p>Google Drive Download: https://drive.google.com/uc?export=download&id=1CWOELtePqeDDI-t07aWB0NAWQXlvH-ul</p>
+                    <p>Any other video source: https://example.com/video.mp4</p>
                 </div>
             </form>
         </div>
@@ -2467,7 +2471,7 @@
             <div class="categories-title">Categories</div>
             <div class="categories-scroll" id="categories-scroll">
                 <div class="category-btn active" data-category="All">All</div>
-                <div class="category-btn" data-category="Algaita Dub-Studio">Algaita Dub-Studio</div>
+                <div class="category-btn" data-category="Hollywood">Hollywood</div>
                 <div class="category-btn" data-category="Nollywood">Nollywood</div>
                 <div class="category-btn" data-category="Bollywood">Bollywood</div>
                 <div class="category-btn" data-category="Kannywood">Kannywood</div>
@@ -2496,7 +2500,7 @@
             </div>
             <div class="nav-body">
                 <div style="position: relative; width: 100%; height: 100%;">
-                    <!-- Download button (only shown for Google Drive videos) -->
+                    <!-- Download button (only shown for videos with download URL) -->
                     <button class="download-btn" id="video-download-btn" style="display: none;" onclick="downloadVideo()">
                         <i class="fas fa-download"></i>
                         <span>Download</span>
@@ -2588,12 +2592,12 @@
     <script>
         // Initialize Firebase with your configuration
         const firebaseConfig = {
-            apiKey: "AIzaSyARFUQJo32JwHMzPmlgz-1pOOINzkdZTH8",
-            authDomain: "arewatv-d151b.firebaseapp.com",
-            projectId: "arewatv-d151b",
-            storageBucket: "arewatv-d151b.firebasestorage.app",
-            messagingSenderId: "1051914778796",
-            appId: "1:1051914778796:web:173a5e42dc3dc4da1a0709"
+            apiKey: "AIzaSyA9JK8BX2pAXpmW_d6GpXRZjFpTLkso1KI",
+            authDomain: "movie-nest-77e6b.firebaseapp.com",
+            projectId: "movie-nest-77e6b",
+            storageBucket: "movie-nest-77e6b.firebasestorage.app",
+            messagingSenderId: "513317696448",
+            appId: "1:513317696448:web:c70c566151226ef55bce25"
         };
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
@@ -2666,7 +2670,7 @@
                 description: "A sample movie for testing",
                 imgUrl: "https://picsum.photos/seed/movie1/300/450.jpg",
                 videoUrl: "https://www.youtube.com/embed/MN4hHqWWpwU",
-                category: "Algaita Dub-Studio",
+                category: "Hollywood",
                 genre: "Action",
                 year: 2023,
                 type: "Movie"
@@ -2768,14 +2772,12 @@
             document.getElementById('loading').style.display = 'none';
         }
         
-        // Function to validate video URLs
+        // Function to validate video URLs - Updated to accept any URL
         function isValidVideoUrl(url) {
             try {
                 const urlObj = new URL(url);
-                return (
-                    urlObj.hostname.includes('youtube.com') || 
-                    urlObj.hostname.includes('drive.google.com')
-                );
+                // Just check if it's a valid URL, no restrictions on domain
+                return true;
             } catch (e) {
                 return false;
             }
@@ -2799,13 +2801,16 @@
             // Push state to history
             history.pushState({ uploadOpen: true }, '');
             
+            // Load saved form data
+            loadFormDataFromLocalStorage();
+            
             // Reset form
-            document.getElementById('upload-form').reset();
+            // document.getElementById('upload-form').reset(); // Removed to preserve saved data
             
             // Reset seasons data
-            seasons = [];
-            seasonCounter = 0;
-            document.getElementById('seasons-list').innerHTML = '';
+            // seasons = []; // Removed to preserve saved data
+            // seasonCounter = 0; // Removed to preserve saved data
+            // document.getElementById('seasons-list').innerHTML = ''; // Removed to preserve saved data
             
             // Scroll to top of modal content
             setTimeout(() => {
@@ -2821,8 +2826,8 @@
             uploadModal.classList.remove('open');
             inUploadModal = false;
             
-            // Reset form
-            document.getElementById('upload-form').reset();
+            // Don't reset form to preserve data
+            // document.getElementById('upload-form').reset();
         };
         
         // Function to toggle the ad upload modal
@@ -3380,6 +3385,9 @@
             
             // Add at least one episode to the new season
             addEpisode(seasonId);
+            
+            // Save form data after adding season
+            saveFormDataToLocalStorage();
         };
         
         // Function to remove a season
@@ -3394,6 +3402,9 @@
             if (seasons.length === 0) {
                 seasonCounter = 0;
             }
+            
+            // Save form data after removing season
+            saveFormDataToLocalStorage();
         };
         
         // Function to add a new episode to a season
@@ -3408,7 +3419,8 @@
                 id: episodeId,
                 number: episodeNumber,
                 title: `Episode ${episodeNumber}`,
-                url: ''
+                url: '',
+                downloadUrl: ''
             };
             
             season.episodes.push(episodeData);
@@ -3424,7 +3436,8 @@
                     </div>
                 </div>
                 <div class="episode-actions">
-                    <input type="url" placeholder="Episode URL" style="width: 200px; padding: 5px; margin-right: 10px;" onchange="updateEpisodeUrl('${episodeId}', this.value)">
+                    <input type="url" placeholder="Episode URL" style="width: 150px; padding: 5px; margin-right: 5px;" onchange="updateEpisodeUrl('${episodeId}', this.value)">
+                    <input type="url" placeholder="Download URL" style="width: 150px; padding: 5px; margin-right: 10px;" onchange="updateEpisodeDownloadUrl('${episodeId}', this.value)">
                     <button type="button" class="episode-btn remove" onclick="removeEpisode('${seasonId}', '${episodeId}')">
                         <i class="fas fa-trash"></i>
                     </button>
@@ -3432,6 +3445,9 @@
             `;
             
             document.getElementById(`${seasonId}-episodes`).appendChild(episodeElement);
+            
+            // Save form data after adding episode
+            saveFormDataToLocalStorage();
         };
         
         // Function to remove an episode
@@ -3457,6 +3473,9 @@
                     episodeElement.querySelector('.episode-title input').value = episode.title;
                 }
             });
+            
+            // Save form data after removing episode
+            saveFormDataToLocalStorage();
         };
         
         // Function to update episode title
@@ -3468,6 +3487,9 @@
                     break;
                 }
             }
+            
+            // Save form data after updating episode title
+            saveFormDataToLocalStorage();
         };
         
         // Function to update episode URL
@@ -3479,7 +3501,126 @@
                     break;
                 }
             }
+            
+            // Save form data after updating episode URL
+            saveFormDataToLocalStorage();
         };
+        
+        // Function to update episode download URL
+        const updateEpisodeDownloadUrl = (episodeId, downloadUrl) => {
+            for (const season of seasons) {
+                const episode = season.episodes.find(e => e.id === episodeId);
+                if (episode) {
+                    episode.downloadUrl = downloadUrl;
+                    break;
+                }
+            }
+            
+            // Save form data after updating episode download URL
+            saveFormDataToLocalStorage();
+        };
+        
+        // Function to save form data to localStorage
+        function saveFormDataToLocalStorage() {
+            const formData = {
+                title: document.getElementById('video-title').value,
+                description: document.getElementById('video-description').value,
+                type: document.getElementById('video-type').value,
+                category: document.getElementById('video-category').value,
+                genre: document.getElementById('video-genre').value,
+                country: document.getElementById('video-country').value,
+                year: document.getElementById('video-year').value,
+                trending: document.getElementById('video-trending').checked,
+                videoUrl: document.getElementById('video-url').value,
+                downloadUrl: document.getElementById('video-download-url').value,
+                thumbnail: document.getElementById('video-thumbnail').value,
+                carouselThumbnail: document.getElementById('video-carousel-thumbnail').value,
+                seasons: seasons
+            };
+            
+            localStorage.setItem('videoUploadFormData', JSON.stringify(formData));
+        }
+        
+        // Function to load form data from localStorage
+        function loadFormDataFromLocalStorage() {
+            const savedFormData = localStorage.getItem('videoUploadFormData');
+            if (savedFormData) {
+                const formData = JSON.parse(savedFormData);
+                
+                document.getElementById('video-title').value = formData.title || '';
+                document.getElementById('video-description').value = formData.description || '';
+                document.getElementById('video-type').value = formData.type || 'movie';
+                document.getElementById('video-category').value = formData.category || 'Hollywood';
+                document.getElementById('video-genre').value = formData.genre || 'Action';
+                document.getElementById('video-country').value = formData.country || 'USA';
+                document.getElementById('video-year').value = formData.year || '';
+                document.getElementById('video-trending').checked = formData.trending || false;
+                document.getElementById('video-url').value = formData.videoUrl || '';
+                document.getElementById('video-download-url').value = formData.downloadUrl || '';
+                document.getElementById('video-thumbnail').value = formData.thumbnail || '';
+                document.getElementById('video-carousel-thumbnail').value = formData.carouselThumbnail || '';
+                
+                // Restore seasons data
+                if (formData.seasons && formData.seasons.length > 0) {
+                    seasons = formData.seasons;
+                    seasonCounter = seasons.length;
+                    
+                    // Recreate seasons UI
+                    const seasonsList = document.getElementById('seasons-list');
+                    seasonsList.innerHTML = '';
+                    
+                    seasons.forEach(season => {
+                        const seasonElement = document.createElement('div');
+                        seasonElement.className = 'seasons-container';
+                        seasonElement.id = season.id;
+                        
+                        const seasonHeader = document.createElement('div');
+                        seasonHeader.className = 'season-header';
+                        seasonHeader.innerHTML = `
+                            <div class="season-title">Season ${season.seasonNumber}</div>
+                            <div class="season-actions">
+                                <button type="button" class="season-btn" onclick="addEpisode('${season.id}')">Add Episode</button>
+                                <button type="button" class="season-btn remove" onclick="removeSeason('${season.id}')">Remove</button>
+                            </div>
+                        `;
+                        
+                        const episodesContainer = document.createElement('div');
+                        episodesContainer.className = 'episodes-container';
+                        episodesContainer.id = `${season.id}-episodes`;
+                        
+                        season.episodes.forEach(episode => {
+                            const episodeElement = document.createElement('div');
+                            episodeElement.className = 'episode-item';
+                            episodeElement.id = episode.id;
+                            episodeElement.innerHTML = `
+                                <div class="episode-info">
+                                    <div class="episode-number">Episode ${episode.number}</div>
+                                    <div class="episode-title">
+                                        <input type="text" placeholder="Episode title" value="${episode.title}" onchange="updateEpisodeTitle('${episode.id}', this.value)">
+                                    </div>
+                                </div>
+                                <div class="episode-actions">
+                                    <input type="url" placeholder="Episode URL" style="width: 150px; padding: 5px; margin-right: 5px;" value="${episode.url || ''}" onchange="updateEpisodeUrl('${episode.id}', this.value)">
+                                    <input type="url" placeholder="Download URL" style="width: 150px; padding: 5px; margin-right: 10px;" value="${episode.downloadUrl || ''}" onchange="updateEpisodeDownloadUrl('${episode.id}', this.value)">
+                                    <button type="button" class="episode-btn remove" onclick="removeEpisode('${season.id}', '${episode.id}')">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            `;
+                            
+                            episodesContainer.appendChild(episodeElement);
+                        });
+                        
+                        seasonElement.appendChild(seasonHeader);
+                        seasonElement.appendChild(episodesContainer);
+                        seasonsList.appendChild(seasonElement);
+                    });
+                    
+                    // Show series fields if type is series or anime
+                    toggleSeriesFields();
+                }
+            }
+        }
         
         // Handle form submission for video upload - Enhanced for series
         document.getElementById('upload-form').addEventListener('submit', async function(e) {
@@ -3501,13 +3642,7 @@
             
             // Validate URL format
             if (!isValidVideoUrl(videoUrl)) {
-                showNotification('Please enter a valid YouTube embed or Google Drive preview URL', 'warning');
-                return;
-            }
-            
-            // If it's a Google Drive video, download URL is required
-            if (videoUrl.includes('drive.google.com') && !downloadUrl) {
-                showNotification('Please provide a download URL for Google Drive videos', 'warning');
+                showNotification('Please enter a valid video URL', 'warning');
                 return;
             }
             
@@ -3540,7 +3675,8 @@
                         episodes: season.episodes.map(episode => ({
                             number: episode.number,
                             title: episode.title,
-                            url: episode.url
+                            url: episode.url,
+                            downloadUrl: episode.downloadUrl || null
                         }))
                     }));
                     
@@ -3568,6 +3704,9 @@
                 
                 // Show success message
                 showNotification('Video uploaded successfully!', 'success');
+                
+                // Clear saved form data after successful upload
+                localStorage.removeItem('videoUploadFormData');
                 
                 // Close modal
                 closeUploadModal();
@@ -3912,7 +4051,7 @@
                     <div class="video-title">${item.title}</div>
                     <div class="video-info">${item.type || 'Movie'} | ${item.year || '2025'} | ${tagsDisplay}</div>
                     <button class="download-btn">
-                        <i class="fas fa-download"></i> Download
+                        <i class="fas fa-play"></i> Watch
                     </button>
                 `;
                 
@@ -4665,9 +4804,8 @@
                 const separator = videoUrl.includes('?') ? '&' : '?';
                 processedUrl = videoUrl + separator + 'autoplay=1&mute=0';
             } 
-            // For Google Drive preview, ensure no autoplay parameters
-            else if (videoUrl.includes('drive.google.com/file/d/')) {
-                // Google Drive preview doesn't autoplay by default, so no changes needed
+            // For other video sources, use as is
+            else {
                 processedUrl = videoUrl;
             }
             
@@ -4682,12 +4820,12 @@
             
             // Show/hide download button based on video source
             const downloadBtn = document.getElementById('video-download-btn');
-            if (videoUrl.includes('drive.google.com') && item.downloadUrl) {
-                // Show download button for Google Drive videos with download URL
+            if (item.downloadUrl) {
+                // Show download button for videos with download URL
                 downloadBtn.style.display = 'flex';
                 downloadBtn.onclick = () => downloadVideo(item.downloadUrl);
             } else {
-                // Hide download button for YouTube videos or Google Drive videos without download URL
+                // Hide download button for videos without download URL
                 downloadBtn.style.display = 'none';
             }
             
@@ -4826,6 +4964,15 @@
                         // Load episode in iframe
                         videoPlayer.src = episodeUrl;
                         
+                        // Update download button if download URL is available
+                        const downloadBtn = document.getElementById('video-download-btn');
+                        if (episode.downloadUrl) {
+                            downloadBtn.style.display = 'flex';
+                            downloadBtn.onclick = () => downloadVideo(episode.downloadUrl);
+                        } else {
+                            downloadBtn.style.display = 'none';
+                        }
+                        
                         // Reset flag after a short delay
                         setTimeout(() => {
                             isEpisodeNavigation = false;
@@ -4942,6 +5089,15 @@
                     
                     document.getElementById('video-player').src = episodeUrl;
                     
+                    // Update download button if download URL is available
+                    const downloadBtn = document.getElementById('video-download-btn');
+                    if (episode.downloadUrl) {
+                        downloadBtn.style.display = 'flex';
+                        downloadBtn.onclick = () => downloadVideo(episode.downloadUrl);
+                    } else {
+                        downloadBtn.style.display = 'none';
+                    }
+                    
                     // Reset flag after a short delay
                     setTimeout(() => {
                         isEpisodeNavigation = false;
@@ -4976,6 +5132,15 @@
                     firstEpisodeUrl = firstEpisodeUrl + separator + 'autoplay=1&mute=0';
                 }
                 document.getElementById('video-player').src = firstEpisodeUrl;
+                
+                // Update download button if download URL is available
+                const downloadBtn = document.getElementById('video-download-btn');
+                if (currentSeason.episodes[0].downloadUrl) {
+                    downloadBtn.style.display = 'flex';
+                    downloadBtn.onclick = () => downloadVideo(currentSeason.episodes[0].downloadUrl);
+                } else {
+                    downloadBtn.style.display = 'none';
+                }
             }
             
             // Scroll to the beginning of the episode scroller
@@ -5292,21 +5457,23 @@
             }, 200);
         };
         
-        // Improved notification system
+        // Improved notification system - Updated to display in the middle of the app
         function showNotification(message, type = 'info') {
             const notification = document.createElement('div');
             notification.className = `notification ${type}`;
             notification.textContent = message;
             
-            // Position fixed at top center
+            // Position fixed at center of screen
             notification.style.position = 'fixed';
-            notification.style.top = '20px';
+            notification.style.top = '50%';
             notification.style.left = '50%';
-            notification.style.transform = 'translateX(-50%)';
+            notification.style.transform = 'translate(-50%, -50%)';
             notification.style.zIndex = '10000';
             notification.style.padding = '15px 25px';
             notification.style.borderRadius = '8px';
             notification.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
+            notification.style.maxWidth = '80%';
+            notification.style.textAlign = 'center';
             
             // Style based on type
             switch(type) {
@@ -5671,79 +5838,6 @@
                 }
             });
             
-            // Add history state handling with immediate response
-            window.addEventListener('popstate', (event) => {
-                // If we're navigating episodes, ignore the back button
-                if (isEpisodeNavigation) {
-                    // Push state again to prevent closing the modal
-                    history.pushState({ videoOpen: true }, '');
-                    return;
-                }
-                
-                // Handle video modal - close immediately
-                if (inVideoModal) {
-                    closeModal();
-                    return; // Exit early to prevent any delays
-                } 
-                // Handle grid view
-                else if (inGridView) {
-                    inGridView = false;
-                    // Show both discover container and categories container
-                    document.getElementById('discover-container').style.display = 'block';
-                    document.getElementById('categories-container').style.display = 'block';
-                    document.getElementById('grid-container').style.display = 'none';
-                }
-                // Handle filter modal
-                else if (inFilterModal) {
-                    document.getElementById('filter-modal').classList.remove('open');
-                    inFilterModal = false;
-                }
-                // Handle history modal
-                else if (inHistoryModal) {
-                    document.getElementById('history-modal').classList.remove('open');
-                    inHistoryModal = false;
-                }
-                // Handle sidebar modal
-                else if (inSidebarModal) {
-                    document.getElementById('sidebar-modal').classList.remove('open');
-                    inSidebarModal = false;
-                }
-                // Handle upload modal
-                else if (inUploadModal) {
-                    document.getElementById('upload-modal').classList.remove('open');
-                    inUploadModal = false;
-                }
-                // Handle ad upload modal
-                else if (inAdUploadModal) {
-                    document.getElementById('ad-upload-modal').classList.remove('open');
-                    inAdUploadModal = false;
-                }
-                // Handle app upload modal
-                else if (inAppUploadModal) {
-                    document.getElementById('app-upload-modal').classList.remove('open');
-                    inAppUploadModal = false;
-                }
-                // Handle password modal
-                else if (inPasswordModal) {
-                    document.getElementById('password-modal').classList.remove('open');
-                    inPasswordModal = false;
-                }
-                // Handle ads submenu
-                else if (inAdsSubmenu) {
-                    document.getElementById('ads-submenu').classList.remove('open');
-                    inAdsSubmenu = false;
-                }
-                // Handle apps submenu
-                else if (inAppsSubmenu) {
-                    document.getElementById('apps-submenu').classList.remove('open');
-                    inAppsSubmenu = false;
-                }
-                // Default to discover if no specific state
-                else {
-                    showDiscoverSection();
-                }
-            });
-            
             // Initialize the app
             initializeApp();
             
@@ -5766,6 +5860,9 @@
                     }
                 });
             });
+            
+            // Add event listeners to save form data on input change
+            document.getElementById('upload-form').addEventListener('input', saveFormDataToLocalStorage);
         });
         
         // Function to initialize ad rotation in the video modal
@@ -5902,7 +5999,7 @@
                 hideLoading();
             } catch (error) {
                 console.error("App initialization failed:", error);
-                showNotification("Failed to load content. Please check your connection.", "warning");
+                showNotification("Failed to load content. Please check your connection.", 'warning');
                 hideLoading();
             }
         }
@@ -5936,7 +6033,7 @@
             // Filter data by category
             const filteredData = data.filter(item => {
                 // Check if item matches the selected category
-                if (category === 'Algaita Dub-Studio') return item.category === 'Algaita Dub-Studio';
+                if (category === 'Hollywood') return item.category === 'Hollywood';
                 if (category === 'Nollywood') return item.category === 'Nollywood';
                 if (category === 'Bollywood') return item.category === 'Bollywood';
                 if (category === 'Kannywood') return item.category === 'Kannywood';
