@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Movie Nest</title>
+    <title>MovieNest - Video Management</title>
     <!-- Add Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <!-- Firebase SDK -->
@@ -91,7 +91,7 @@
             background: transparent;
             font-size: 14px;
             color: #fff;
-            width: 160px;
+            width: 140px;
         }
         .icons {
             display: flex;
@@ -304,7 +304,7 @@
         /* Categories Section - New section based on screenshot */
         .categories-section {
             margin-top: 15px;
-            padding: 0 15px;
+            padding: 0 8px;
         }
         .categories-title {
             font-size: 18px;
@@ -315,7 +315,7 @@
             display: flex;
             overflow-x: auto;
             gap: 8px;
-            padding-bottom: 10px;
+            padding-bottom: 12px;
         }
         .category-btn {
             flex: 0 0 auto;
@@ -324,7 +324,7 @@
             border: 1px solid var(--border-color);
             border-radius: 20px;
             color: var(--text-color);
-            font-size: 10px;
+            font-size: 13px;
             cursor: pointer;
             transition: all 0.3s ease;
         }
@@ -645,6 +645,7 @@
             border-color: white;
             transform: scale(1.1);
             color: white;
+            border: 2px solid #ccc;
             box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
         }
         .episode-btn .ep-num {
@@ -705,26 +706,38 @@
             margin-left: 5px;
         }
         
-        /* Notification Styles */
+        /* Notification Styles - Updated to center */
         .notification {
-            padding: 20px 25px;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 15px 25px;
             font-size: 13px;
             font-weight: bold;
-            color: #333;
             border-radius: 8px;
             border: 1px solid #ccc;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             text-align: center;
+            max-width: 80%;
+            z-index: 10000;
             animation: fadeInOut 3s ease-in-out;
         }
         .notification.success {
-            background-color: #fff;
+            background-color: #4CAF50;
+            color: white;
         }
         .notification.warning {
-            background-color: #fff;
+            background-color: #FF9800;
+            color: white;
         }
         .notification.info {
-            background-color: #2196f3;
+            background-color: #2196F3;
+            color: white;
+        }
+        .notification.error {
+            background-color: #F44336;
+            color: white;
         }
         @keyframes fadeInOut {
             0% {
@@ -783,52 +796,6 @@
         }
         .social-icon:hover {
             background-color: #555;
-        }
-        .notification-bar {
-            position: fixed;
-            bottom: 80px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 90%;
-            max-width: 400px;
-            background: linear-gradient(to right, #004d00, #00b300);
-            color: white;
-            padding: 10px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            opacity: 0;
-            transition: opacity 0.5s ease-in-out;
-            z-index: 1000;
-        }
-        .notification-bar img {
-            width: 50px;
-            height: 50px;
-            border-radius: 8px;
-            margin-right: 10px;
-        }
-        .notification-text {
-            flex: 1;
-            font-size: 11px;
-            text-align: left;
-        }
-        .notification-button {
-            background: #ccff00;
-            color: #000;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-weight: bold;
-            cursor: pointer;
-            border: none;
-        }
-        .close-button {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 18px;
-            cursor: pointer;
-            margin-left: 10px;
         }
         /* Sidebar Modal */
         .sidebar-modal {
@@ -1029,21 +996,21 @@
         /* Video quality selector - Changed to download button */
         .download-btn {
             position: absolute;
-            top: 10px;
-            right: 10px;
-            background-color: #00b300;
+            top: 5px;
+            right: 5px;
+            background: rgba(0,0,0,0.5);
             color: white;
             border: none;
             padding: 8px 12px;
-            border-radius: 4px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 12px;
+            font-size: 10px;
             z-index: 100;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            width: 80px;
+            width: 65px;
             height: 60px;
         }
         .download-btn i {
@@ -1054,7 +1021,7 @@
             font-size: 10px;
         }
         .download-btn:hover {
-            background-color: #009900;
+            background: rgba(0,0,0,0.5);
         }
         
         /* User profile section */
@@ -1122,7 +1089,7 @@
             justify-content: space-between;
             align-items: center;
             padding: 0 15px;
-            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            background: #;
         }
         .player-controls button {
             background: none;
@@ -1480,38 +1447,6 @@
             100% { transform: rotate(360deg); }
         }
         
-        /* Improved Notifications */
-        .notification {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            padding: 15px 25px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            z-index: 10000;
-            font-weight: 500;
-            transition: opacity 0.5s ease;
-            max-width: 80%;
-            text-align: center;
-        }
-        .notification.success {
-            background-color: #4CAF50;
-            color: white;
-        }
-        .notification.warning {
-            background-color: #FF9800;
-            color: white;
-        }
-        .notification.error {
-            background-color: #F44336;
-            color: white;
-        }
-        .notification.info {
-            background-color: #2196F3;
-            color: white;
-        }
-        
         /* Season and Episode Management Styles */
         .seasons-container {
             margin-top: 15px;
@@ -1589,7 +1524,16 @@
         
         .episode-actions {
             display: flex;
+            flex-direction: column;
             gap: 5px;
+        }
+        
+        .episode-input {
+            width: 200px;
+            padding: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 12px;
         }
         
         .episode-btn {
@@ -1861,7 +1805,7 @@
         .ad-container {
             position: fixed;
             bottom: 0;
-            width: 100%;
+            width:  96.5%;
             background: var(--card-bg);
             border: 1px solid var(--border-color);
             box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.3);
@@ -2033,6 +1977,519 @@
         .view-item-views:hover {
             background-color: #009900;
         }
+        
+        /* Video Management Modal Styles */
+        .video-management-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 3000;
+            justify-content: center;
+            align-items: center;
+            overflow-y: auto;
+            padding: 20px 0;
+        }
+        .video-management-modal.open {
+            display: flex;
+        }
+        .video-management-content {
+            background-color: #fff;
+            width: 90%;
+            max-width: 800px;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-height: 90vh;
+            overflow-y: auto;
+            margin: auto;
+        }
+        .video-management-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            position: sticky;
+            top: 0;
+            background-color: #fff;
+            z-index: 10;
+            padding-bottom: 10px;
+        }
+        .video-management-search {
+            margin-bottom: 15px;
+        }
+        .video-management-list {
+            max-height: calc(90vh - 150px);
+            overflow-y: auto;
+        }
+        .video-management-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            gap: 15px;
+        }
+        .video-management-item:last-child {
+            border-bottom: none;
+        }
+        .video-thumbnail {
+            width: 80px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 5px;
+            flex-shrink: 0;
+        }
+        .video-info {
+            flex: 1;
+        }
+        .video-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        .video-meta {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+        .video-actions {
+            display: flex;
+            gap: 10px;
+            flex-direction: column;
+        }
+        .edit-btn, .delete-btn {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            width: 80px;
+            text-align: center;
+        }
+        .edit-btn {
+            background-color: #00b300;
+            color: white;
+        }
+        .edit-btn:hover {
+            background-color: #009900;
+        }
+        .delete-btn {
+            background-color: #ff0000;
+            color: white;
+        }
+        .delete-btn:hover {
+            background-color: #cc0000;
+        }
+        .no-videos {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+        }
+        
+        /* Folder Management Styles */
+        .folder-management {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #f5f5f5;
+            border-radius: 8px;
+        }
+        
+        .folder-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .folder-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .folder-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .folder-btn {
+            background-color: #00b300;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .folder-btn:hover {
+            background-color: #009900;
+        }
+        
+        .folder-list {
+            display: flex;
+            overflow-x: auto;
+            gap: 10px;
+            padding-bottom: 10px;
+            scrollbar-width: thin; /* Firefox */
+            -ms-overflow-style: scrollbar; /* IE and Edge */
+        }
+        
+        .folder-list::-webkit-scrollbar {
+            display: block; /* Chrome, Safari, Edge */
+            width: 8px;
+            height: 8px;
+        }
+        
+        .folder-list::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+        
+        .folder-list::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+        
+        .folder-list::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+        
+        .folder-item {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex: 0 0 auto;
+            width: 200px;
+            min-width: 200px;
+            max-width: 200px;
+        }
+        
+        .folder-item:hover {
+            border-color: #00b300;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .folder-item.active {
+            background-color: #e6f7e6;
+            border-color: #00b300;
+        }
+        
+        .folder-name {
+            font-weight: bold;
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .folder-description {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+        
+        .folder-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            color: #888;
+        }
+        
+        .folder-actions-small {
+            display: flex;
+            gap: 5px;
+        }
+        
+        .folder-action-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            color: #666;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+        
+        .folder-action-btn:hover {
+            background-color: #f0f0f0;
+        }
+        
+        .folder-action-btn.edit {
+            color: #00b300;
+        }
+        
+        .folder-action-btn.delete {
+            color: #ff0000;
+        }
+        
+        .create-folder-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 4000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .create-folder-modal.open {
+            display: flex;
+        }
+        
+        .create-folder-content {
+            background-color: #fff;
+            width: 90%;
+            max-width: 500px;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .create-folder-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .create-folder-header h3 {
+            font-size: 18px;
+            margin: 0;
+            color: #333;
+        }
+        
+        .create-folder-header button {
+            background: none;
+            border: none;
+            color: #333;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        
+        .create-folder-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .create-folder-btn {
+            background: linear-gradient(to right, #004d00, #00b300);
+            color: #fff;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        
+        .create-folder-btn:hover {
+            background: linear-gradient(to right, #003d00, #009900);
+        }
+        
+        /* Folder selection in upload form */
+        .folder-selection {
+            margin-top: 10px;
+        }
+        
+        .folder-select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            background-color: #fff;
+            color: #333;
+        }
+        
+        .folder-select:focus {
+            outline: none;
+            border-color: #00b300;
+            box-shadow: 0 0 0 2px rgba(0, 179, 0, 0.2);
+        }
+        
+        /* Video folder management */
+        .video-folder-select {
+            background-color: #f5f5f5;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 8px;
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .video-folder-select select {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            background-color: #fff;
+            color: #333;
+        }
+        
+        .video-folder-select button {
+            background-color: #00b300;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .video-folder-select button:hover {
+            background-color: #009900;
+        }
+        
+        /* Breadcrumb navigation */
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-bottom: 15px;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .breadcrumb-item {
+            cursor: pointer;
+            color: #00b300;
+            font-weight: 500;
+        }
+        
+        .breadcrumb-item:hover {
+            text-decoration: underline;
+        }
+        
+        .breadcrumb-separator {
+            color: #999;
+        }
+        
+        .breadcrumb-current {
+            color: #333;
+            font-weight: bold;
+        }
+        
+        /* Image preview styles */
+        .image-preview {
+            display: none;
+            max-width: 100%;
+            max-height: 200px;
+            margin-top: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        
+        .file-input-label {
+            display: inline-block;
+            padding: 8px 12px;
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            color: #333;
+            transition: all 0.3s ease;
+        }
+        
+        .file-input-label:hover {
+            background-color: #e0e0e0;
+        }
+        
+        .file-input {
+            display: none;
+        }
+        
+        /* Settings Modal Styles */
+        .settings-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 3000;
+            justify-content: center;
+            align-items: center;
+            overflow-y: auto;
+            padding: 20px 0;
+        }
+        .settings-modal.open {
+            display: flex;
+        }
+        .settings-content {
+            background-color: #fff;
+            width: 90%;
+            max-width: 500px;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-height: 90vh;
+            overflow-y: auto;
+            margin: auto;
+        }
+        .settings-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            position: sticky;
+            top: 0;
+            background-color: #fff;
+            z-index: 10;
+            padding-bottom: 10px;
+        }
+        .settings-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .stats-container {
+            background-color: #f5f5f5;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .stat-item:last-child {
+            border-bottom: none;
+        }
+        .stat-label {
+            font-size: 14px;
+            color: #333;
+            font-weight: 500;
+        }
+        .stat-value {
+            font-size: 16px;
+            color: #00b300;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -2040,6 +2497,7 @@
     <div id="loading" class="loading" style="display: none;">
         <div class="loading-spinner"></div>
     </div>
+    
     <!-- Hidden radio buttons for navigation -->
     <input type="radio" name="nav" id="nav-discover" class="nav-radio" checked>
     <input type="radio" name="nav" id="nav-movies" class="nav-radio">
@@ -2067,7 +2525,7 @@
             </div>
             <!-- Logo as Image -->
             <div class="logo">
-                <img src="https://ucarecdn.com/cee71935-3e43-44cb-a532-f962e8a311d1/-/preview/1000x1000/" alt="Movie Nest Logo" />
+                <img src="https://ucarecdn.com/1ad62d6d-b8fb-4f3f-a98a-8d9bba0f57a0/-/preview/1000x1000/" alt="MovieNest Logo" />
             </div>
             <!-- History Icon -->
             <div class="history-icon" onclick="toggleHistoryModal()">
@@ -2092,14 +2550,18 @@
             <button onclick="toggleFilterModal()">✖</button>
         </div>
         <div class="filter-section">
-            <h4>Genre</h4>
+            <h4>Category</h4>
             <div class="filter-options">
-                <div class="filter-option active" data-genre="All">All</div>
-                <div class="filter-option" data-genre="Action">Action</div>
-                <div class="filter-option" data-genre="Drama">Drama</div>
-                <div class="filter-option" data-genre="Comedy">Comedy</div>
-                <div class="filter-option" data-genre="Romance">Romance</div>
-                <div class="filter-option" data-genre="Thriller">Thriller</div>
+                <div class="filter-option active" data-category="All">All</div>
+                <div class="filter-option" data-category="Hollywood">Hollywood</div>
+                <div class="filter-option" data-category="Nollywood">Nollywood</div>
+                <div class="filter-option" data-category="Bollywood">Bollywood</div>
+                <div class="filter-option" data-category="Kannywood">Kannywood</div>
+                <div class="filter-option" data-category="Action">Action</div>
+                <div class="filter-option" data-category="Drama">Drama</div>
+                <div class="filter-option" data-category="Comedy">Comedy</div>
+                <div class="filter-option" data-category="Romance">Romance</div>
+                <div class="filter-option" data-category="Thriller">Thriller</div>
             </div>
         </div>
         <div class="filter-section">
@@ -2157,6 +2619,14 @@
                 <img src="https://cdn-icons-png.flaticon.com/128/2767/2767325.png" alt="View Ads">
                 <span>View Ads</span>
             </div>
+            <div class="sidebar-item" onclick="checkVideoManagementPassword()">
+                <img src="https://cdn-icons-png.flaticon.com/128/4225/4225690.png" alt="Video Management">
+                <span>Video Management</span>
+            </div>
+            <div class="sidebar-item" onclick="checkSettingsPassword()">
+                <img src="https://cdn-icons-png.flaticon.com/128/3405/3405247.png" alt="Settings">
+                <span>Settings</span>
+            </div>
             <div class="sidebar-item">
                 <img src="https://cdn-icons-png.flaticon.com/128/18392/18392966.png" alt="Online Service">
                 <span>Online Service</span>
@@ -2164,11 +2634,6 @@
             <div class="sidebar-item">
                 <img src="https://cdn-icons-png.flaticon.com/128/2312/2312342.png" alt="Privacy Policy">
                 <span>Privacy Policy</span>
-            </div>
-            <!-- New items -->
-            <div class="sidebar-item">
-                <img src="https://cdn-icons-png.flaticon.com/128/3405/3405247.png" alt="Settings">
-                <span>Settings</span>
             </div>
             <div class="sidebar-item">
                 <img src="https://cdn-icons-png.flaticon.com/128/2838/2838694.png" alt="Help">
@@ -2219,10 +2684,34 @@
                 <div class="form-group">
                     <label for="video-category">Category</label>
                     <select id="video-category" required>
+                        <!-- Industries -->
                         <option value="Hollywood">Hollywood</option>
                         <option value="Nollywood">Nollywood</option>
                         <option value="Bollywood">Bollywood</option>
                         <option value="Kannywood">Kannywood</option>
+
+                        <!-- Genres -->
+                        <option value="Action">Action</option>
+                        <option value="Adventure">Adventure</option>
+                        <option value="Comedy">Comedy</option>
+                        <option value="Drama">Drama</option>
+                        <option value="Romance">Romance</option>
+                        <option value="Thriller">Thriller</option>
+                        <option value="Horror">Horror</option>
+                        <option value="Sci-Fi">Sci-Fi</option>
+                        <option value="Fantasy">Fantasy</option>
+                        <option value="Mystery">Mystery</option>
+                        <option value="Crime">Crime</option>
+                        <option value="Documentary">Documentary</option>
+                        <option value="Biography">Biography</option>
+                        <option value="Historical">Historical</option>
+                        <option value="War">War</option>
+                        <option value="Western">Western</option>
+                        <option value="Musical">Musical</option>
+                        <option value="Animation">Animation</option>
+                        <option value="Family">Family</option>
+                        <option value="Sports">Sports</option>
+                        <option value="Short-Drama">Short-Drama</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -2238,7 +2727,7 @@
                 <div class="form-group">
                     <label for="video-country">Country</label>
                     <select id="video-country" required>
-                        <option value="USA">USA</option>
+                        <option value="United States">United States</option>
                         <option value="UK">UK</option>
                         <option value="Nigeria">Nigeria</option>
                         <option value="India">India</option>
@@ -2263,23 +2752,41 @@
                     </label>
                 </div>
                 <div class="form-group">
-                    <label for="video-url">Video URL</label>
-                    <input type="url" id="video-url" placeholder="https://example.com/video" required>
-                    <small style="color: #666; font-size: 12px;">Enter any valid video URL</small>
+                    <label for="video-url">Video URL (Any valid video URL)</label>
+                    <input type="url" id="video-url" placeholder="Enter any video URL (YouTube, Vimeo, Direct Link, etc.)" required>
                 </div>
                 <div class="form-group">
                     <label for="video-download-url">Download URL (Optional)</label>
-                    <input type="url" id="video-download-url" placeholder="https://example.com/download">
-                    <small style="color: #666; font-size: 12px;">Required for Google Drive videos if you want to enable download</small>
+                    <input type="url" id="video-download-url" placeholder="https://example.com/download-link">
+                    <small style="color: #666; font-size: 12px;">Optional: Provide a download link if available</small>
                 </div>
                 <div class="form-group">
-                    <label for="video-thumbnail">Thumbnail URL</label>
-                    <input type="url" id="video-thumbnail" placeholder="https://example.com/thumbnail.jpg">
+                    <label for="video-thumbnail">Thumbnail Image</label>
+                    <label for="video-thumbnail" class="file-input-label">
+                        <i class="fas fa-upload"></i> Choose Thumbnail Image
+                    </label>
+                    <input type="file" id="video-thumbnail" class="file-input" accept="image/*" onchange="previewThumbnail(event, 'video-thumbnail-preview')">
+                    <img id="video-thumbnail-preview" class="image-preview">
+                    <input type="hidden" id="video-thumbnail-url" name="video-thumbnail-url">
                 </div>
                 <div class="form-group">
-                    <label for="video-carousel-thumbnail">Carousel Thumbnail URL (Optional)</label>
-                    <input type="url" id="video-carousel-thumbnail" placeholder="https://example.com/carousel-thumbnail.jpg">
+                    <label for="video-carousel-thumbnail">Carousel Thumbnail Image (Optional)</label>
+                    <label for="video-carousel-thumbnail" class="file-input-label">
+                        <i class="fas fa-upload"></i> Choose Carousel Thumbnail
+                    </label>
+                    <input type="file" id="video-carousel-thumbnail" class="file-input" accept="image/*" onchange="previewThumbnail(event, 'video-carousel-thumbnail-preview')">
+                    <img id="video-carousel-thumbnail-preview" class="image-preview">
+                    <input type="hidden" id="video-carousel-thumbnail-url" name="video-carousel-thumbnail-url">
                     <small style="color: #666; font-size: 12px;">If not provided, the regular thumbnail will be used</small>
+                </div>
+                
+                <!-- Folder Selection -->
+                <div class="form-group folder-selection">
+                    <label for="video-folder">Save to Folder (Optional)</label>
+                    <select id="video-folder" class="folder-select">
+                        <option value="">No Folder</option>
+                        <!-- Folders will be loaded here dynamically -->
+                    </select>
                 </div>
                 
                 <!-- Series-specific fields - initially hidden -->
@@ -2300,8 +2807,10 @@
                     <h4>Example URLs:</h4>
                     <p>YouTube: https://www.youtube.com/embed/MN4hHqWWpwU</p>
                     <p>Google Drive: https://drive.google.com/file/d/1CWOELtePqeDDI-t07aWB0NAWQXlvH-ul/preview</p>
-                    <p>Google Drive Download: https://drive.google.com/uc?export=download&id=1CWOELtePqeDDI-t07aWB0NAWQXlvH-ul</p>
-                    <p>Any other video source: https://example.com/video.mp4</p>
+                    <p>Vimeo: https://player.vimeo.com/video/123456789</p>
+                    <p>Dailymotion: https://www.dailymotion.com/embed/video/x123456</p>
+                    <p>Direct MP4: https://example.com/video.mp4</p>
+                    <p>Any other valid video URL</p>
                 </div>
             </form>
         </div>
@@ -2390,6 +2899,160 @@
         </div>
     </div>
     
+    <!-- Settings Modal -->
+    <div class="settings-modal" id="settings-modal">
+        <div class="settings-content">
+            <div class="settings-header">
+                <h3>Settings</h3>
+                <button onclick="closeSettingsModal()">✖</button>
+            </div>
+            
+            <div class="stats-container">
+                <h4 style="margin-top: 0; margin-bottom: 15px; color: #333;">App Statistics</h4>
+                
+                <div class="stat-item">
+                    <div class="stat-label">Total Videos</div>
+                    <div class="stat-value" id="total-videos-count">0</div>
+                </div>
+                
+                <div class="stat-item">
+                    <div class="stat-label">Total Video Views</div>
+                    <div class="stat-value" id="total-views-count">0</div>
+                </div>
+                
+                <div class="stat-item">
+                    <div class="stat-label">Total Apps</div>
+                    <div class="stat-value" id="total-apps-count">0</div>
+                </div>
+                
+                <div class="stat-item">
+                    <div class="stat-label">Total App Views</div>
+                    <div class="stat-value" id="total-app-views-count">0</div>
+                </div>
+                
+                <div class="stat-item">
+                    <div class="stat-label">Total Ads</div>
+                    <div class="stat-value" id="total-ads-count">0</div>
+                </div>
+                
+                <div class="stat-item">
+                    <div class="stat-label">Total Ad Views</div>
+                    <div class="stat-value" id="total-ad-views-count">0</div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="cache-clear">Clear App Cache</label>
+                <button type="button" class="upload-btn" onclick="clearAppCacheAndNotify()">Clear Cache</button>
+                <small style="color: #666; font-size: 12px;">This will clear all cached data and reload the app</small>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Video Management Modal -->
+    <div class="video-management-modal" id="video-management-modal">
+        <div class="video-management-content">
+            <div class="video-management-header">
+                <h3 id="video-management-title">Video Management</h3>
+                <button onclick="closeVideoManagementModal()">✖</button>
+            </div>
+            
+            <!-- Folder Management Section -->
+            <div class="folder-management">
+                <div class="folder-header">
+                    <div class="folder-title">Folders</div>
+                    <div class="folder-actions">
+                        <button class="folder-btn" onclick="openCreateFolderModal()">
+                            <i class="fas fa-plus"></i> Create Folder
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Breadcrumb Navigation -->
+                <div class="breadcrumb" id="folder-breadcrumb">
+                    <div class="breadcrumb-item" onclick="showAllVideosInManagement()">All Videos</div>
+                </div>
+                
+                <!-- Folder List -->
+                <div class="folder-list" id="folder-list">
+                    <!-- Folders will be loaded here dynamically -->
+                </div>
+            </div>
+            
+            <div class="video-management-search">
+                <div class="search-container" style="width: 100%; margin-bottom: 15px;">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="video-management-search" placeholder="Search videos..." oninput="filterManagementVideos()">
+                </div>
+            </div>
+            <div class="video-management-list" id="video-management-list">
+                <!-- Videos will be loaded here -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- Create Folder Modal -->
+    <div class="create-folder-modal" id="create-folder-modal">
+        <div class="create-folder-content">
+            <div class="create-folder-header">
+                <h3>Create New Folder</h3>
+                <button onclick="closeCreateFolderModal()">✖</button>
+            </div>
+            <form class="create-folder-form" id="create-folder-form" onsubmit="createFolderSubmit(event)">
+                <div class="form-group">
+                    <label for="folder-name">Folder Name</label>
+                    <input type="text" id="folder-name" placeholder="Enter folder name" required>
+                </div>
+                <div class="form-group">
+                    <label for="folder-description">Description (Optional)</label>
+                    <textarea id="folder-description" placeholder="Enter folder description" rows="3"></textarea>
+                </div>
+                <button type="submit" class="create-folder-btn">Create Folder</button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Edit Folder Modal -->
+    <div class="create-folder-modal" id="edit-folder-modal">
+        <div class="create-folder-content">
+            <div class="create-folder-header">
+                <h3>Edit Folder</h3>
+                <button onclick="closeEditFolderModal()">✖</button>
+            </div>
+            <form class="create-folder-form" id="edit-folder-form" onsubmit="editFolderSubmit(event)">
+                <div class="form-group">
+                    <label for="edit-folder-name">Folder Name</label>
+                    <input type="text" id="edit-folder-name" placeholder="Enter folder name" required>
+                </div>
+                <div class="form-group">
+                    <label for="edit-folder-description">Description (Optional)</label>
+                    <textarea id="edit-folder-description" placeholder="Enter folder description" rows="3"></textarea>
+                </div>
+                <button type="submit" class="create-folder-btn">Update Folder</button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Video Folder Management Modal -->
+    <div class="create-folder-modal" id="video-folder-modal">
+        <div class="create-folder-content">
+            <div class="create-folder-header">
+                <h3>Change Video Folder</h3>
+                <button onclick="closeVideoFolderModal()">✖</button>
+            </div>
+            <form class="create-folder-form" id="video-folder-form" onsubmit="changeVideoFolderSubmit(event)">
+                <div class="form-group">
+                    <label for="video-folder-select">Select Folder</label>
+                    <select id="video-folder-select" class="folder-select">
+                        <option value="">No Folder</option>
+                        <!-- Folders will be loaded here dynamically -->
+                    </select>
+                </div>
+                <button type="submit" class="create-folder-btn">Update Folder</button>
+            </form>
+        </div>
+    </div>
+    
     <!-- Submenu for Ads Center -->
     <div class="submenu" id="ads-submenu">
         <div class="submenu-item" onclick="checkUploadAdPassword()">
@@ -2443,12 +3106,6 @@
         </div>
     </div>
     
-    <div class="notification-bar" id="notification-bar">
-        <img src="https://bit.ly/434z6xR" alt="App Logo">
-        <div class="notification-text">Enjoy more movies download movie nest app.</div>
-        <button class="notification-button" onclick="window.open('https://www.appcreator24.com/app3501058-ks4rfa', '_blank')">OPEN</button>
-        <button class="close-button" onclick="closeNotification()">✖</button>
-    </div>
     <!-- History Modal -->
     <div class="history-modal" id="history-modal">
         <div class="history-modal-header">
@@ -2476,8 +3133,25 @@
                 <div class="category-btn" data-category="Bollywood">Bollywood</div>
                 <div class="category-btn" data-category="Kannywood">Kannywood</div>
                 <div class="category-btn" data-category="Action">Action</div>
-                <div class="category-btn" data-category="Drama">Drama</div>
+                <div class="category-btn" data-category="Short-Drama">Short-Drama</div>
                 <div class="category-btn" data-category="Comedy">Comedy</div>
+                <div class="category-btn" data-category="Adventure">Adventure</div>
+                <div class="category-btn" data-category="Romance">Romance</div>
+                <div class="category-btn" data-category="Thriller">Thriller</div>
+                <div class="category-btn" data-category="Horror">Horror</div>
+                <div class="category-btn" data-category="Sci-Fi">Sci-Fi</div>
+                <div class="category-btn" data-category="Fantasy">Fantasy</div>
+                <div class="category-btn" data-category="Mystery">Mystery</div>
+                <div class="category-btn" data-category="Crime">Crime</div>
+                <div class="category-btn" data-category="Documentary">Documentary</div>
+                <div class="category-btn" data-category="Biography">Biography</div>
+                <div class="category-btn" data-category="Historical">Historical</div>
+                <div class="category-btn" data-category="War">War</div>
+                <div class="category-btn" data-category="Western">Western</div>
+                <div class="category-btn" data-category="Musical">Musical</div>
+                <div class="category-btn" data-category="Animation">Animation</div>
+                <div class="category-btn" data-category="Family">Family</div>
+                <div class="category-btn" data-category="Sports">Sports</div>
             </div>
         </div>
         
@@ -2500,7 +3174,7 @@
             </div>
             <div class="nav-body">
                 <div style="position: relative; width: 100%; height: 100%;">
-                    <!-- Download button (only shown for videos with download URL) -->
+                    <!-- Download button (only shown if download URL is available) -->
                     <button class="download-btn" id="video-download-btn" style="display: none;" onclick="downloadVideo()">
                         <i class="fas fa-download"></i>
                         <span>Download</span>
@@ -2568,8 +3242,8 @@
     <!-- Bottom Navigation Bar -->
     <footer>
         <label for="nav-discover" class="nav-icon" onclick="showDiscoverSection();">
-            <i class="fas fa-compass"></i>
-            <span>Discover</span>
+            <i class="fa-solid fa-house"></i>
+            <span>Home</span>
         </label>
         <label for="nav-movies" class="nav-icon" onclick="showHomeVideos();">
             <i class="fas fa-film"></i>
@@ -2580,7 +3254,7 @@
             <span>Trending</span>
         </label>
         <label for="nav-mylist" class="nav-icon" onclick="showMyList();">
-            <i class="fas fa-list"></i>
+            <i class="fas fa-tasks"></i>
             <span>My List</span>
         </label>
         <label for="nav-apps" class="nav-icon" onclick="showProfileSection();">
@@ -2604,15 +3278,81 @@
         const db = firebase.firestore();
         const storage = firebase.storage();
         
+        // Cache management functions
+        const CACHE_EXPIRY_HOURS = 24; // Cache expires after 24 hours
+
+        function isCacheExpired(timestamp) {
+            const now = new Date().getTime();
+            const cacheTime = new Date(timestamp).getTime();
+            const hoursDiff = (now - cacheTime) / (1000 * 60 * 60);
+            return hoursDiff > CACHE_EXPIRY_HOURS;
+        }
+
+        function getCachedData(key) {
+            try {
+                const cachedData = localStorage.getItem(key);
+                if (!cachedData) return null;
+                
+                const { data, timestamp } = JSON.parse(cachedData);
+                if (isCacheExpired(timestamp)) {
+                    localStorage.removeItem(key);
+                    return null;
+                }
+                
+                return data;
+            } catch (error) {
+                console.error('Error reading from cache:', error);
+                return null;
+            }
+        }
+
+        function setCachedData(key, data) {
+            try {
+                const cacheData = {
+                    data,
+                    timestamp: new Date().toISOString()
+                };
+                localStorage.setItem(key, JSON.stringify(cacheData));
+            } catch (error) {
+                console.error('Error writing to cache:', error);
+            }
+        }
+        
+        // Function to format view counts with K, M, B suffixes
+        function formatViewCount(count) {
+            if (!count) return '0';
+            
+            const num = parseInt(count);
+            if (num >= 1000000000) {
+                return (num / 1000000000).toFixed(1) + 'B';
+            } else if (num >= 1000000) {
+                return (num / 1000000).toFixed(1) + 'M';
+            } else if (num >= 1000) {
+                return (num / 1000).toFixed(1) + 'K';
+            }
+            return num.toString();
+        }
+        
         // Fetch videos from Firestore
         async function fetchVideosFromFirestore() {
             try {
+                // Check cache first
+                const cachedVideos = getCachedData('videosCache');
+                if (cachedVideos) {
+                    console.log('Using cached videos');
+                    return cachedVideos;
+                }
+                
                 showLoading();
                 const snapshot = await db.collection('videos').get();
                 const videos = [];
                 snapshot.forEach(doc => {
                     videos.push({ id: doc.id, ...doc.data() });
                 });
+                
+                // Cache the results
+                setCachedData('videosCache', videos);
+                
                 hideLoading();
                 return videos;
             } catch (error) {
@@ -2626,11 +3366,22 @@
         // Fetch ads from Firestore
         async function fetchAdsFromFirestore() {
             try {
+                // Check cache first
+                const cachedAds = getCachedData('adsCache');
+                if (cachedAds) {
+                    console.log('Using cached ads');
+                    return cachedAds;
+                }
+                
                 const snapshot = await db.collection('ads').get();
                 const ads = [];
                 snapshot.forEach(doc => {
                     ads.push({ id: doc.id, ...doc.data() });
                 });
+                
+                // Cache the results
+                setCachedData('adsCache', ads);
+                
                 return ads;
             } catch (error) {
                 console.error('Error fetching ads:', error);
@@ -2641,16 +3392,71 @@
         // Fetch apps from Firestore
         async function fetchAppsFromFirestore() {
             try {
+                // Check cache first
+                const cachedApps = getCachedData('appsCache');
+                if (cachedApps) {
+                    console.log('Using cached apps');
+                    return cachedApps;
+                }
+                
                 const snapshot = await db.collection('apps').get();
                 const apps = [];
                 snapshot.forEach(doc => {
                     apps.push({ id: doc.id, ...doc.data() });
                 });
+                
+                // Cache the results
+                setCachedData('appsCache', apps);
+                
                 return apps;
             } catch (error) {
                 console.error('Error fetching apps:', error);
                 return [];
             }
+        }
+        
+        // Fetch folders from Firestore
+        async function fetchFoldersFromFirestore() {
+            try {
+                // Check cache first
+                const cachedFolders = getCachedData('foldersCache');
+                if (cachedFolders) {
+                    console.log('Using cached folders');
+                    return cachedFolders;
+                }
+                
+                const snapshot = await db.collection('folders').get();
+                const folders = [];
+                snapshot.forEach(doc => {
+                    folders.push({ id: doc.id, ...doc.data() });
+                });
+                
+                // Cache the results
+                setCachedData('foldersCache', folders);
+                
+                return folders;
+            } catch (error) {
+                console.error('Error fetching folders:', error);
+                return [];
+            }
+        }
+        
+        // Function to clear cache when needed (e.g., after uploading new content)
+        function clearAppCache() {
+            localStorage.removeItem('videosCache');
+            localStorage.removeItem('adsCache');
+            localStorage.removeItem('appsCache');
+            localStorage.removeItem('foldersCache');
+            console.log('App cache cleared');
+        }
+        
+        // Function to clear cache and show notification
+        function clearAppCacheAndNotify() {
+            clearAppCache();
+            showNotification('Cache cleared successfully. App will reload now.', 'success');
+            setTimeout(() => {
+                window.location.reload();
+            }, 2000);
         }
         
         // Initialize saved movies from localStorage
@@ -2661,6 +3467,10 @@
             name: 'Movie Nest User',
             avatar: null
         };
+        
+        // Initialize current folder for video management
+        let currentFolderId = null;
+        let currentFolderName = null;
         
         // Fallback data in case external files fail to load
         const fallbackData = [
@@ -2740,6 +3550,21 @@
         // Track if we're currently in the app upload modal
         let inAppUploadModal = false;
         
+        // Track if we're currently in the video management modal
+        let inVideoManagementModal = false;
+        
+        // Track if we're currently in the create folder modal
+        let inCreateFolderModal = false;
+        
+        // Track if we're currently in the edit folder modal
+        let inEditFolderModal = false;
+        
+        // Track if we're currently in the video folder modal
+        let inVideoFolderModal = false;
+        
+        // Track if we're currently in the settings modal
+        let inSettingsModal = false;
+        
         // Track if we're currently in the ads submenu
         let inAdsSubmenu = false;
         
@@ -2763,9 +3588,6 @@
         // Track if we're opening a direct video link
         let openingDirectLink = false;
         
-        // Track category view state
-        let inCategoryView = false;
-        
         // Function to show/hide loading spinner
         function showLoading() {
             document.getElementById('loading').style.display = 'flex';
@@ -2779,11 +3601,169 @@
         function isValidVideoUrl(url) {
             try {
                 const urlObj = new URL(url);
-                // Just check if it's a valid URL, no restrictions on domain
+                // Simply check if it's a valid URL without restricting to specific domains
                 return true;
             } catch (e) {
                 return false;
             }
+        }
+        
+        // Function to preview selected thumbnail
+        function previewThumbnail(event, previewId) {
+            const file = event.target.files[0];
+            const preview = document.getElementById(previewId);
+            
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            } else {
+                preview.style.display = 'none';
+            }
+        }
+        
+        // Function to upload image to Firebase Storage
+        async function uploadImage(file, path) {
+            if (!file) return null;
+            
+            try {
+                showLoading();
+                const storageRef = storage.ref();
+                const fileName = `${Date.now()}_${file.name}`;
+                const fileRef = storageRef.child(`${path}/${fileName}`);
+                
+                await fileRef.put(file);
+                const downloadUrl = await fileRef.getDownloadURL();
+                hideLoading();
+                
+                return downloadUrl;
+            } catch (error) {
+                console.error('Error uploading image:', error);
+                hideLoading();
+                showNotification('Error uploading image. Please try again.', 'error');
+                return null;
+            }
+        }
+        
+        // Save form data to localStorage
+        function saveUploadFormData() {
+            const formData = {
+                title: document.getElementById('video-title').value,
+                description: document.getElementById('video-description').value,
+                type: document.getElementById('video-type').value,
+                category: document.getElementById('video-category').value,
+                genre: document.getElementById('video-genre').value,
+                country: document.getElementById('video-country').value,
+                year: document.getElementById('video-year').value,
+                trending: document.getElementById('video-trending').checked,
+                videoUrl: document.getElementById('video-url').value,
+                downloadUrl: document.getElementById('video-download-url').value,
+                thumbnail: document.getElementById('video-thumbnail-url').value,
+                carouselThumbnail: document.getElementById('video-carousel-thumbnail-url').value,
+                folderId: document.getElementById('video-folder').value,
+                seasons: seasons.map(season => ({
+                    seasonNumber: season.seasonNumber,
+                    episodes: season.episodes.map(episode => ({
+                        number: episode.number,
+                        title: episode.title,
+                        url: episode.url,
+                        downloadUrl: episode.downloadUrl || ''
+                    }))
+                }))
+            };
+            
+            localStorage.setItem('uploadFormData', JSON.stringify(formData));
+        }
+        
+        // Load form data from localStorage
+        function loadUploadFormData() {
+            const savedData = localStorage.getItem('uploadFormData');
+            if (!savedData) return;
+            
+            try {
+                const formData = JSON.parse(savedData);
+                
+                // Populate basic fields
+                document.getElementById('video-title').value = formData.title || '';
+                document.getElementById('video-description').value = formData.description || '';
+                document.getElementById('video-type').value = formData.type || 'Movie';
+                document.getElementById('video-category').value = formData.category || 'Hollywood';
+                document.getElementById('video-genre').value = formData.genre || 'Action';
+                document.getElementById('video-country').value = formData.country || 'United States';
+                document.getElementById('video-year').value = formData.year || '';
+                document.getElementById('video-trending').checked = formData.trending || false;
+                document.getElementById('video-url').value = formData.videoUrl || '';
+                document.getElementById('video-download-url').value = formData.downloadUrl || '';
+                document.getElementById('video-folder').value = formData.folderId || '';
+                
+                // Set thumbnail URL and preview
+                document.getElementById('video-thumbnail-url').value = formData.thumbnail || '';
+                if (formData.thumbnail) {
+                    const preview = document.getElementById('video-thumbnail-preview');
+                    preview.src = formData.thumbnail;
+                    preview.style.display = 'block';
+                }
+                
+                // Set carousel thumbnail URL and preview
+                document.getElementById('video-carousel-thumbnail-url').value = formData.carouselThumbnail || '';
+                if (formData.carouselThumbnail) {
+                    const preview = document.getElementById('video-carousel-thumbnail-preview');
+                    preview.src = formData.carouselThumbnail;
+                    preview.style.display = 'block';
+                }
+                
+                // Handle series data if present
+                if ((formData.type === 'series' || formData.type === 'anime') && formData.seasons && formData.seasons.length > 0) {
+                    toggleSeriesFields();
+                    
+                    // Clear existing seasons
+                    seasons = [];
+                    seasonCounter = 0;
+                    document.getElementById('seasons-list').innerHTML = '';
+                    
+                    // Recreate seasons
+                    formData.seasons.forEach(seasonData => {
+                        addSeason();
+                        const currentSeason = seasons[seasons.length - 1];
+                        
+                        // Update season number
+                        currentSeason.seasonNumber = seasonData.seasonNumber;
+                        document.querySelector(`#${currentSeason.id} .season-title`).textContent = `Season ${seasonData.seasonNumber}`;
+                        
+                        // Clear default episode and add saved episodes
+                        currentSeason.episodes = [];
+                        const episodesContainer = document.getElementById(`${currentSeason.id}-episodes`);
+                        episodesContainer.innerHTML = '';
+                        
+                        seasonData.episodes.forEach(episodeData => {
+                            addEpisode(currentSeason.id);
+                            const currentEpisode = currentSeason.episodes[currentSeason.episodes.length - 1];
+                            
+                            // Update episode data
+                            currentEpisode.number = episodeData.number;
+                            currentEpisode.title = episodeData.title;
+                            currentEpisode.url = episodeData.url;
+                            currentEpisode.downloadUrl = episodeData.downloadUrl || '';
+                            
+                            // Update DOM
+                            const episodeElement = document.getElementById(currentEpisode.id);
+                            episodeElement.querySelector('.episode-title input').value = episodeData.title;
+                            episodeElement.querySelector('.episode-url-input').value = episodeData.url;
+                            episodeElement.querySelector('.episode-download-url-input').value = episodeData.downloadUrl || '';
+                        });
+                    });
+                }
+            } catch (error) {
+                console.error('Error loading saved form data:', error);
+            }
+        }
+        
+        // Clear saved form data
+        function clearUploadFormData() {
+            localStorage.removeItem('uploadFormData');
         }
         
         // Function to toggle the upload modal
@@ -2805,7 +3785,10 @@
             history.pushState({ uploadOpen: true }, '');
             
             // Load saved form data
-            loadFormDataFromLocalStorage();
+            loadUploadFormData();
+            
+            // Load folders for folder selection
+            loadFoldersForUpload();
             
             // Scroll to top of modal content
             setTimeout(() => {
@@ -2820,6 +3803,9 @@
             const uploadModal = document.getElementById('upload-modal');
             uploadModal.classList.remove('open');
             inUploadModal = false;
+            
+            // Save form data before closing
+            saveUploadFormData();
         };
         
         // Function to toggle the ad upload modal
@@ -2844,6 +3830,9 @@
             adUploadModal.classList.add('open');
             inAdUploadModal = true;
             
+            // Reset form
+            document.getElementById('ad-upload-form').reset();
+            
             // Scroll to top of modal content
             setTimeout(() => {
                 const adUploadContent = document.querySelector('.ad-upload-content');
@@ -2857,6 +3846,9 @@
             const adUploadModal = document.getElementById('ad-upload-modal');
             adUploadModal.classList.remove('open');
             inAdUploadModal = false;
+            
+            // Reset form
+            document.getElementById('ad-upload-form').reset();
         };
         
         // Function to toggle the app upload modal
@@ -2881,6 +3873,9 @@
             appUploadModal.classList.add('open');
             inAppUploadModal = true;
             
+            // Reset form
+            document.getElementById('app-upload-form').reset();
+            
             // Scroll to top of modal content
             setTimeout(() => {
                 const appUploadContent = document.querySelector('.app-upload-content');
@@ -2894,6 +3889,9 @@
             const appUploadModal = document.getElementById('app-upload-modal');
             appUploadModal.classList.remove('open');
             inAppUploadModal = false;
+            
+            // Reset form
+            document.getElementById('app-upload-form').reset();
         };
         
         // Function to check password before opening upload modal
@@ -2938,6 +3936,36 @@
             passwordModal.dataset.target = 'ad';
         };
         
+        // Function to check password before opening video management modal
+        const checkVideoManagementPassword = () => {
+            const passwordModal = document.getElementById('password-modal');
+            passwordModal.classList.add('open');
+            inPasswordModal = true;
+            
+            // Focus on password input
+            setTimeout(() => {
+                document.getElementById('password-input').focus();
+            }, 100);
+            
+            // Set a flag to indicate we're opening video management
+            passwordModal.dataset.target = 'video-management';
+        };
+        
+        // Function to check password before opening settings modal
+        const checkSettingsPassword = () => {
+            const passwordModal = document.getElementById('password-modal');
+            passwordModal.classList.add('open');
+            inPasswordModal = true;
+            
+            // Focus on password input
+            setTimeout(() => {
+                document.getElementById('password-input').focus();
+            }, 100);
+            
+            // Set a flag to indicate we're opening settings
+            passwordModal.dataset.target = 'settings';
+        };
+        
         const closePasswordModal = () => {
             const passwordModal = document.getElementById('password-modal');
             passwordModal.classList.remove('open');
@@ -2952,10 +3980,12 @@
             event.preventDefault();
             
             const password = document.getElementById('password-input').value;
-            const correctPassword = "Mm&&0220";
             const target = document.getElementById('password-modal').dataset.target;
             
-            if (password === correctPassword) {
+            if (password === "Mm&&0220" && target === 'video-management') {
+                closePasswordModal();
+                openVideoManagementModal();
+            } else if (password === "Mm&&0220") {
                 closePasswordModal();
                 openUploadModal();
             } else if (password === "Mm&&0221" && target === 'app') {
@@ -2964,8 +3994,100 @@
             } else if (password === "Mm&&0221" && target === 'ad') {
                 closePasswordModal();
                 openAdUploadModal();
+            } else if (password === "Mm&&02211" && target === 'video-management') {
+                closePasswordModal();
+                openVideoManagementModal();
+            } else if (password === "Mm&&022111" && target === 'settings') {
+                closePasswordModal();
+                openSettingsModal();
             } else {
                 document.getElementById('password-error').textContent = "Incorrect password. Please try again.";
+            }
+        };
+        
+        // Function to open Settings Modal
+        const openSettingsModal = async () => {
+            const settingsModal = document.getElementById('settings-modal');
+            const sidebarModal = document.getElementById('sidebar-modal');
+            
+            // Close sidebar modal first
+            if (sidebarModal.classList.contains('open')) {
+                sidebarModal.classList.remove('open');
+                inSidebarModal = false;
+            }
+            
+            // Open settings modal
+            settingsModal.classList.add('open');
+            inSettingsModal = true;
+            
+            // Load statistics
+            await loadSettingsStatistics();
+            
+            // Scroll to top of modal content
+            setTimeout(() => {
+                const settingsContent = document.querySelector('.settings-content');
+                if (settingsContent) {
+                    settingsContent.scrollTop = 0;
+                }
+            }, 100);
+        };
+        
+        // Function to close the settings modal
+        const closeSettingsModal = () => {
+            const settingsModal = document.getElementById('settings-modal');
+            settingsModal.classList.remove('open');
+            inSettingsModal = false;
+        };
+        
+        // Function to load statistics for settings
+        const loadSettingsStatistics = async () => {
+            try {
+                showLoading();
+                
+                // Get total videos count
+                const videosSnapshot = await db.collection('videos').get();
+                const totalVideos = videosSnapshot.size;
+                document.getElementById('total-videos-count').textContent = totalVideos;
+                
+                // Get total video views
+                let totalVideoViews = 0;
+                videosSnapshot.forEach(doc => {
+                    const views = doc.data().views || 0;
+                    totalVideoViews += views;
+                });
+                document.getElementById('total-views-count').textContent = formatViewCount(totalVideoViews);
+                
+                // Get total apps count
+                const appsSnapshot = await db.collection('apps').get();
+                const totalApps = appsSnapshot.size;
+                document.getElementById('total-apps-count').textContent = totalApps;
+                
+                // Get total app views
+                let totalAppViews = 0;
+                appsSnapshot.forEach(doc => {
+                    const views = doc.data().views || 0;
+                    totalAppViews += views;
+                });
+                document.getElementById('total-app-views-count').textContent = formatViewCount(totalAppViews);
+                
+                // Get total ads count
+                const adsSnapshot = await db.collection('ads').get();
+                const totalAds = adsSnapshot.size;
+                document.getElementById('total-ads-count').textContent = totalAds;
+                
+                // Get total ad views
+                let totalAdViews = 0;
+                adsSnapshot.forEach(doc => {
+                    const views = doc.data().views || 0;
+                    totalAdViews += views;
+                });
+                document.getElementById('total-ad-views-count').textContent = formatViewCount(totalAdViews);
+                
+                hideLoading();
+            } catch (error) {
+                console.error('Error loading settings statistics:', error);
+                showNotification('Error loading statistics. Please try again.', 'error');
+                hideLoading();
             }
         };
         
@@ -3150,7 +4272,7 @@
             
             const viewsButton = document.createElement('button');
             viewsButton.className = 'view-item-views';
-            viewsButton.textContent = app.views ? `${app.views} views` : '0 views';
+            viewsButton.textContent = app.views ? `${formatViewCount(app.views)} views` : '0 views';
             viewsButton.onclick = async () => {
                 try {
                     // Get the app document
@@ -3166,7 +4288,7 @@
                         await appRef.update({ views: newViews });
                         
                         // Update button text to show view count
-                        viewsButton.textContent = `${newViews} views`;
+                        viewsButton.textContent = `${formatViewCount(newViews)} views`;
                         
                         // Update local data
                         app.views = newViews;
@@ -3217,7 +4339,7 @@
             
             const viewsButton = document.createElement('button');
             viewsButton.className = 'view-item-views';
-            viewsButton.textContent = ad.views ? `${ad.views} views` : '0 views';
+            viewsButton.textContent = ad.views ? `${formatViewCount(ad.views)} views` : '0 views';
             viewsButton.onclick = async () => {
                 try {
                     // Get the ad document
@@ -3233,7 +4355,7 @@
                         await adRef.update({ views: newViews });
                         
                         // Update button text to show view count
-                        viewsButton.textContent = `${newViews} views`;
+                        viewsButton.textContent = `${formatViewCount(newViews)} views`;
                         
                         // Update local data
                         ad.views = newViews;
@@ -3312,544 +4434,6 @@
                 });
             } else {
                 adsContent.innerHTML = '<p>No ads found matching your search</p>';
-            }
-        };
-        
-        // Function to toggle series fields based on video type
-        const toggleSeriesFields = () => {
-            const videoType = document.getElementById('video-type').value;
-            const seriesFields = document.getElementById('series-fields');
-            
-            if (videoType === 'series' || videoType === 'anime') {
-                seriesFields.style.display = 'block';
-                
-                // Add at least one season if none exist
-                if (seasons.length === 0) {
-                    addSeason();
-                }
-            } else {
-                seriesFields.style.display = 'none';
-            }
-        };
-        
-        // Function to add a new season
-        const addSeason = () => {
-            seasonCounter++;
-            const seasonId = `season-${seasonCounter}`;
-            
-            const seasonData = {
-                id: seasonId,
-                seasonNumber: seasonCounter,
-                episodes: []
-            };
-            
-            seasons.push(seasonData);
-            
-            const seasonElement = document.createElement('div');
-            seasonElement.className = 'seasons-container';
-            seasonElement.id = seasonId;
-            seasonElement.innerHTML = `
-                <div class="season-header">
-                    <div class="season-title">Season ${seasonCounter}</div>
-                    <div class="season-actions">
-                        <button type="button" class="season-btn" onclick="addEpisode('${seasonId}')">Add Episode</button>
-                        <button type="button" class="season-btn remove" onclick="removeSeason('${seasonId}')">Remove</button>
-                    </div>
-                </div>
-                <div class="episodes-container" id="${seasonId}-episodes">
-                    <!-- Episodes will be added here dynamically -->
-                </div>
-            `;
-            
-            document.getElementById('seasons-list').appendChild(seasonElement);
-            
-            // Add at least one episode to the new season
-            addEpisode(seasonId);
-            
-            // Save form data after adding season
-            saveFormDataToLocalStorage();
-        };
-        
-        // Function to remove a season
-        const removeSeason = (seasonId) => {
-            // Remove from data array
-            seasons = seasons.filter(season => season.id !== seasonId);
-            
-            // Remove from DOM
-            document.getElementById(seasonId).remove();
-            
-            // If no seasons left, reset counter
-            if (seasons.length === 0) {
-                seasonCounter = 0;
-            }
-            
-            // Save form data after removing season
-            saveFormDataToLocalStorage();
-        };
-        
-        // Function to add a new episode to a season
-        const addEpisode = (seasonId) => {
-            const season = seasons.find(s => s.id === seasonId);
-            if (!season) return;
-            
-            const episodeNumber = season.episodes.length + 1;
-            const episodeId = `${seasonId}-episode-${episodeNumber}`;
-            
-            const episodeData = {
-                id: episodeId,
-                number: episodeNumber,
-                title: `Episode ${episodeNumber}`,
-                url: '',
-                downloadUrl: ''
-            };
-            
-            season.episodes.push(episodeData);
-            
-            const episodeElement = document.createElement('div');
-            episodeElement.className = 'episode-item';
-            episodeElement.id = episodeId;
-            episodeElement.innerHTML = `
-                <div class="episode-info">
-                    <div class="episode-number">Episode ${episodeNumber}</div>
-                    <div class="episode-title">
-                        <input type="text" placeholder="Episode title" value="${episodeData.title}" onchange="updateEpisodeTitle('${episodeId}', this.value)">
-                    </div>
-                </div>
-                <div class="episode-actions">
-                    <input type="url" placeholder="Episode URL" style="width: 150px; padding: 5px; margin-right: 5px;" onchange="updateEpisodeUrl('${episodeId}', this.value)">
-                    <input type="url" placeholder="Download URL" style="width: 150px; padding: 5px; margin-right: 10px;" onchange="updateEpisodeDownloadUrl('${episodeId}', this.value)">
-                    <button type="button" class="episode-btn remove" onclick="removeEpisode('${seasonId}', '${episodeId}')">
-                        <i class="fas fa-trash"></i>
-                    </button>
-                </div>
-            `;
-            
-            document.getElementById(`${seasonId}-episodes`).appendChild(episodeElement);
-            
-            // Save form data after adding episode
-            saveFormDataToLocalStorage();
-        };
-        
-        // Function to remove an episode
-        const removeEpisode = (seasonId, episodeId) => {
-            const season = seasons.find(s => s.id === seasonId);
-            if (!season) return;
-            
-            // Remove from data array
-            season.episodes = season.episodes.filter(episode => episode.id !== episodeId);
-            
-            // Remove from DOM
-            document.getElementById(episodeId).remove();
-            
-            // Renumber remaining episodes
-            season.episodes.forEach((episode, index) => {
-                episode.number = index + 1;
-                episode.title = episode.title.replace(/Episode \d+/, `Episode ${index + 1}`);
-                
-                // Update DOM
-                const episodeElement = document.getElementById(episode.id);
-                if (episodeElement) {
-                    episodeElement.querySelector('.episode-number').textContent = `Episode ${index + 1}`;
-                    episodeElement.querySelector('.episode-title input').value = episode.title;
-                }
-            });
-            
-            // Save form data after removing episode
-            saveFormDataToLocalStorage();
-        };
-        
-        // Function to update episode title
-        const updateEpisodeTitle = (episodeId, title) => {
-            for (const season of seasons) {
-                const episode = season.episodes.find(e => e.id === episodeId);
-                if (episode) {
-                    episode.title = title;
-                    break;
-                }
-            }
-            
-            // Save form data after updating episode title
-            saveFormDataToLocalStorage();
-        };
-        
-        // Function to update episode URL
-        const updateEpisodeUrl = (episodeId, url) => {
-            for (const season of seasons) {
-                const episode = season.episodes.find(e => e.id === episodeId);
-                if (episode) {
-                    episode.url = url;
-                    break;
-                }
-            }
-            
-            // Save form data after updating episode URL
-            saveFormDataToLocalStorage();
-        };
-        
-        // Function to update episode download URL
-        const updateEpisodeDownloadUrl = (episodeId, downloadUrl) => {
-            for (const season of seasons) {
-                const episode = season.episodes.find(e => e.id === episodeId);
-                if (episode) {
-                    episode.downloadUrl = downloadUrl;
-                    break;
-                }
-            }
-            
-            // Save form data after updating episode download URL
-            saveFormDataToLocalStorage();
-        };
-        
-        // Function to save form data to localStorage
-        function saveFormDataToLocalStorage() {
-            const formData = {
-                title: document.getElementById('video-title').value,
-                description: document.getElementById('video-description').value,
-                type: document.getElementById('video-type').value,
-                category: document.getElementById('video-category').value,
-                genre: document.getElementById('video-genre').value,
-                country: document.getElementById('video-country').value,
-                year: document.getElementById('video-year').value,
-                trending: document.getElementById('video-trending').checked,
-                videoUrl: document.getElementById('video-url').value,
-                downloadUrl: document.getElementById('video-download-url').value,
-                thumbnail: document.getElementById('video-thumbnail').value,
-                carouselThumbnail: document.getElementById('video-carousel-thumbnail').value,
-                seasons: seasons
-            };
-            
-            localStorage.setItem('videoUploadFormData', JSON.stringify(formData));
-        }
-        
-        // Function to load form data from localStorage
-        function loadFormDataFromLocalStorage() {
-            const savedFormData = localStorage.getItem('videoUploadFormData');
-            if (savedFormData) {
-                const formData = JSON.parse(savedFormData);
-                
-                document.getElementById('video-title').value = formData.title || '';
-                document.getElementById('video-description').value = formData.description || '';
-                document.getElementById('video-type').value = formData.type || 'movie';
-                document.getElementById('video-category').value = formData.category || 'Hollywood';
-                document.getElementById('video-genre').value = formData.genre || 'Action';
-                document.getElementById('video-country').value = formData.country || 'USA';
-                document.getElementById('video-year').value = formData.year || '';
-                document.getElementById('video-trending').checked = formData.trending || false;
-                document.getElementById('video-url').value = formData.videoUrl || '';
-                document.getElementById('video-download-url').value = formData.downloadUrl || '';
-                document.getElementById('video-thumbnail').value = formData.thumbnail || '';
-                document.getElementById('video-carousel-thumbnail').value = formData.carouselThumbnail || '';
-                
-                // Restore seasons data
-                if (formData.seasons && formData.seasons.length > 0) {
-                    seasons = formData.seasons;
-                    seasonCounter = seasons.length;
-                    
-                    // Recreate seasons UI
-                    const seasonsList = document.getElementById('seasons-list');
-                    seasonsList.innerHTML = '';
-                    
-                    seasons.forEach(season => {
-                        const seasonElement = document.createElement('div');
-                        seasonElement.className = 'seasons-container';
-                        seasonElement.id = season.id;
-                        
-                        const seasonHeader = document.createElement('div');
-                        seasonHeader.className = 'season-header';
-                        seasonHeader.innerHTML = `
-                            <div class="season-title">Season ${season.seasonNumber}</div>
-                            <div class="season-actions">
-                                <button type="button" class="season-btn" onclick="addEpisode('${season.id}')">Add Episode</button>
-                                <button type="button" class="season-btn remove" onclick="removeSeason('${season.id}')">Remove</button>
-                            </div>
-                        `;
-                        
-                        const episodesContainer = document.createElement('div');
-                        episodesContainer.className = 'episodes-container';
-                        episodesContainer.id = `${season.id}-episodes`;
-                        
-                        season.episodes.forEach(episode => {
-                            const episodeElement = document.createElement('div');
-                            episodeElement.className = 'episode-item';
-                            episodeElement.id = episode.id;
-                            episodeElement.innerHTML = `
-                                <div class="episode-info">
-                                    <div class="episode-number">Episode ${episode.number}</div>
-                                    <div class="episode-title">
-                                        <input type="text" placeholder="Episode title" value="${episode.title}" onchange="updateEpisodeTitle('${episode.id}', this.value)">
-                                    </div>
-                                </div>
-                                <div class="episode-actions">
-                                    <input type="url" placeholder="Episode URL" style="width: 150px; padding: 5px; margin-right: 5px;" value="${episode.url || ''}" onchange="updateEpisodeUrl('${episode.id}', this.value)">
-                                    <input type="url" placeholder="Download URL" style="width: 150px; padding: 5px; margin-right: 10px;" value="${episode.downloadUrl || ''}" onchange="updateEpisodeDownloadUrl('${episode.id}', this.value)">
-                                    <button type="button" class="episode-btn remove" onclick="removeEpisode('${season.id}', '${episode.id}')">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </div>
-                            `;
-                            
-                            episodesContainer.appendChild(episodeElement);
-                        });
-                        
-                        seasonElement.appendChild(seasonHeader);
-                        seasonElement.appendChild(episodesContainer);
-                        seasonsList.appendChild(seasonElement);
-                    });
-                    
-                    // Show series fields if type is series or anime
-                    toggleSeriesFields();
-                }
-            }
-        }
-        
-        // Handle form submission for video upload - Enhanced for series
-        document.getElementById('upload-form').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            // Get form values
-            const title = document.getElementById('video-title').value;
-            const description = document.getElementById('video-description').value;
-            const type = document.getElementById('video-type').value;
-            const category = document.getElementById('video-category').value;
-            const genre = document.getElementById('video-genre').value;
-            const country = document.getElementById('video-country').value;
-            const year = document.getElementById('video-year').value;
-            const trending = document.getElementById('video-trending').checked;
-            const videoUrl = document.getElementById('video-url').value;
-            const downloadUrl = document.getElementById('video-download-url').value;
-            const thumbnail = document.getElementById('video-thumbnail').value || `https://picsum.photos/seed/${Math.random().toString(36).substring(7)}/300/450.jpg`;
-            const carouselThumbnail = document.getElementById('video-carousel-thumbnail').value;
-            
-            // Validate URL format
-            if (!isValidVideoUrl(videoUrl)) {
-                showNotification('Please enter a valid video URL', 'warning');
-                return;
-            }
-            
-            try {
-                showLoading();
-                
-                // Create video object
-                const videoData = {
-                    title,
-                    description,
-                    type,
-                    category,
-                    genre,
-                    country,
-                    year: parseInt(year),
-                    trending,
-                    videoUrl,
-                    downloadUrl: downloadUrl || null,
-                    imgUrl: thumbnail,
-                    carouselCover: carouselThumbnail || thumbnail, // Use carousel thumbnail if provided, otherwise use regular thumbnail
-                    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-                    uploadedBy: 'anonymous' // Use 'anonymous' instead of user ID
-                };
-                
-                // If it's a series or anime, add seasons and episodes data
-                if ((type === 'series' || type === 'anime') && seasons.length > 0) {
-                    videoData.isSeries = true;
-                    videoData.seasons = seasons.map(season => ({
-                        seasonNumber: season.seasonNumber,
-                        episodes: season.episodes.map(episode => ({
-                            number: episode.number,
-                            title: episode.title,
-                            url: episode.url,
-                            downloadUrl: episode.downloadUrl || null
-                        }))
-                    }));
-                    
-                    // Validate that all episodes have URLs
-                    let allEpisodesHaveUrls = true;
-                    for (const season of videoData.seasons) {
-                        for (const episode of season.episodes) {
-                            if (!episode.url || !isValidVideoUrl(episode.url)) {
-                                allEpisodesHaveUrls = false;
-                                break;
-                            }
-                        }
-                        if (!allEpisodesHaveUrls) break;
-                    }
-                    
-                    if (!allEpisodesHaveUrls) {
-                        showNotification('Please provide valid URLs for all episodes', 'warning');
-                        hideLoading();
-                        return;
-                    }
-                }
-                
-                // Add to Firestore
-                const docRef = await db.collection('videos').add(videoData);
-                
-                // Show success message
-                showNotification('Video uploaded successfully!', 'success');
-                
-                // Clear saved form data after successful upload
-                localStorage.removeItem('videoUploadFormData');
-                
-                // Close modal
-                closeUploadModal();
-                
-                // Add the new video to the local data array
-                const newVideo = {
-                    id: docRef.id,
-                    ...videoData
-                };
-                data.unshift(newVideo);
-                
-                // Refresh the UI
-                createDiscoverSection();
-                createCategories();
-                
-            } catch (error) {
-                console.error('Error uploading video:', error);
-                showNotification('Error uploading video. Please try again.', 'warning');
-            } finally {
-                hideLoading();
-            }
-        });
-        
-        // Handle form submission for ad upload
-        document.getElementById('ad-upload-form').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            // Get form values
-            const title = document.getElementById('ad-title').value;
-            const description = document.getElementById('ad-description').value;
-            const image = document.getElementById('ad-image').value;
-            const link = document.getElementById('ad-link').value;
-            const category = document.getElementById('ad-category').value;
-            
-            try {
-                showLoading();
-                
-                // Create ad object
-                const adData = {
-                    title,
-                    description,
-                    image,
-                    link,
-                    category,
-                    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-                    uploadedBy: 'anonymous'
-                };
-                
-                // Add to Firestore
-                const docRef = await db.collection('ads').add(adData);
-                
-                // Show success message
-                showNotification('Ad uploaded successfully!', 'success');
-                
-                // Close modal
-                closeAdUploadModal();
-                
-                // Refresh ads data
-                const newAd = {
-                    id: docRef.id,
-                    ...adData
-                };
-                if (!adsData) {
-                    adsData = [];
-                }
-                adsData.unshift(newAd);
-                
-                // Update ad display
-                updateAdDisplay();
-                
-            } catch (error) {
-                console.error('Error uploading ad:', error);
-                showNotification('Error uploading ad. Please try again.', 'warning');
-            } finally {
-                hideLoading();
-            }
-        });
-        
-        // Handle form submission for app upload
-        document.getElementById('app-upload-form').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            // Get form values
-            const name = document.getElementById('app-name').value;
-            const description = document.getElementById('app-description').value;
-            const icon = document.getElementById('app-icon').value;
-            const link = document.getElementById('app-link').value;
-            const category = document.getElementById('app-category').value;
-            const rating = parseFloat(document.getElementById('app-rating').value);
-            
-            try {
-                showLoading();
-                
-                // Create app object
-                const appData = {
-                    name,
-                    description,
-                    icon,
-                    link,
-                    category,
-                    rating,
-                    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-                    uploadedBy: 'anonymous'
-                };
-                
-                // Add to Firestore
-                const docRef = await db.collection('apps').add(appData);
-                
-                // Show success message
-                showNotification('App uploaded successfully!', 'success');
-                
-                // Close modal
-                closeAppUploadModal();
-                
-                // Refresh apps data
-                const newApp = {
-                    id: docRef.id,
-                    ...appData
-                };
-                if (!profileApps) {
-                    profileApps = [];
-                }
-                profileApps.unshift(newApp);
-                
-                // Shuffle the profile apps array
-                profileApps = shuffleArray(profileApps);
-                
-                // Update app display
-                updateAppDisplay();
-                
-            } catch (error) {
-                console.error('Error uploading app:', error);
-                showNotification('Error uploading app. Please try again.', 'warning');
-            } finally {
-                hideLoading();
-            }
-        });
-        
-        // Function to update ad display
-        const updateAdDisplay = () => {
-            // Update notification bar ad
-            const notificationBar = document.getElementById('notification-bar');
-            if (adsData && adsData.length > 0) {
-                const ad = adsData[0];
-                notificationBar.querySelector('img').src = ad.image;
-                notificationBar.querySelector('.notification-text').textContent = ad.title;
-                notificationBar.querySelector('.notification-button').onclick = () => window.open(ad.link, '_blank');
-            }
-        };
-        
-        // Function to update app display
-        const updateAppDisplay = () => {
-            // Update profile section
-            if (inGridView && document.getElementById('grid-container').style.display === 'block') {
-                const gridContainer = document.getElementById('grid-container');
-                gridContainer.innerHTML = '';
-                
-                if (profileApps && Array.isArray(profileApps)) {
-                    profileApps.forEach(item => {
-                        const profileItem = createProfileItem(item);
-                        gridContainer.appendChild(profileItem);
-                    });
-                }
             }
         };
         
@@ -3954,9 +4538,10 @@
                 { logoUrl: "https://cdn-icons-png.flaticon.com/128/9592/9592247.png", name: "Ads Center", url: "#", isAds: true },
                 { logoUrl: "https://cdn-icons-png.flaticon.com/128/2767/2767325.png", name: "View Apps", url: "#", isViewApps: true },
                 { logoUrl: "https://cdn-icons-png.flaticon.com/128/2767/2767325.png", name: "View Ads", url: "#", isViewAds: true },
+                { logoUrl: "https://cdn-icons-png.flaticon.com/128/4225/4225690.png", name: "Video Management", url: "#", isVideoManagement: true },
+                { logoUrl: "https://cdn-icons-png.flaticon.com/128/3405/3405247.png", name: "Settings", url: "#", isSettings: true },
                 { logoUrl: "https://cdn-icons-png.flaticon.com/128/18392/18392966.png", name: "Online Service", url: "#" },
                 { logoUrl: "https://cdn-icons-png.flaticon.com/128/2312/2312342.png", name: "Privacy Policy", url: "#" },
-                { logoUrl: "https://cdn-icons-png.flaticon.com/128/3405/3405247.png", name: "Settings", url: "#" },
                 { logoUrl: "https://cdn-icons-png.flaticon.com/128/2838/2838694.png", name: "Help & Support", url: "#" },
             ];
             urlLogos.forEach(item => {
@@ -3978,6 +4563,12 @@
                 } else if (item.isViewAds) {
                     // View Ads
                     sidebarItem.onclick = viewAds;
+                } else if (item.isVideoManagement) {
+                    // Video Management
+                    sidebarItem.onclick = checkVideoManagementPassword;
+                } else if (item.isSettings) {
+                    // Settings
+                    sidebarItem.onclick = checkSettingsPassword;
                 } else {
                     sidebarItem.onclick = () => window.open(item.url, '_blank');
                 }
@@ -4025,13 +4616,21 @@
                 // Use carouselCover if available, otherwise fall back to imgUrl
                 const carouselImage = item.carouselCover || item.imgUrl;
                 
+                // Determine if it's a series or movie
+                const isSeries = item.type === 'series' || item.type === 'anime';
+                const typeIcon = isSeries ? 
+                    '<i class="fas fa-tv" style="margin-right: 5px; color: #00b300;"></i>' : 
+                    '<i class="fas fa-film" style="margin-right: 5px; color: #00b300;"></i>';
+                
                 slide.innerHTML = `
                     <img src="${carouselImage}" alt="${item.title}">
                     <div class="overlay"></div>
-                    <div class="video-title">${item.title}</div>
-                    <div class="video-info">${item.type || 'Movie'} | ${item.year || '2025'} | ${tagsDisplay}</div>
+                    <div class="video-title" style="color: white;">${typeIcon}${item.title}</div>
+                    <div class="video-info">
+                        ${isSeries ? 'Series' : 'Movie'} | ${item.year || '2025'} | ${item.category || 'N/A'} | ${item.country || 'N/A'}
+                    </div>
                     <button class="download-btn">
-                        <i class="fas fa-play"></i> Watch
+                        <i class="fas fa-download"></i> Download
                     </button>
                 `;
                 
@@ -4336,7 +4935,7 @@
             
             const genreDefault = document.createElement('option');
             genreDefault.value = '';
-            genreDefault.textContent = 'All Genres';
+            genreDefault.textContent = 'All Category'; // Changed from "All Genres"
             genreDropdown.appendChild(genreDefault);
             
             genres.forEach(genre => {
@@ -4380,17 +4979,15 @@
                 yearDropdown.appendChild(option);
             });
             
-            // Create filter button
-            const filterButton = document.createElement('button');
-            filterButton.className = 'filter-button';
-            filterButton.innerHTML = '<i class="fas fa-filter"></i> Apply';
-            filterButton.onclick = applyGridFilters;
+            // Add event listeners to apply filters automatically when selection changes
+            genreDropdown.addEventListener('change', applyGridFilters);
+            countryDropdown.addEventListener('change', applyGridFilters);
+            yearDropdown.addEventListener('change', applyGridFilters);
             
             // Add elements to filter section
             filterSection.appendChild(genreDropdown);
             filterSection.appendChild(countryDropdown);
             filterSection.appendChild(yearDropdown);
-            filterSection.appendChild(filterButton);
             
             return filterSection;
         };
@@ -4473,7 +5070,7 @@
             openButton.style.border = 'none';
             openButton.style.padding = '6px 12px';
             openButton.style.borderRadius = '5px';
-            openButton.style.cursor = pointer;
+            openButton.style.cursor = 'pointer';
             openButton.style.fontSize = '14px';
             
             openButton.onclick = async () => {
@@ -4491,7 +5088,7 @@
                         await appRef.update({ views: newViews });
                         
                         // Update button text to show view count
-                        openButton.textContent = `${newViews} views`;
+                        openButton.textContent = `${formatViewCount(newViews)} views`;
                         
                         // Update local data
                         item.views = newViews;
@@ -4563,7 +5160,7 @@
             openButton.style.border = 'none';
             openButton.style.padding = '6px 12px';
             openButton.style.borderRadius = '5px';
-            openButton.style.cursor = pointer;
+            openButton.style.cursor = 'pointer';
             openButton.style.fontSize = '14px';
             
             openButton.onclick = async () => {
@@ -4581,7 +5178,7 @@
                         await adRef.update({ views: newViews });
                         
                         // Update button text to show view count
-                        openButton.textContent = `${newViews} views`;
+                        openButton.textContent = `${formatViewCount(newViews)} views`;
                         
                         // Update local data
                         item.views = newViews;
@@ -4681,7 +5278,7 @@
         // Track current movie in modal
         let currentMovieInModal = null;
         
-        // Enhanced checkVideoIdInUrl function to handle sharing links
+        // Modified checkVideoIdInUrl function to wait for ads data
         const checkVideoIdInUrl = async () => {
             const urlParams = new URLSearchParams(window.location.search);
             const videoId = urlParams.get('videoId');
@@ -4695,7 +5292,7 @@
                 openingDirectLink = true;
                 
                 try {
-                    // Fetch videos from Firestore to ensure we have the latest data
+                    // Fetch videos from Firestore
                     const fetchedVideos = await fetchVideosFromFirestore();
                     if (fetchedVideos.length > 0) {
                         data = shuffleArray(fetchedVideos);
@@ -4717,11 +5314,6 @@
                             
                             // Open video modal immediately without delay
                             openVideoNav(video.videoUrl, video.title, video);
-                            
-                            // Remove videoId from URL to prevent reopening on refresh
-                            const url = new URL(window.location);
-                            url.searchParams.delete('videoId');
-                            window.history.replaceState({}, '', url);
                         } else {
                             // Video not found
                             directLinkMessage.textContent = 'Video not found. Redirecting to home page...';
@@ -4789,13 +5381,65 @@
                 const separator = videoUrl.includes('?') ? '&' : '?';
                 processedUrl = videoUrl + separator + 'autoplay=1&mute=0';
             } 
-            // For other video sources, use as is
+            // Check if it's a Vimeo embed URL
+            else if (videoUrl.includes('player.vimeo.com/video/')) {
+                // Add autoplay parameter for Vimeo
+                const separator = videoUrl.includes('?') ? '&' : '?';
+                processedUrl = videoUrl + separator + 'autoplay=1&muted=0';
+            }
+            // Check if it's a Dailymotion embed URL
+            else if (videoUrl.includes('dailymotion.com/embed/video/')) {
+                // Add autoplay parameters for Dailymotion
+                const separator = videoUrl.includes('?') ? '&' : '?';
+                processedUrl = videoUrl + separator + 'autoplay=1&muted=0';
+            }
+            // For direct video files (mp4, webm, etc.)
+            else if (videoUrl.match(/\.(mp4|webm|ogg|avi|mov)(\?.*)?$/i)) {
+                // Create a video element instead of iframe for direct video files
+                const existingVideo = iframeContainer.querySelector('video');
+                if (existingVideo) {
+                    existingVideo.remove();
+                }
+                
+                const videoElement = document.createElement('video');
+                videoElement.id = 'video-player';
+                videoElement.controls = true;
+                videoElement.autoplay = true;
+                videoElement.style.width = '100%';
+                videoElement.style.height = '100%';
+                
+                const sourceElement = document.createElement('source');
+                sourceElement.src = videoUrl;
+                
+                // Determine video type based on file extension
+                if (videoUrl.includes('.mp4')) {
+                    sourceElement.type = 'video/mp4';
+                } else if (videoUrl.includes('.webm')) {
+                    sourceElement.type = 'video/webm';
+                } else if (videoUrl.includes('.ogg')) {
+                    sourceElement.type = 'video/ogg';
+                }
+                
+                videoElement.appendChild(sourceElement);
+                iframeContainer.appendChild(videoElement);
+                
+                // Set the processed URL to the original URL
+                processedUrl = videoUrl;
+            }
+            // For Google Drive preview or other embeddable services
+            else if (videoUrl.includes('drive.google.com/file/d/')) {
+                // Google Drive preview doesn't autoplay by default, so no changes needed
+                processedUrl = videoUrl;
+            }
+            // For any other URL, use as is
             else {
                 processedUrl = videoUrl;
             }
             
-            // Set the processed video URL in the iframe
-            videoPlayer.src = processedUrl;
+            // Set the processed video URL in the iframe if it's still an iframe
+            if (videoPlayer.tagName === 'IFRAME') {
+                videoPlayer.src = processedUrl;
+            }
             
             // Track current movie
             currentMovieInModal = item;
@@ -4803,14 +5447,14 @@
             // Update save button state
             updateSaveButton();
             
-            // Show/hide download button based on video source
+            // Show/hide download button based on whether download URL is available
             const downloadBtn = document.getElementById('video-download-btn');
             if (item.downloadUrl) {
-                // Show download button for videos with download URL
+                // Show download button if download URL is available
                 downloadBtn.style.display = 'flex';
                 downloadBtn.onclick = () => downloadVideo(item.downloadUrl);
             } else {
-                // Hide download button for videos without download URL
+                // Hide download button if no download URL is available
                 downloadBtn.style.display = 'none';
             }
             
@@ -4845,8 +5489,8 @@
                         // Update view count in Firestore
                         await videoRef.update({ views: newViews });
                         
-                        // Update view count display
-                        document.getElementById('view-count').textContent = `${newViews} views`;
+                        // Update view count display with icon only
+                        document.getElementById('view-count').innerHTML = `<i class="fas fa-eye"></i> ${formatViewCount(newViews)}`;
                         
                         // Update local data
                         item.views = newViews;
@@ -4856,15 +5500,15 @@
                             views: 1,
                             ...item 
                         });
-                        document.getElementById('view-count').textContent = '1 views';
+                        document.getElementById('view-count').innerHTML = `<i class="fas fa-eye"></i> 1`;
                         item.views = 1;
                     }
                 } catch (error) {
                     console.error('Error updating view count:', error);
-                    document.getElementById('view-count').textContent = 'Error loading views';
+                    document.getElementById('view-count').innerHTML = `<i class="fas fa-eye"></i> Error`;
                 }
             } else {
-                document.getElementById('view-count').textContent = '0 views';
+                document.getElementById('view-count').innerHTML = `<i class="fas fa-eye"></i> 0`;
             }
             
             // Only push state if we're not already in the modal
@@ -4939,19 +5583,69 @@
                         // Add active class to clicked button
                         episodeBtn.classList.add('active');
                         
-                        // Process episode URL if it's a YouTube video
+                        // Process episode URL based on its type
                         let episodeUrl = episode.url;
+                        
+                        // Check if it's a YouTube embed URL
                         if (episodeUrl.includes('youtube.com/embed/')) {
                             const separator = episodeUrl.includes('?') ? '&' : '?';
                             episodeUrl = episodeUrl + separator + 'autoplay=1&mute=0';
                         }
+                        // Check if it's a Vimeo embed URL
+                        else if (episodeUrl.includes('player.vimeo.com/video/')) {
+                            const separator = episodeUrl.includes('?') ? '&' : '?';
+                            episodeUrl = episodeUrl + separator + 'autoplay=1&muted=0';
+                        }
+                        // Check if it's a Dailymotion embed URL
+                        else if (episodeUrl.includes('dailymotion.com/embed/video/')) {
+                            const separator = episodeUrl.includes('?') ? '&' : '?';
+                            episodeUrl = episodeUrl + separator + 'autoplay=1&muted=0';
+                        }
+                        // For direct video files
+                        else if (episodeUrl.match(/\.(mp4|webm|ogg|avi|mov)(\?.*)?$/i)) {
+                            // Create a video element instead of iframe for direct video files
+                            const existingVideo = iframeContainer.querySelector('video');
+                            if (existingVideo) {
+                                existingVideo.remove();
+                            }
+                            
+                            const videoElement = document.createElement('video');
+                            videoElement.id = 'video-player';
+                            videoElement.controls = true;
+                            videoElement.autoplay = true;
+                            videoElement.style.width = '100%';
+                            videoElement.style.height = '100%';
+                            
+                            const sourceElement = document.createElement('source');
+                            sourceElement.src = episode.url;
+                            
+                            // Determine video type based on file extension
+                            if (episode.url.includes('.mp4')) {
+                                sourceElement.type = 'video/mp4';
+                            } else if (episode.url.includes('.webm')) {
+                                sourceElement.type = 'video/webm';
+                            } else if (episode.url.includes('.ogg')) {
+                                sourceElement.type = 'video/ogg';
+                            }
+                            
+                            videoElement.appendChild(sourceElement);
+                            iframeContainer.appendChild(videoElement);
+                            
+                            // Reset flag after a short delay
+                            setTimeout(() => {
+                                isEpisodeNavigation = false;
+                            }, 100);
+                            return;
+                        }
                         
                         // Load episode in iframe
-                        videoPlayer.src = episodeUrl;
+                        if (videoPlayer.tagName === 'IFRAME') {
+                            videoPlayer.src = episodeUrl;
+                        }
                         
-                        // Update download button if download URL is available
+                        // Update download button for this episode
                         const downloadBtn = document.getElementById('video-download-btn');
-                        if (episode.downloadUrl) {
+                        if (episode.downloadUrl && episode.downloadUrl.trim() !== '') {
                             downloadBtn.style.display = 'flex';
                             downloadBtn.onclick = () => downloadVideo(episode.downloadUrl);
                         } else {
@@ -4989,12 +5683,6 @@
             
             // Add the video to the history
             addToHistory(videoId);
-            
-            // If this is a shared video, show a special notification
-            if (openingDirectLink) {
-                openingDirectLink = false;
-                showNotification(`Now playing: ${item.title}`, 'success');
-            }
         };
         
         // Function to download video
@@ -5080,9 +5768,9 @@
                     
                     document.getElementById('video-player').src = episodeUrl;
                     
-                    // Update download button if download URL is available
+                    // Update download button for this episode
                     const downloadBtn = document.getElementById('video-download-btn');
-                    if (episode.downloadUrl) {
+                    if (episode.downloadUrl && episode.downloadUrl.trim() !== '') {
                         downloadBtn.style.display = 'flex';
                         downloadBtn.onclick = () => downloadVideo(episode.downloadUrl);
                     } else {
@@ -5124,11 +5812,12 @@
                 }
                 document.getElementById('video-player').src = firstEpisodeUrl;
                 
-                // Update download button if download URL is available
+                // Update download button for first episode
+                const firstEpisode = currentSeason.episodes[0];
                 const downloadBtn = document.getElementById('video-download-btn');
-                if (currentSeason.episodes[0].downloadUrl) {
+                if (firstEpisode.downloadUrl && firstEpisode.downloadUrl.trim() !== '') {
                     downloadBtn.style.display = 'flex';
-                    downloadBtn.onclick = () => downloadVideo(currentSeason.episodes[0].downloadUrl);
+                    downloadBtn.onclick = () => downloadVideo(firstEpisode.downloadUrl);
                 } else {
                     downloadBtn.style.display = 'none';
                 }
@@ -5242,8 +5931,7 @@
             
             // Set flag and push state for grid view
             inGridView = true;
-            inCategoryView = true;
-            history.pushState({ gridView: true, categoryView: true }, '');
+            history.pushState({ gridView: true }, '');
             
             const categoryData = data.filter(item => item.category === category);
             currentGridData = categoryData; // Set current grid data for filtering
@@ -5449,13 +6137,13 @@
             }, 200);
         };
         
-        // Improved notification system - Updated to display in the middle of the app
+        // Improved notification system - Updated to center
         function showNotification(message, type = 'info') {
             const notification = document.createElement('div');
             notification.className = `notification ${type}`;
             notification.textContent = message;
             
-            // Position fixed at center of screen
+            // Position fixed at center
             notification.style.position = 'fixed';
             notification.style.top = '50%';
             notification.style.left = '50%';
@@ -5510,14 +6198,15 @@
             history.pushState({ gridView: true }, '');
             
             // Get selected filters
-            const selectedGenre = document.querySelector('.filter-option[data-genre].active')?.dataset.genre || 'All';
+            const selectedCategory = document.querySelector('.filter-option[data-category].active')?.dataset.category || 'All';
             const selectedSort = document.querySelector('.filter-option[data-sort].active')?.dataset.sort || 'Newest';
             
             // Apply filters to data
             let filteredData = data;
             
-            if (selectedGenre !== 'All') {
-                filteredData = filteredData.filter(item => item.genre === selectedGenre);
+            if (selectedCategory !== 'All') {
+                // Filter by category field instead of genre
+                filteredData = filteredData.filter(item => item.category === selectedCategory);
             }
             
             // Sort data
@@ -5531,7 +6220,7 @@
                 filteredData.sort((a, b) => a.title.localeCompare(b.title));
             }
             
-            // Update the grid with filtered data
+            // Update UI with filtered data
             const gridContainer = document.getElementById('grid-container');
             
             // Remove existing frames but keep the filter section
@@ -5550,17 +6239,16 @@
             toggleFilterModal();
         };
         
-        // Share movie function
+        // Share movie function - updated to use localhost
         const shareMovie = () => {
-            // Create a URL with video ID parameter
-            const url = new URL(window.location.href);
-            url.searchParams.set('videoId', currentMovieInModal.id);
-            const shareUrl = url.toString();
+            // Create a URL with video ID parameter using localhost
+            const baseUrl = window.location.origin; // This will automatically use the current domain (localhost when developing)
+            const shareUrl = `${baseUrl}?videoId=${currentMovieInModal.id}`;
             
             if (navigator.share) {
                 navigator.share({
                     title: currentMovieInModal.title,
-                    text: `Check out "${currentMovieInModal.title}" on Movie Nest!`,
+                    text: 'Check out this movie on Hausa Movies!',
                     url: shareUrl
                 })
                 .then(() => console.log('Shared successfully'))
@@ -5773,6 +6461,9 @@
             // Update user profile UI
             updateUserProfile();
             
+            // Check for video ID in URL immediately
+            checkVideoIdInUrl();
+            
             // Check network connection on load
             checkNetworkConnection();
             
@@ -5811,6 +6502,36 @@
                 }
             });
             
+            document.getElementById('video-management-modal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeVideoManagementModal();
+                }
+            });
+            
+            document.getElementById('create-folder-modal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeCreateFolderModal();
+                }
+            });
+            
+            document.getElementById('edit-folder-modal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeEditFolderModal();
+                }
+            });
+            
+            document.getElementById('video-folder-modal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeVideoFolderModal();
+                }
+            });
+            
+            document.getElementById('settings-modal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeSettingsModal();
+                }
+            });
+            
             // Add keyboard event to close modal with Escape key
             document.addEventListener('keydown', function(e) {
                 if (e.key === 'Escape' && inUploadModal) {
@@ -5824,6 +6545,21 @@
                 }
                 if (e.key === 'Escape' && inPasswordModal) {
                     closePasswordModal();
+                }
+                if (e.key === 'Escape' && inVideoManagementModal) {
+                    closeVideoManagementModal();
+                }
+                if (e.key === 'Escape' && inCreateFolderModal) {
+                    closeCreateFolderModal();
+                }
+                if (e.key === 'Escape' && inEditFolderModal) {
+                    closeEditFolderModal();
+                }
+                if (e.key === 'Escape' && inVideoFolderModal) {
+                    closeVideoFolderModal();
+                }
+                if (e.key === 'Escape' && inSettingsModal) {
+                    closeSettingsModal();
                 }
             });
             
@@ -5850,8 +6586,19 @@
                 });
             });
             
-            // Add event listeners to save form data on input change
-            document.getElementById('upload-form').addEventListener('input', saveFormDataToLocalStorage);
+            // Add event listeners to form inputs to save data on change
+            const uploadForm = document.getElementById('upload-form');
+            if (uploadForm) {
+                // Save data on input change
+                uploadForm.addEventListener('input', () => {
+                    saveUploadFormData();
+                });
+                
+                // Save data on select change
+                uploadForm.addEventListener('change', () => {
+                    saveUploadFormData();
+                });
+            }
         });
         
         // Function to initialize ad rotation in the video modal
@@ -5986,10 +6733,6 @@
                 }
                 
                 hideLoading();
-                
-                // Check for video ID in URL after data is loaded
-                await checkVideoIdInUrl();
-                
             } catch (error) {
                 console.error("App initialization failed:", error);
                 showNotification("Failed to load content. Please check your connection.", 'warning');
@@ -6031,8 +6774,25 @@
                 if (category === 'Bollywood') return item.category === 'Bollywood';
                 if (category === 'Kannywood') return item.category === 'Kannywood';
                 if (category === 'Action') return item.genre === 'Action';
-                if (category === 'Drama') return item.genre === 'Drama';
+                if (category === 'Short-Drama') return item.genre === 'Short-Drama';
                 if (category === 'Comedy') return item.genre === 'Comedy';
+                if (category === 'Adventure') return item.genre === 'Adventure';
+                if (category === 'Horror') return item.genre === 'Horror';
+                if (category === 'Sci-Fi') return item.genre === 'Sci-Fi';
+                if (category === 'Romance') return item.genre === 'Romance';
+                if (category === 'Fantasy') return item.genre === 'Fantasy';
+                if (category === 'Mystery') return item.genre === 'Mystery';
+                if (category === 'Crime') return item.genre === 'Crime';
+                if (category === 'Documentary') return item.genre === 'Documentary';
+                if (category === 'Biography') return item.genre === 'Biography';
+                if (category === 'Historical') return item.genre === 'Historical';
+                if (category === 'War') return item.genre === 'War';
+                if (category === 'Western') return item.genre === 'Western';
+                if (category === 'Musical') return item.genre === 'Musical';
+                if (category === 'Animation') return item.genre === 'Animation';
+                if (category === 'Family') return item.genre === 'Family';
+                if (category === 'Sports') return item.genre === 'Sports';
+                if (category === 'Thriller') return item.genre === 'Thriller';
                 return true;
             });
             
@@ -6076,22 +6836,6 @@
             }
             lastScrollTop = currentScrollTop;
         });
-        
-        // Fixed: Changed timeout value to something more reasonable (40 seconds)
-        setTimeout(() => {
-            const bar = document.getElementById('notification-bar');
-            bar.style.opacity = '1';
-            bar.style.pointerEvents = 'auto'; // Enable interaction once visible
-        }, 40000); // Show after 40 seconds
-        
-        function closeNotification() {
-            const bar = document.getElementById('notification-bar');
-            bar.style.opacity = '0';
-            bar.style.pointerEvents = 'none'; // Disable interaction immediately
-            setTimeout(() => {
-                bar.remove(); // Fully remove from DOM
-            }, 500); // Allow fade-out to complete
-        }
         
         // Carousel functionality
         let currentIndex = 0;
@@ -6177,26 +6921,7 @@
             setInterval(nextSlide, 5000);
         }
         
-        // Enhanced back button handling
-        window.addEventListener('popstate', (event) => {
-            // Handle video modal closing
-            if (inVideoModal) {
-                closeModal();
-                inVideoModal = false;
-            } 
-            // Handle grid view navigation back to discover
-            else if (inGridView) {
-                inGridView = false;
-                showDiscoverSection();
-            }
-            // Handle category navigation
-            else if (inCategoryView) {
-                inCategoryView = false;
-                showDiscoverSection();
-            }
-        });
-        
-        // Enhanced closeModal function
+        // Function to close the modal - optimized for immediate closing
         const closeModal = () => {
             // Stop the video immediately
             const videoPlayer = document.getElementById('video-player');
@@ -6242,7 +6967,6 @@
                 }
             }
         };
-        
         // Modified closeNav function for immediate closing
         const closeNav = () => {
             if (inVideoModal) {
@@ -6261,24 +6985,1116 @@
             }
         };
         
-        // Add touch handling for Android back button
-        document.addEventListener('backbutton', (e) => {
+        // Function to toggle series fields based on video type
+        const toggleSeriesFields = () => {
+            const videoType = document.getElementById('video-type').value;
+            const seriesFields = document.getElementById('series-fields');
+            
+            if (videoType === 'series' || videoType === 'anime') {
+                seriesFields.style.display = 'block';
+                
+                // Add at least one season if none exist
+                if (seasons.length === 0) {
+                    addSeason();
+                }
+            } else {
+                seriesFields.style.display = 'none';
+            }
+        };
+        
+        // Function to add a new season
+        const addSeason = () => {
+            seasonCounter++;
+            const seasonId = `season-${seasonCounter}`;
+            
+            const seasonData = {
+                id: seasonId,
+                seasonNumber: seasonCounter,
+                episodes: []
+            };
+            
+            seasons.push(seasonData);
+            
+            const seasonElement = document.createElement('div');
+            seasonElement.className = 'seasons-container';
+            seasonElement.id = seasonId;
+            seasonElement.innerHTML = `
+                <div class="season-header">
+                    <div class="season-title">Season ${seasonCounter}</div>
+                    <div class="season-actions">
+                        <button type="button" class="season-btn" onclick="addEpisode('${seasonId}')">Add Episode</button>
+                        <button type="button" class="season-btn remove" onclick="removeSeason('${seasonId}')">Remove</button>
+                    </div>
+                </div>
+                <div class="episodes-container" id="${seasonId}-episodes">
+                    <!-- Episodes will be added here dynamically -->
+                </div>
+            `;
+            
+            document.getElementById('seasons-list').appendChild(seasonElement);
+            
+            // Add at least one episode to the new season
+            addEpisode(seasonId);
+            
+            // Save form data after adding season
+            saveUploadFormData();
+        };
+        
+        // Function to remove a season
+        const removeSeason = (seasonId) => {
+            // Remove from data array
+            seasons = seasons.filter(season => season.id !== seasonId);
+            
+            // Remove from DOM
+            document.getElementById(seasonId).remove();
+            
+            // If no seasons left, reset counter
+            if (seasons.length === 0) {
+                seasonCounter = 0;
+            }
+            
+            // Save form data after removing season
+            saveUploadFormData();
+        };
+        
+        // Function to add a new episode to a season
+        const addEpisode = (seasonId) => {
+            const season = seasons.find(s => s.id === seasonId);
+            if (!season) return;
+            
+            const episodeNumber = season.episodes.length + 1;
+            const episodeId = `${seasonId}-episode-${episodeNumber}`;
+            
+            const episodeData = {
+                id: episodeId,
+                number: episodeNumber,
+                title: `Episode ${episodeNumber}`,
+                url: '',
+                downloadUrl: ''
+            };
+            
+            season.episodes.push(episodeData);
+            
+            const episodeElement = document.createElement('div');
+            episodeElement.className = 'episode-item';
+            episodeElement.id = episodeId;
+            episodeElement.innerHTML = `
+                <div class="episode-info">
+                    <div class="episode-number">Episode ${episodeNumber}</div>
+                    <div class="episode-title">
+                        <input type="text" placeholder="Episode title" value="${episodeData.title}" onchange="updateEpisodeTitle('${episodeId}', this.value)">
+                    </div>
+                </div>
+                <div class="episode-actions">
+                    <div style="display: flex; flex-direction: column; gap: 5px;">
+                        <input type="url" class="episode-input episode-url-input" placeholder="Enter any video URL" value="${episodeData.url}" onchange="updateEpisodeUrl('${episodeId}', this.value)">
+                        <input type="url" class="episode-input episode-download-url-input" placeholder="Download URL (optional)" value="${episodeData.downloadUrl || ''}" onchange="updateEpisodeDownloadUrl('${episodeId}', this.value)">
+                    </div>
+                    <button type="button" class="episode-btn remove" onclick="removeEpisode('${seasonId}', '${episodeId}')">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            `;
+            
+            document.getElementById(`${seasonId}-episodes`).appendChild(episodeElement);
+            
+            // Save form data after adding episode
+            saveUploadFormData();
+        };
+        
+        // Function to remove an episode
+        const removeEpisode = (seasonId, episodeId) => {
+            const season = seasons.find(s => s.id === seasonId);
+            if (!season) return;
+            
+            // Remove from data array
+            season.episodes = season.episodes.filter(episode => episode.id !== episodeId);
+            
+            // Remove from DOM
+            document.getElementById(episodeId).remove();
+            
+            // Renumber remaining episodes
+            season.episodes.forEach((episode, index) => {
+                episode.number = index + 1;
+                episode.title = episode.title.replace(/Episode \d+/, `Episode ${index + 1}`);
+                
+                // Update DOM
+                const episodeElement = document.getElementById(episode.id);
+                if (episodeElement) {
+                    episodeElement.querySelector('.episode-number').textContent = `Episode ${index + 1}`;
+                    episodeElement.querySelector('.episode-title input').value = episode.title;
+                }
+            });
+            
+            // Save form data after removing episode
+            saveUploadFormData();
+        };
+        
+        // Function to update episode title
+        const updateEpisodeTitle = (episodeId, title) => {
+            for (const season of seasons) {
+                const episode = season.episodes.find(e => e.id === episodeId);
+                if (episode) {
+                    episode.title = title;
+                    break;
+                }
+            }
+            
+            // Save form data after updating episode title
+            saveUploadFormData();
+        };
+        
+        // Function to update episode URL
+        const updateEpisodeUrl = (episodeId, url) => {
+            for (const season of seasons) {
+                const episode = season.episodes.find(e => e.id === episodeId);
+                if (episode) {
+                    episode.url = url;
+                    break;
+                }
+            }
+            
+            // Save form data after updating episode URL
+            saveUploadFormData();
+        };
+        
+        // Function to update episode download URL
+        const updateEpisodeDownloadUrl = (episodeId, downloadUrl) => {
+            for (const season of seasons) {
+                const episode = season.episodes.find(e => e.id === episodeId);
+                if (episode) {
+                    episode.downloadUrl = downloadUrl;
+                    break;
+                }
+            }
+            
+            // Save form data after updating episode download URL
+            saveUploadFormData();
+        };
+        
+        // Handle form submission for video upload - Enhanced for series
+        document.getElementById('upload-form').addEventListener('submit', async function(e) {
             e.preventDefault();
             
-            if (inVideoModal) {
-                closeModal();
-                inVideoModal = false;
-            } else if (inGridView) {
-                inGridView = false;
-                showDiscoverSection();
-            } else if (inCategoryView) {
-                inCategoryView = false;
-                showDiscoverSection();
-            } else {
-                // Exit app if on home screen
-                navigator.app.exitApp();
+            // Get form values
+            const title = document.getElementById('video-title').value;
+            const description = document.getElementById('video-description').value;
+            const type = document.getElementById('video-type').value;
+            const category = document.getElementById('video-category').value;
+            const genre = document.getElementById('video-genre').value;
+            const country = document.getElementById('video-country').value;
+            const year = document.getElementById('video-year').value;
+            const trending = document.getElementById('video-trending').checked;
+            const videoUrl = document.getElementById('video-url').value;
+            const downloadUrl = document.getElementById('video-download-url').value;
+            const folderId = document.getElementById('video-folder').value;
+            
+            // Handle thumbnail upload
+            const thumbnailFile = document.getElementById('video-thumbnail').files[0];
+            let thumbnailUrl = document.getElementById('video-thumbnail-url').value;
+            
+            if (thumbnailFile) {
+                thumbnailUrl = await uploadImage(thumbnailFile, 'thumbnails');
+                if (!thumbnailUrl) {
+                    showNotification('Failed to upload thumbnail. Please try again.', 'error');
+                    return;
+                }
+            } else if (!thumbnailUrl) {
+                // Generate a placeholder if no thumbnail is provided
+                thumbnailUrl = `https://picsum.photos/seed/${Math.random().toString(36).substring(7)}/300/450.jpg`;
             }
-        }, false);
+            
+            // Handle carousel thumbnail upload
+            const carouselThumbnailFile = document.getElementById('video-carousel-thumbnail').files[0];
+            let carouselThumbnailUrl = document.getElementById('video-carousel-thumbnail-url').value;
+            
+            if (carouselThumbnailFile) {
+                carouselThumbnailUrl = await uploadImage(carouselThumbnailFile, 'carousel-thumbnails');
+                if (!carouselThumbnailUrl) {
+                    showNotification('Failed to upload carousel thumbnail. Please try again.', 'error');
+                    return;
+                }
+            } else if (!carouselThumbnailUrl) {
+                // Use regular thumbnail if carousel thumbnail is not provided
+                carouselThumbnailUrl = thumbnailUrl;
+            }
+            
+            try {
+                showLoading();
+                
+                // Create video object
+                const videoData = {
+                    title,
+                    description,
+                    type,
+                    category,
+                    genre,
+                    country,
+                    year: parseInt(year),
+                    trending,
+                    videoUrl,
+                    downloadUrl: downloadUrl || null,
+                    imgUrl: thumbnailUrl,
+                    carouselCover: carouselThumbnailUrl,
+                    folderId: folderId || null,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    uploadedBy: 'anonymous'
+                };
+                
+                // If it's a series or anime, add seasons and episodes data
+                if ((type === 'series' || type === 'anime') && seasons.length > 0) {
+                    videoData.isSeries = true;
+                    videoData.seasons = seasons.map(season => ({
+                        seasonNumber: season.seasonNumber,
+                        episodes: season.episodes.map(episode => ({
+                            number: episode.number,
+                            title: episode.title,
+                            url: episode.url,
+                            downloadUrl: episode.downloadUrl || ''
+                        }))
+                    }));
+                    
+                    // Validate that all episodes have URLs
+                    let allEpisodesHaveUrls = true;
+                    for (const season of videoData.seasons) {
+                        for (const episode of season.episodes) {
+                            if (!episode.url || !isValidVideoUrl(episode.url)) {
+                                allEpisodesHaveUrls = false;
+                                break;
+                            }
+                        }
+                        if (!allEpisodesHaveUrls) break;
+                    }
+                    
+                    if (!allEpisodesHaveUrls) {
+                        showNotification('Please provide valid URLs for all episodes', 'warning');
+                        hideLoading();
+                        return;
+                    }
+                }
+                
+                // Check if we're editing an existing video
+                const editingId = document.getElementById('upload-form').dataset.editingId;
+                
+                if (editingId) {
+                    // Update existing video
+                    await db.collection('videos').doc(editingId).update(videoData);
+                    showNotification('Video updated successfully!', 'success');
+                    
+                    // Remove the editing flag
+                    delete document.getElementById('upload-form').dataset.editingId;
+                } else {
+                    // Add new video
+                    const docRef = await db.collection('videos').add(videoData);
+                    showNotification('Video uploaded successfully!', 'success');
+                    
+                    // Add the new video to the local data array
+                    const newVideo = {
+                        id: docRef.id,
+                        ...videoData
+                    };
+                    data.unshift(newVideo);
+                }
+                
+                // Clear cache to force refresh
+                clearAppCache();
+                
+                // Clear saved form data
+                clearUploadFormData();
+                
+                // Clear form and previews
+                document.getElementById('upload-form').reset();
+                document.getElementById('video-thumbnail-preview').style.display = 'none';
+                document.getElementById('video-carousel-thumbnail-preview').style.display = 'none';
+                
+                // Close modal
+                closeUploadModal();
+                
+                // Refresh the UI
+                createDiscoverSection();
+                createCategories();
+                
+            } catch (error) {
+                console.error('Error uploading/updating video:', error);
+                showNotification('Error processing video. Please try again.', 'warning');
+            } finally {
+                hideLoading();
+            }
+        });
+        
+        // Video Management Functions
+        // Function to open the video management modal
+        const openVideoManagementModal = async () => {
+            const videoManagementModal = document.getElementById('video-management-modal');
+            const sidebarModal = document.getElementById('sidebar-modal');
+            
+            // Close sidebar modal first
+            if (sidebarModal.classList.contains('open')) {
+                sidebarModal.classList.remove('open');
+                inSidebarModal = false;
+            }
+            
+            // Open video management modal
+            videoManagementModal.classList.add('open');
+            inVideoManagementModal = true;
+            
+            // Reset current folder
+            currentFolderId = null;
+            currentFolderName = null;
+            
+            // Load folders and videos
+            await loadManagementFolders();
+            await loadManagementVideos();
+            
+            // Update header with total videos count
+            await updateVideoManagementHeader();
+            
+            // Scroll to top of modal content
+            setTimeout(() => {
+                const videoManagementContent = document.querySelector('.video-management-content');
+                if (videoManagementContent) {
+                    videoManagementContent.scrollTop = 0;
+                }
+            }, 100);
+        };
+        
+        // Function to update the video management header with total videos count
+        const updateVideoManagementHeader = async () => {
+            try {
+                // Get total videos count
+                const videosSnapshot = await db.collection('videos').get();
+                const totalVideos = videosSnapshot.size;
+                
+                // Update the header with total count
+                const headerTitle = document.getElementById('video-management-title');
+                if (headerTitle) {
+                    headerTitle.textContent = `Video Management (${totalVideos} videos)`;
+                }
+            } catch (error) {
+                console.error('Error updating video management header:', error);
+            }
+        };
+        
+        // Function to close the video management modal
+        const closeVideoManagementModal = () => {
+            const videoManagementModal = document.getElementById('video-management-modal');
+            videoManagementModal.classList.remove('open');
+            inVideoManagementModal = false;
+            
+            // Reset current folder
+            currentFolderId = null;
+            currentFolderName = null;
+        };
+        
+        // Function to load folders for management
+        const loadManagementFolders = async () => {
+            const folderList = document.getElementById('folder-list');
+            folderList.innerHTML = '<div class="loading"><div class="loading-spinner"></div></div>';
+            
+            try {
+                // Fetch folders from Firestore
+                const folders = await fetchFoldersFromFirestore();
+                
+                // Clear loading indicator
+                folderList.innerHTML = '';
+                
+                if (folders.length === 0) {
+                    folderList.innerHTML = '<div class="no-videos">No folders found</div>';
+                    return;
+                }
+                
+                // Display folders
+                folders.forEach(folder => {
+                    const folderItem = createManagementFolderItem(folder);
+                    folderList.appendChild(folderItem);
+                });
+            } catch (error) {
+                console.error('Error loading folders for management:', error);
+                folderList.innerHTML = '<div class="no-videos">Error loading folders</div>';
+            }
+        };
+        
+        // Function to create a folder item for the management list
+        const createManagementFolderItem = (folder) => {
+            const folderItem = document.createElement('div');
+            folderItem.className = 'folder-item';
+            if (currentFolderId === folder.id) {
+                folderItem.classList.add('active');
+            }
+            
+            const folderName = document.createElement('div');
+            folderName.className = 'folder-name';
+            folderName.textContent = folder.name;
+            
+            const folderDescription = document.createElement('div');
+            folderDescription.className = 'folder-description';
+            folderDescription.textContent = folder.description || 'No description';
+            
+            const folderMeta = document.createElement('div');
+            folderMeta.className = 'folder-meta';
+            
+            // Format the creation date
+            let createdDate = 'Unknown date';
+            if (folder.createdAt) {
+                const date = folder.createdAt.toDate ? folder.createdAt.toDate() : new Date(folder.createdAt);
+                createdDate = date.toLocaleDateString();
+            }
+            
+            folderMeta.innerHTML = `
+                <span>Created: ${createdDate}</span>
+                <div class="folder-actions-small">
+                    <button class="folder-action-btn edit" onclick="editFolder('${folder.id}', '${folder.name}', '${folder.description || ''}')">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                    <button class="folder-action-btn delete" onclick="confirmDeleteFolder('${folder.id}', '${folder.name}')">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            `;
+            
+            folderItem.appendChild(folderName);
+            folderItem.appendChild(folderDescription);
+            folderItem.appendChild(folderMeta);
+            
+            // Add click event to view videos in folder
+            folderItem.onclick = (e) => {
+                // Don't trigger if clicking on action buttons
+                if (e.target.closest('.folder-actions-small')) return;
+                
+                showVideosInFolder(folder.id, folder.name);
+            };
+            
+            return folderItem;
+        };
+        
+        // Function to load videos for management
+        const loadManagementVideos = async () => {
+            const videoList = document.getElementById('video-management-list');
+            videoList.innerHTML = '<div class="loading"><div class="loading-spinner"></div></div>';
+            
+            try {
+                // Fetch videos from Firestore
+                let query = db.collection('videos');
+                
+                // If a folder is selected, filter by folder
+                if (currentFolderId) {
+                    query = query.where('folderId', '==', currentFolderId);
+                }
+                
+                const snapshot = await query.get();
+                let videos = [];
+                snapshot.forEach(doc => {
+                    videos.push({ id: doc.id, ...doc.data() });
+                });
+                
+                // Sort videos by createdAt timestamp in descending order (newest first)
+                videos.sort((a, b) => {
+                    // Handle cases where createdAt might not exist
+                    const aTime = a.createdAt ? (a.createdAt.toDate ? a.createdAt.toDate() : new Date(a.createdAt)) : new Date(0);
+                    const bTime = b.createdAt ? (b.createdAt.toDate ? b.createdAt.toDate() : new Date(b.createdAt)) : new Date(0);
+                    return bTime - aTime; // Sort in descending order (newest first)
+                });
+                
+                // Clear loading indicator
+                videoList.innerHTML = '';
+                
+                if (videos.length === 0) {
+                    videoList.innerHTML = '<div class="no-videos">No videos found</div>';
+                    return;
+                }
+                
+                // Store videos for filtering
+                window.managementVideos = videos;
+                
+                // Display videos
+                videos.forEach(video => {
+                    const videoItem = createManagementVideoItem(video);
+                    videoList.appendChild(videoItem);
+                });
+            } catch (error) {
+                console.error('Error loading videos for management:', error);
+                videoList.innerHTML = '<div class="no-videos">Error loading videos</div>';
+            }
+        };
+        
+        // Function to create a video item for the management list
+        const createManagementVideoItem = (video) => {
+            const videoItem = document.createElement('div');
+            videoItem.className = 'video-management-item';
+            
+            const thumbnail = document.createElement('img');
+            thumbnail.src = video.imgUrl || 'https://picsum.photos/seed/video/80/120.jpg';
+            thumbnail.alt = video.title;
+            thumbnail.className = 'video-thumbnail';
+            
+            const videoInfo = document.createElement('div');
+            videoInfo.className = 'video-info';
+            
+            const title = document.createElement('div');
+            title.className = 'video-title';
+            title.textContent = video.title;
+            
+            const meta = document.createElement('div');
+            meta.className = 'video-meta';
+            
+            // Format the creation date
+            let createdDate = 'Unknown date';
+            if (video.createdAt) {
+                const date = video.createdAt.toDate ? video.createdAt.toDate() : new Date(video.createdAt);
+                createdDate = date.toLocaleDateString();
+            }
+            
+            // Get folder name if available
+            let folderName = 'No Folder';
+            if (video.folderId) {
+                // This would need to be fetched from the folders collection
+                // For now, we'll just show the folder ID
+                folderName = `Folder: ${video.folderId}`;
+            }
+            
+            meta.textContent = `${video.type || 'Movie'} | ${video.category || 'Unknown'} | ${video.year || 'Unknown'} | ${folderName} | Added: ${createdDate}`;
+            
+            videoInfo.appendChild(title);
+            videoInfo.appendChild(meta);
+            
+            const actions = document.createElement('div');
+            actions.className = 'video-actions';
+            
+            const editBtn = document.createElement('button');
+            editBtn.className = 'edit-btn';
+            editBtn.textContent = 'Edit';
+            editBtn.onclick = () => editVideo(video);
+            
+            const deleteBtn = document.createElement('button');
+            deleteBtn.className = 'delete-btn';
+            deleteBtn.textContent = 'Delete';
+            deleteBtn.onclick = () => deleteVideo(video.id, video.title);
+            
+            const folderBtn = document.createElement('button');
+            folderBtn.className = 'edit-btn';
+            folderBtn.textContent = 'Folder';
+            folderBtn.style.marginTop = '5px';
+            folderBtn.onclick = () => openVideoFolderModal(video.id, video.folderId);
+            
+            actions.appendChild(editBtn);
+            actions.appendChild(deleteBtn);
+            actions.appendChild(folderBtn);
+            
+            videoItem.appendChild(thumbnail);
+            videoItem.appendChild(videoInfo);
+            videoItem.appendChild(actions);
+            
+            return videoItem;
+        };
+        
+        // Function to filter videos in the management list
+        const filterManagementVideos = () => {
+            const searchTerm = document.getElementById('video-management-search').value.toLowerCase();
+            const videoList = document.getElementById('video-management-list');
+            
+            if (!window.managementVideos || window.managementVideos.length === 0) {
+                return;
+            }
+            
+            // Clear current list
+            videoList.innerHTML = '';
+            
+            // Filter videos based on search term
+            const filteredVideos = window.managementVideos.filter(video => {
+                return video.title.toLowerCase().includes(searchTerm) ||
+                       (video.category && video.category.toLowerCase().includes(searchTerm)) ||
+                       (video.genre && video.genre.toLowerCase().includes(searchTerm));
+            });
+            
+            if (filteredVideos.length === 0) {
+                videoList.innerHTML = '<div class="no-videos">No videos match your search</div>';
+                return;
+            }
+            
+            // Display filtered videos
+            filteredVideos.forEach(video => {
+                const videoItem = createManagementVideoItem(video);
+                videoList.appendChild(videoItem);
+            });
+        };
+        
+        // Function to edit a video
+        const editVideo = (video) => {
+            // Close video management modal
+            closeVideoManagementModal();
+            
+            // Open upload modal
+            openUploadModal();
+            
+            // Populate form with video data
+            setTimeout(() => {
+                document.getElementById('video-title').value = video.title || '';
+                document.getElementById('video-description').value = video.description || '';
+                document.getElementById('video-type').value = video.type || 'movie';
+                document.getElementById('video-category').value = video.category || 'Hollywood';
+                document.getElementById('video-genre').value = video.genre || 'Action';
+                document.getElementById('video-country').value = video.country || 'United States';
+                document.getElementById('video-year').value = video.year || '';
+                document.getElementById('video-trending').checked = video.trending || false;
+                document.getElementById('video-url').value = video.videoUrl || '';
+                document.getElementById('video-download-url').value = video.downloadUrl || '';
+                document.getElementById('video-folder').value = video.folderId || '';
+                
+                // Set thumbnail URL and preview
+                document.getElementById('video-thumbnail-url').value = video.imgUrl || '';
+                if (video.imgUrl) {
+                    const preview = document.getElementById('video-thumbnail-preview');
+                    preview.src = video.imgUrl;
+                    preview.style.display = 'block';
+                }
+                
+                // Set carousel thumbnail URL and preview
+                document.getElementById('video-carousel-thumbnail-url').value = video.carouselCover || '';
+                if (video.carouselCover) {
+                    const preview = document.getElementById('video-carousel-thumbnail-preview');
+                    preview.src = video.carouselCover;
+                    preview.style.display = 'block';
+                }
+                
+                // Set a flag to indicate we're editing an existing video
+                document.getElementById('upload-form').dataset.editingId = video.id;
+                
+                // If it's a series, populate seasons and episodes
+                if ((video.type === 'series' || video.type === 'anime') && video.seasons) {
+                    toggleSeriesFields();
+                    
+                    // Clear existing seasons
+                    seasons = [];
+                    seasonCounter = 0;
+                    document.getElementById('seasons-list').innerHTML = '';
+                    
+                    // Recreate seasons
+                    video.seasons.forEach(seasonData => {
+                        addSeason();
+                        const currentSeason = seasons[seasons.length - 1];
+                        
+                        // Update season number
+                        currentSeason.seasonNumber = seasonData.seasonNumber;
+                        document.querySelector(`#${currentSeason.id} .season-title`).textContent = `Season ${seasonData.seasonNumber}`;
+                        
+                        // Clear default episode and add saved episodes
+                        currentSeason.episodes = [];
+                        const episodesContainer = document.getElementById(`${currentSeason.id}-episodes`);
+                        episodesContainer.innerHTML = '';
+                        
+                        seasonData.episodes.forEach(episodeData => {
+                            addEpisode(currentSeason.id);
+                            const currentEpisode = currentSeason.episodes[currentSeason.episodes.length - 1];
+                            
+                            // Update episode data
+                            currentEpisode.number = episodeData.number;
+                            currentEpisode.title = episodeData.title;
+                            currentEpisode.url = episodeData.url;
+                            currentEpisode.downloadUrl = episodeData.downloadUrl || '';
+                            
+                            // Update DOM
+                            const episodeElement = document.getElementById(currentEpisode.id);
+                            episodeElement.querySelector('.episode-title input').value = episodeData.title;
+                            episodeElement.querySelector('.episode-url-input').value = episodeData.url;
+                            episodeElement.querySelector('.episode-download-url-input').value = episodeData.downloadUrl || '';
+                        });
+                    });
+                }
+            }, 100);
+        };
+        
+        // Function to delete a video
+        const deleteVideo = async (videoId, videoTitle) => {
+            if (confirm(`Are you sure you want to delete "${videoTitle}"? This action cannot be undone.`)) {
+                try {
+                    showLoading();
+                    
+                    // Delete video from Firestore
+                    await db.collection('videos').doc(videoId).delete();
+                    
+                    // Clear cache to force refresh
+                    clearAppCache();
+                    
+                    // Show success message
+                    showNotification(`"${videoTitle}" has been deleted successfully.`, 'success');
+                    
+                    // Reload videos in management modal
+                    await loadManagementVideos();
+                    
+                    // Also refresh the main app data
+                    await initializeApp();
+                    
+                    hideLoading();
+                } catch (error) {
+                    console.error('Error deleting video:', error);
+                    showNotification('Error deleting video. Please try again.', 'error');
+                    hideLoading();
+                }
+            }
+        };
+        
+        // Folder Management Functions
+        
+        // Function to open the create folder modal
+        const openCreateFolderModal = () => {
+            const createFolderModal = document.getElementById('create-folder-modal');
+            createFolderModal.classList.add('open');
+            inCreateFolderModal = true;
+            
+            // Reset form
+            document.getElementById('create-folder-form').reset();
+            
+            // Focus on folder name input
+            setTimeout(() => {
+                document.getElementById('folder-name').focus();
+            }, 100);
+        };
+        
+        // Function to close the create folder modal
+        const closeCreateFolderModal = () => {
+            const createFolderModal = document.getElementById('create-folder-modal');
+            createFolderModal.classList.remove('open');
+            inCreateFolderModal = false;
+        };
+        
+        // Function to open the edit folder modal
+        const openEditFolderModal = (folderId, folderName, folderDescription) => {
+            const editFolderModal = document.getElementById('edit-folder-modal');
+            editFolderModal.classList.add('open');
+            inEditFolderModal = true;
+            
+            // Populate form with folder data
+            document.getElementById('edit-folder-name').value = folderName;
+            document.getElementById('edit-folder-description').value = folderDescription;
+            
+            // Store folder ID for submission
+            document.getElementById('edit-folder-form').dataset.folderId = folderId;
+            
+            // Focus on folder name input
+            setTimeout(() => {
+                document.getElementById('edit-folder-name').focus();
+            }, 100);
+        };
+        
+        // Function to close the edit folder modal
+        const closeEditFolderModal = () => {
+            const editFolderModal = document.getElementById('edit-folder-modal');
+            editFolderModal.classList.remove('open');
+            inEditFolderModal = false;
+        };
+        
+        // Function to create a new folder
+        const createFolderSubmit = async (event) => {
+            event.preventDefault();
+            
+            const folderName = document.getElementById('folder-name').value.trim();
+            const folderDescription = document.getElementById('folder-description').value.trim();
+            
+            if (!folderName) {
+                showNotification('Please enter a folder name', 'warning');
+                return;
+            }
+            
+            try {
+                showLoading();
+                
+                // Create folder in Firestore
+                const folderData = {
+                    name: folderName,
+                    description: folderDescription,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                };
+                
+                const docRef = await db.collection('folders').add(folderData);
+                
+                // Clear cache to force refresh
+                clearAppCache();
+                
+                // Show success message
+                showNotification('Folder created successfully!', 'success');
+                
+                // Close modal
+                closeCreateFolderModal();
+                
+                // Reload folders
+                await loadManagementFolders();
+                
+                hideLoading();
+            } catch (error) {
+                console.error('Error creating folder:', error);
+                showNotification('Error creating folder. Please try again.', 'error');
+                hideLoading();
+            }
+        };
+        
+        // Function to edit a folder
+        const editFolderSubmit = async (event) => {
+            event.preventDefault();
+            
+            const folderId = document.getElementById('edit-folder-form').dataset.folderId;
+            const folderName = document.getElementById('edit-folder-name').value.trim();
+            const folderDescription = document.getElementById('edit-folder-description').value.trim();
+            
+            if (!folderName) {
+                showNotification('Please enter a folder name', 'warning');
+                return;
+            }
+            
+            try {
+                showLoading();
+                
+                // Update folder in Firestore
+                await db.collection('folders').doc(folderId).update({
+                    name: folderName,
+                    description: folderDescription
+                });
+                
+                // Clear cache to force refresh
+                clearAppCache();
+                
+                // Show success message
+                showNotification('Folder updated successfully!', 'success');
+                
+                // Close modal
+                closeEditFolderModal();
+                
+                // Reload folders
+                await loadManagementFolders();
+                
+                hideLoading();
+            } catch (error) {
+                console.error('Error updating folder:', error);
+                showNotification('Error updating folder. Please try again.', 'error');
+                hideLoading();
+            }
+        };
+        
+        // Function to edit a folder (wrapper for opening modal)
+        const editFolder = (folderId, folderName, folderDescription) => {
+            openEditFolderModal(folderId, folderName, folderDescription);
+        };
+        
+        // Function to confirm delete folder
+        const confirmDeleteFolder = (folderId, folderName) => {
+            if (confirm(`Are you sure you want to delete "${folderName}"? All videos in this folder will also be deleted. This action cannot be undone.`)) {
+                deleteFolder(folderId);
+            }
+        };
+        
+        // Function to delete a folder
+        const deleteFolder = async (folderId) => {
+            try {
+                showLoading();
+                
+                // First, get all videos in this folder
+                const videosSnapshot = await db.collection('videos').where('folderId', '==', folderId).get();
+                
+                // Batch delete
+                const batch = db.batch();
+                
+                // Delete the folder
+                batch.delete(db.collection('folders').doc(folderId));
+                
+                // Delete all videos in the folder
+                videosSnapshot.forEach(doc => {
+                    batch.delete(doc.ref);
+                });
+                
+                await batch.commit();
+                
+                // Clear cache to force refresh
+                clearAppCache();
+                
+                // Show success message
+                showNotification('Folder and its videos deleted successfully!', 'success');
+                
+                // Reload folders and videos
+                await loadManagementFolders();
+                await loadManagementVideos();
+                
+                // If we were viewing the deleted folder, go back to all videos
+                if (currentFolderId === folderId) {
+                    showAllVideosInManagement();
+                }
+                
+                hideLoading();
+            } catch (error) {
+                console.error('Error deleting folder:', error);
+                showNotification('Error deleting folder. Please try again.', 'error');
+                hideLoading();
+            }
+        };
+        
+        // Function to show videos in a specific folder
+        const showVideosInFolder = async (folderId, folderName) => {
+            // Set current folder
+            currentFolderId = folderId;
+            currentFolderName = folderName;
+            
+            // Update breadcrumb
+            const breadcrumb = document.getElementById('folder-breadcrumb');
+            breadcrumb.innerHTML = `
+                <div class="breadcrumb-item" onclick="showAllVideosInManagement()">All Videos</div>
+                <span class="breadcrumb-separator">></span>
+                <div class="breadcrumb-current">${folderName}</div>
+            `;
+            
+            // Update folder list to show active state
+            document.querySelectorAll('.folder-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            document.querySelector(`.folder-item[onclick*="${folderId}"]`)?.classList.add('active');
+            
+            // Load videos for this folder
+            await loadManagementVideos();
+        };
+        
+        // Function to show all videos in management
+        const showAllVideosInManagement = async () => {
+            // Reset current folder
+            currentFolderId = null;
+            currentFolderName = null;
+            
+            // Update breadcrumb
+            const breadcrumb = document.getElementById('folder-breadcrumb');
+            breadcrumb.innerHTML = `
+                <div class="breadcrumb-current">All Videos</div>
+            `;
+            
+            // Update folder list to remove active state
+            document.querySelectorAll('.folder-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Load all videos
+            await loadManagementVideos();
+        };
+        
+        // Function to open the video folder modal
+        const openVideoFolderModal = (videoId, currentFolderId) => {
+            const videoFolderModal = document.getElementById('video-folder-modal');
+            videoFolderModal.classList.add('open');
+            inVideoFolderModal = true;
+            
+            // Store video ID for submission
+            document.getElementById('video-folder-form').dataset.videoId = videoId;
+            
+            // Set current selection
+            document.getElementById('video-folder-select').value = currentFolderId || '';
+            
+            // Focus on select
+            setTimeout(() => {
+                document.getElementById('video-folder-select').focus();
+            }, 100);
+        };
+        
+        // Function to close the video folder modal
+        const closeVideoFolderModal = () => {
+            const videoFolderModal = document.getElementById('video-folder-modal');
+            videoFolderModal.classList.remove('open');
+            inVideoFolderModal = false;
+        };
+        
+        // Function to change video folder
+        const changeVideoFolderSubmit = async (event) => {
+            event.preventDefault();
+            
+            const videoId = document.getElementById('video-folder-form').dataset.videoId;
+            const folderId = document.getElementById('video-folder-select').value;
+            
+            try {
+                showLoading();
+                
+                // Update video in Firestore
+                await db.collection('videos').doc(videoId).update({
+                    folderId: folderId || null
+                });
+                
+                // Clear cache to force refresh
+                clearAppCache();
+                
+                // Show success message
+                showNotification('Video folder updated successfully!', 'success');
+                
+                // Close modal
+                closeVideoFolderModal();
+                
+                // Reload videos
+                await loadManagementVideos();
+                
+                hideLoading();
+            } catch (error) {
+                console.error('Error updating video folder:', error);
+                showNotification('Error updating video folder. Please try again.', 'error');
+                hideLoading();
+            }
+        };
+        
+        // Function to load folders for upload form
+        const loadFoldersForUpload = async () => {
+            const folderSelect = document.getElementById('video-folder');
+            
+            // Clear existing options except the first one
+            while (folderSelect.children.length > 1) {
+                folderSelect.removeChild(folderSelect.lastChild);
+            }
+            
+            try {
+                // Fetch folders from Firestore
+                const folders = await fetchFoldersFromFirestore();
+                
+                // Add folders to select
+                folders.forEach(folder => {
+                    const option = document.createElement('option');
+                    option.value = folder.id;
+                    option.textContent = folder.name;
+                    folderSelect.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Error loading folders for upload:', error);
+            }
+        };
+        
+        // Function to load folders for video folder modal
+        const loadFoldersForVideoFolderModal = async () => {
+            const folderSelect = document.getElementById('video-folder-select');
+            
+            // Clear existing options except the first one
+            while (folderSelect.children.length > 1) {
+                folderSelect.removeChild(folderSelect.lastChild);
+            }
+            
+            try {
+                // Fetch folders from Firestore
+                const folders = await fetchFoldersFromFirestore();
+                
+                // Add folders to select
+                folders.forEach(folder => {
+                    const option = document.createElement('option');
+                    option.value = folder.id;
+                    option.textContent = folder.name;
+                    folderSelect.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Error loading folders for video folder modal:', error);
+            }
+        };
+        
+        // Initialize folder loading for video folder modal when DOM is ready
+        document.addEventListener('DOMContentLoaded', () => {
+            // Load folders for video folder modal
+            loadFoldersForVideoFolderModal();
+        });
+        
+        // Function to update ad display
+        function updateAdDisplay() {
+            if (!adsData || adsData.length === 0) return;
+            
+            // If we're not in the video modal, update the main ad display
+            if (!inVideoModal) {
+                showAd(currentAdIndex);
+            }
+        }
     </script>
 </body>
 </html>
