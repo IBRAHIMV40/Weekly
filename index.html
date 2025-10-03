@@ -2418,78 +2418,6 @@
         .file-input {
             display: none;
         }
-        
-        /* Settings Modal Styles */
-        .settings-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            z-index: 3000;
-            justify-content: center;
-            align-items: center;
-            overflow-y: auto;
-            padding: 20px 0;
-        }
-        .settings-modal.open {
-            display: flex;
-        }
-        .settings-content {
-            background-color: #fff;
-            width: 90%;
-            max-width: 500px;
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            max-height: 90vh;
-            overflow-y: auto;
-            margin: auto;
-        }
-        .settings-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            position: sticky;
-            top: 0;
-            background-color: #fff;
-            z-index: 10;
-            padding-bottom: 10px;
-        }
-        .settings-form {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-        .stats-container {
-            background-color: #f5f5f5;
-            border-radius: 8px;
-            padding: 15px;
-            margin-bottom: 15px;
-        }
-        .stat-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 0;
-            border-bottom: 1px solid #eee;
-        }
-        .stat-item:last-child {
-            border-bottom: none;
-        }
-        .stat-label {
-            font-size: 14px;
-            color: #333;
-            font-weight: 500;
-        }
-        .stat-value {
-            font-size: 16px;
-            color: #00b300;
-            font-weight: bold;
-        }
     </style>
 </head>
 <body>
@@ -2623,10 +2551,6 @@
                 <img src="https://cdn-icons-png.flaticon.com/128/4225/4225690.png" alt="Video Management">
                 <span>Video Management</span>
             </div>
-            <div class="sidebar-item" onclick="checkSettingsPassword()">
-                <img src="https://cdn-icons-png.flaticon.com/128/3405/3405247.png" alt="Settings">
-                <span>Settings</span>
-            </div>
             <div class="sidebar-item">
                 <img src="https://cdn-icons-png.flaticon.com/128/18392/18392966.png" alt="Online Service">
                 <span>Online Service</span>
@@ -2634,6 +2558,11 @@
             <div class="sidebar-item">
                 <img src="https://cdn-icons-png.flaticon.com/128/2312/2312342.png" alt="Privacy Policy">
                 <span>Privacy Policy</span>
+            </div>
+            <!-- New items -->
+            <div class="sidebar-item">
+                <img src="https://cdn-icons-png.flaticon.com/128/3405/3405247.png" alt="Settings">
+                <span>Settings</span>
             </div>
             <div class="sidebar-item">
                 <img src="https://cdn-icons-png.flaticon.com/128/2838/2838694.png" alt="Help">
@@ -2899,61 +2828,11 @@
         </div>
     </div>
     
-    <!-- Settings Modal -->
-    <div class="settings-modal" id="settings-modal">
-        <div class="settings-content">
-            <div class="settings-header">
-                <h3>Settings</h3>
-                <button onclick="closeSettingsModal()">✖</button>
-            </div>
-            
-            <div class="stats-container">
-                <h4 style="margin-top: 0; margin-bottom: 15px; color: #333;">App Statistics</h4>
-                
-                <div class="stat-item">
-                    <div class="stat-label">Total Videos</div>
-                    <div class="stat-value" id="total-videos-count">0</div>
-                </div>
-                
-                <div class="stat-item">
-                    <div class="stat-label">Total Video Views</div>
-                    <div class="stat-value" id="total-views-count">0</div>
-                </div>
-                
-                <div class="stat-item">
-                    <div class="stat-label">Total Apps</div>
-                    <div class="stat-value" id="total-apps-count">0</div>
-                </div>
-                
-                <div class="stat-item">
-                    <div class="stat-label">Total App Views</div>
-                    <div class="stat-value" id="total-app-views-count">0</div>
-                </div>
-                
-                <div class="stat-item">
-                    <div class="stat-label">Total Ads</div>
-                    <div class="stat-value" id="total-ads-count">0</div>
-                </div>
-                
-                <div class="stat-item">
-                    <div class="stat-label">Total Ad Views</div>
-                    <div class="stat-value" id="total-ad-views-count">0</div>
-                </div>
-            </div>
-            
-            <div class="form-group">
-                <label for="cache-clear">Clear App Cache</label>
-                <button type="button" class="upload-btn" onclick="clearAppCacheAndNotify()">Clear Cache</button>
-                <small style="color: #666; font-size: 12px;">This will clear all cached data and reload the app</small>
-            </div>
-        </div>
-    </div>
-    
     <!-- Video Management Modal -->
     <div class="video-management-modal" id="video-management-modal">
         <div class="video-management-content">
             <div class="video-management-header">
-                <h3 id="video-management-title">Video Management</h3>
+                <h3>Video Management</h3>
                 <button onclick="closeVideoManagementModal()">✖</button>
             </div>
             
@@ -3450,15 +3329,6 @@
             console.log('App cache cleared');
         }
         
-        // Function to clear cache and show notification
-        function clearAppCacheAndNotify() {
-            clearAppCache();
-            showNotification('Cache cleared successfully. App will reload now.', 'success');
-            setTimeout(() => {
-                window.location.reload();
-            }, 2000);
-        }
-        
         // Initialize saved movies from localStorage
         let savedMovies = JSON.parse(localStorage.getItem('savedMovies')) || [];
         
@@ -3561,9 +3431,6 @@
         
         // Track if we're currently in the video folder modal
         let inVideoFolderModal = false;
-        
-        // Track if we're currently in the settings modal
-        let inSettingsModal = false;
         
         // Track if we're currently in the ads submenu
         let inAdsSubmenu = false;
@@ -3951,21 +3818,6 @@
             passwordModal.dataset.target = 'video-management';
         };
         
-        // Function to check password before opening settings modal
-        const checkSettingsPassword = () => {
-            const passwordModal = document.getElementById('password-modal');
-            passwordModal.classList.add('open');
-            inPasswordModal = true;
-            
-            // Focus on password input
-            setTimeout(() => {
-                document.getElementById('password-input').focus();
-            }, 100);
-            
-            // Set a flag to indicate we're opening settings
-            passwordModal.dataset.target = 'settings';
-        };
-        
         const closePasswordModal = () => {
             const passwordModal = document.getElementById('password-modal');
             passwordModal.classList.remove('open');
@@ -3980,12 +3832,13 @@
             event.preventDefault();
             
             const password = document.getElementById('password-input').value;
+            const correctPassword = "Mm&&0220";
             const target = document.getElementById('password-modal').dataset.target;
             
-            if (password === "Mm&&0220" && target === 'video-management') {
+            if (password === correctPassword && target === 'video-management') {
                 closePasswordModal();
                 openVideoManagementModal();
-            } else if (password === "Mm&&0220") {
+            } else if (password === correctPassword) {
                 closePasswordModal();
                 openUploadModal();
             } else if (password === "Mm&&0221" && target === 'app') {
@@ -3994,100 +3847,11 @@
             } else if (password === "Mm&&0221" && target === 'ad') {
                 closePasswordModal();
                 openAdUploadModal();
-            } else if (password === "Mm&&02211" && target === 'video-management') {
+            } else if (password === "Mm&&02211") {
                 closePasswordModal();
                 openVideoManagementModal();
-            } else if (password === "Mm&&022111" && target === 'settings') {
-                closePasswordModal();
-                openSettingsModal();
             } else {
                 document.getElementById('password-error').textContent = "Incorrect password. Please try again.";
-            }
-        };
-        
-        // Function to open Settings Modal
-        const openSettingsModal = async () => {
-            const settingsModal = document.getElementById('settings-modal');
-            const sidebarModal = document.getElementById('sidebar-modal');
-            
-            // Close sidebar modal first
-            if (sidebarModal.classList.contains('open')) {
-                sidebarModal.classList.remove('open');
-                inSidebarModal = false;
-            }
-            
-            // Open settings modal
-            settingsModal.classList.add('open');
-            inSettingsModal = true;
-            
-            // Load statistics
-            await loadSettingsStatistics();
-            
-            // Scroll to top of modal content
-            setTimeout(() => {
-                const settingsContent = document.querySelector('.settings-content');
-                if (settingsContent) {
-                    settingsContent.scrollTop = 0;
-                }
-            }, 100);
-        };
-        
-        // Function to close the settings modal
-        const closeSettingsModal = () => {
-            const settingsModal = document.getElementById('settings-modal');
-            settingsModal.classList.remove('open');
-            inSettingsModal = false;
-        };
-        
-        // Function to load statistics for settings
-        const loadSettingsStatistics = async () => {
-            try {
-                showLoading();
-                
-                // Get total videos count
-                const videosSnapshot = await db.collection('videos').get();
-                const totalVideos = videosSnapshot.size;
-                document.getElementById('total-videos-count').textContent = totalVideos;
-                
-                // Get total video views
-                let totalVideoViews = 0;
-                videosSnapshot.forEach(doc => {
-                    const views = doc.data().views || 0;
-                    totalVideoViews += views;
-                });
-                document.getElementById('total-views-count').textContent = formatViewCount(totalVideoViews);
-                
-                // Get total apps count
-                const appsSnapshot = await db.collection('apps').get();
-                const totalApps = appsSnapshot.size;
-                document.getElementById('total-apps-count').textContent = totalApps;
-                
-                // Get total app views
-                let totalAppViews = 0;
-                appsSnapshot.forEach(doc => {
-                    const views = doc.data().views || 0;
-                    totalAppViews += views;
-                });
-                document.getElementById('total-app-views-count').textContent = formatViewCount(totalAppViews);
-                
-                // Get total ads count
-                const adsSnapshot = await db.collection('ads').get();
-                const totalAds = adsSnapshot.size;
-                document.getElementById('total-ads-count').textContent = totalAds;
-                
-                // Get total ad views
-                let totalAdViews = 0;
-                adsSnapshot.forEach(doc => {
-                    const views = doc.data().views || 0;
-                    totalAdViews += views;
-                });
-                document.getElementById('total-ad-views-count').textContent = formatViewCount(totalAdViews);
-                
-                hideLoading();
-            } catch (error) {
-                console.error('Error loading settings statistics:', error);
-                showNotification('Error loading statistics. Please try again.', 'error');
-                hideLoading();
             }
         };
         
@@ -4539,9 +4303,9 @@
                 { logoUrl: "https://cdn-icons-png.flaticon.com/128/2767/2767325.png", name: "View Apps", url: "#", isViewApps: true },
                 { logoUrl: "https://cdn-icons-png.flaticon.com/128/2767/2767325.png", name: "View Ads", url: "#", isViewAds: true },
                 { logoUrl: "https://cdn-icons-png.flaticon.com/128/4225/4225690.png", name: "Video Management", url: "#", isVideoManagement: true },
-                { logoUrl: "https://cdn-icons-png.flaticon.com/128/3405/3405247.png", name: "Settings", url: "#", isSettings: true },
                 { logoUrl: "https://cdn-icons-png.flaticon.com/128/18392/18392966.png", name: "Online Service", url: "#" },
                 { logoUrl: "https://cdn-icons-png.flaticon.com/128/2312/2312342.png", name: "Privacy Policy", url: "#" },
+                { logoUrl: "https://cdn-icons-png.flaticon.com/128/3405/3405247.png", name: "Settings", url: "#" },
                 { logoUrl: "https://cdn-icons-png.flaticon.com/128/2838/2838694.png", name: "Help & Support", url: "#" },
             ];
             urlLogos.forEach(item => {
@@ -4566,9 +4330,6 @@
                 } else if (item.isVideoManagement) {
                     // Video Management
                     sidebarItem.onclick = checkVideoManagementPassword;
-                } else if (item.isSettings) {
-                    // Settings
-                    sidebarItem.onclick = checkSettingsPassword;
                 } else {
                     sidebarItem.onclick = () => window.open(item.url, '_blank');
                 }
@@ -6526,12 +6287,6 @@
                 }
             });
             
-            document.getElementById('settings-modal').addEventListener('click', function(e) {
-                if (e.target === this) {
-                    closeSettingsModal();
-                }
-            });
-            
             // Add keyboard event to close modal with Escape key
             document.addEventListener('keydown', function(e) {
                 if (e.key === 'Escape' && inUploadModal) {
@@ -6557,9 +6312,6 @@
                 }
                 if (e.key === 'Escape' && inVideoFolderModal) {
                     closeVideoFolderModal();
-                }
-                if (e.key === 'Escape' && inSettingsModal) {
-                    closeSettingsModal();
                 }
             });
             
@@ -7346,9 +7098,6 @@
             await loadManagementFolders();
             await loadManagementVideos();
             
-            // Update header with total videos count
-            await updateVideoManagementHeader();
-            
             // Scroll to top of modal content
             setTimeout(() => {
                 const videoManagementContent = document.querySelector('.video-management-content');
@@ -7356,23 +7105,6 @@
                     videoManagementContent.scrollTop = 0;
                 }
             }, 100);
-        };
-        
-        // Function to update the video management header with total videos count
-        const updateVideoManagementHeader = async () => {
-            try {
-                // Get total videos count
-                const videosSnapshot = await db.collection('videos').get();
-                const totalVideos = videosSnapshot.size;
-                
-                // Update the header with total count
-                const headerTitle = document.getElementById('video-management-title');
-                if (headerTitle) {
-                    headerTitle.textContent = `Video Management (${totalVideos} videos)`;
-                }
-            } catch (error) {
-                console.error('Error updating video management header:', error);
-            }
         };
         
         // Function to close the video management modal
