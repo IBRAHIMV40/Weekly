@@ -2387,6 +2387,11 @@
         <button class="network-warning-retry" onclick="checkNetworkConnection()">Try Again</button>
     </div>
     
+    <!-- Direct Link Message -->
+    <div id="direct-link-message" class="direct-link-message" style="display: none;">
+        Opening shared video...
+    </div>
+    
     <header>
         <div class="header-top">
             <!-- Bars Icon -->
@@ -4924,6 +4929,13 @@
             const videoId = urlParams.get('videoId');
             
             if (videoId) {
+                // Show direct link message
+                const directLinkMessage = document.getElementById('direct-link-message');
+                directLinkMessage.style.display = 'block';
+                
+                // Set flag that we're opening a direct link
+                openingDirectLink = true;
+                
                 try {
                     // Fetch videos from Firestore
                     const fetchedVideos = await fetchVideosFromFirestore();
@@ -4940,22 +4952,34 @@
                         // Find the video with the matching ID
                         const video = data.find(item => item.id == videoId);
                         if (video) {
+                            // Hide the direct link message after a short delay
+                            setTimeout(() => {
+                                directLinkMessage.style.display = 'none';
+                            }, 2000);
+                            
                             // Open video modal immediately without delay
                             openVideoNav(video.videoUrl, video.title, video);
                         } else {
                             // Video not found
-                            showNotification('Video not found. Redirecting to home page...', 'warning');
+                            directLinkMessage.textContent = 'Video not found. Redirecting to home page...';
                             setTimeout(() => {
+                                directLinkMessage.style.display = 'none';
                                 showDiscoverSection();
                             }, 3000);
                         }
                     } else {
                         // No videos available
-                        showNotification('No videos available. Please check back later.', 'warning');
+                        directLinkMessage.textContent = 'No videos available. Please check back later.';
+                        setTimeout(() => {
+                            directLinkMessage.style.display = 'none';
+                        }, 3000);
                     }
                 } catch (error) {
                     console.error("Error fetching videos for direct link:", error);
-                    showNotification('Error loading video. Please try again later.', 'error');
+                    directLinkMessage.textContent = 'Error loading video. Please try again later.';
+                    setTimeout(() => {
+                        directLinkMessage.style.display = 'none';
+                    }, 3000);
                 }
             }
         };
@@ -5860,31 +5884,32 @@
             toggleFilterModal();
         };
         
-        // Share movie function - updated to use localhost
-        const shareMovie = () => {
-            // Create a URL with video ID parameter using localhost
-            const baseUrl = 'http://localhost:3000';
-            const shareUrl = `${baseUrl}?videoId=${currentMovieInModal.id}`;
-            
-            if (navigator.share) {
-                navigator.share({
-                    title: currentMovieInModal.title,
-                    text: 'Check out this movie on Hausa Movies!',
-                    url: shareUrl
-                })
-                .then(() => console.log('Shared successfully'))
-                .catch((error) => console.log('Error sharing:', error));
-            } else {
-                // Fallback - copy to clipboard
-                const dummy = document.createElement('input');
-                document.body.appendChild(dummy);
-                dummy.value = shareUrl;
-                dummy.select();
-                document.execCommand('copy');
-                document.body.removeChild(dummy);
-                showNotification('Link copied to clipboard!', 'success');
-            }
-        };
+        // Share movie function
+const shareMovie = () => {
+    // Create a URL with video ID parameter
+    const url = new URL(window.location.href);
+    url.searchParams.set('videoId', currentMovieInModal.id);
+    const shareUrl = url.toString();
+    
+    if (navigator.share) {
+        navigator.share({
+            title: currentMovieInModal.title,
+            text: 'Check out this movie on Movie Nest!',
+            url: shareUrl
+        })
+        .then(() => console.log('Shared successfully'))
+        .catch((error) => console.log('Error sharing:', error));
+    } else {
+        // Fallback - copy to clipboard
+        const dummy = document.createElement('input');
+        document.body.appendChild(dummy);
+        dummy.value = shareUrl;
+        dummy.select();
+        document.execCommand('copy');
+        document.body.removeChild(dummy);
+        showNotification('Link copied to clipboard!', 'success');
+    }
+};
         
         // Open Edit Profile Modal
         const openEditProfileModal = () => {
