@@ -1412,13 +1412,13 @@
         .search-suggestion-item:last-child {
             border-bottom: none;
         }
+        .search-suggestion-item:hover {
+            background-color: #444;
+        }
         .search-suggestion-item .suggestion-type {
             font-size: 12px;
             color: #aaa;
             margin-left: 5px;
-        }
-        .search-suggestion-item:hover {
-            background-color: #444;
         }
         
         /* Loading Spinner */
@@ -6239,10 +6239,10 @@
             toggleFilterModal();
         };
         
-        // Share movie function - updated to use localhost
+        // Share movie function - updated to use arewatv domain
         const shareMovie = () => {
-            // Create a URL with video ID parameter using localhost
-            const baseUrl = window.location.origin; // This will automatically use the current domain (localhost when developing)
+            // Create a URL with video ID parameter using the arewatv domain
+            const baseUrl = 'https://arewatv-net.netlify.app/';
             const shareUrl = `${baseUrl}?videoId=${currentMovieInModal.id}`;
             
             if (navigator.share) {
@@ -8084,127 +8084,6 @@
         document.addEventListener('DOMContentLoaded', () => {
             // Load folders for video folder modal
             loadFoldersForVideoFolderModal();
-        });
-        
-        // Function to update ad display
-        function updateAdDisplay() {
-            if (!adsData || adsData.length === 0) return;
-            
-            // If we're not in the video modal, update the main ad display
-            if (!inVideoModal) {
-                showAd(currentAdIndex);
-            }
-        }
-        
-        // Handle ad upload form submission
-        document.getElementById('ad-upload-form').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            // Get form values
-            const title = document.getElementById('ad-title').value;
-            const description = document.getElementById('ad-description').value;
-            const image = document.getElementById('ad-image').value;
-            const link = document.getElementById('ad-link').value;
-            const category = document.getElementById('ad-category').value;
-            
-            try {
-                showLoading();
-                
-                // Create ad object
-                const adData = {
-                    title,
-                    description,
-                    image,
-                    link,
-                    category,
-                    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-                    uploadedBy: 'anonymous'
-                };
-                
-                // Add new ad
-                const docRef = await db.collection('ads').add(adData);
-                showNotification('Ad uploaded successfully!', 'success');
-                
-                // Add the new ad to the local data array
-                const newAd = {
-                    id: docRef.id,
-                    ...adData
-                };
-                adsData.unshift(newAd);
-                
-                // Clear cache to force refresh
-                clearAppCache();
-                
-                // Clear form
-                document.getElementById('ad-upload-form').reset();
-                
-                // Close modal
-                closeAdUploadModal();
-                
-                // Refresh the UI
-                updateAdDisplay();
-                
-            } catch (error) {
-                console.error('Error uploading ad:', error);
-                showNotification('Error processing ad. Please try again.', 'warning');
-            } finally {
-                hideLoading();
-            }
-        });
-        
-        // Handle app upload form submission
-        document.getElementById('app-upload-form').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            // Get form values
-            const name = document.getElementById('app-name').value;
-            const description = document.getElementById('app-description').value;
-            const icon = document.getElementById('app-icon').value;
-            const link = document.getElementById('app-link').value;
-            const category = document.getElementById('app-category').value;
-            const rating = parseFloat(document.getElementById('app-rating').value);
-            
-            try {
-                showLoading();
-                
-                // Create app object
-                const appData = {
-                    name,
-                    description,
-                    icon,
-                    link,
-                    category,
-                    rating,
-                    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-                    uploadedBy: 'anonymous'
-                };
-                
-                // Add new app
-                const docRef = await db.collection('apps').add(appData);
-                showNotification('App uploaded successfully!', 'success');
-                
-                // Add the new app to the local data array
-                const newApp = {
-                    id: docRef.id,
-                    ...appData
-                };
-                profileApps.unshift(newApp);
-                
-                // Clear cache to force refresh
-                clearAppCache();
-                
-                // Clear form
-                document.getElementById('app-upload-form').reset();
-                
-                // Close modal
-                closeAppUploadModal();
-                
-            } catch (error) {
-                console.error('Error uploading app:', error);
-                showNotification('Error processing app. Please try again.', 'warning');
-            } finally {
-                hideLoading();
-            }
         });
     </script>
 </body>
