@@ -1115,338 +1115,6 @@
             width: 0%;
         }
         
-        /* Edit Profile Modal */
-        .edit-profile-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            z-index: 3000;
-            justify-content: center;
-            align-items: center;
-        }
-        .edit-profile-modal.open {
-            display: flex;
-        }
-        .edit-profile-content {
-            background-color: #fff;
-            width: 90%;
-            max-width: 400px;
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        .edit-profile-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        .edit-profile-header h3 {
-            font-size: 18px;
-            margin: 0;
-            color: #333';
-        }
-        .edit-profile-header button {
-            background: none;
-            border: none;
-            color: #333';
-            font-size: 16px;
-            cursor: pointer;
-        }
-        .avatar-selection {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 20px;
-        }
-        .avatar-option {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            margin: 0 5px;
-            cursor: pointer;
-            border: 2px solid transparent;
-            overflow: hidden;
-        }
-        .avatar-option.selected {
-            border-color: #00b300;
-        }
-        .avatar-option img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-size: 14px;
-            color: #333';
-        }
-        .form-group input {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 14px;
-        }
-        .save-profile-btn {
-            width: 100%;
-            background: linear-gradient(to right, #004d00, #00b300);
-            color: #fff;
-            border: none;
-            padding: 10px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 14px;
-        }
-        
-        /* Upload Modal Styles - Updated for scrolling */
-        .upload-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            z-index: 3000;
-            justify-content: center;
-            align-items: center;
-            overflow-y: auto; /* Enable scrolling for the modal background */
-            padding: 20px 0; /* Add padding for better scrolling */
-        }
-        .upload-modal.open {
-            display: flex;
-        }
-        .upload-content {
-            background-color: #fff;
-            width: 90%;
-            max-width: 500px;
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            max-height: 90vh; /* Limit height to 90% of viewport */
-            overflow-y: auto; /* Enable scrolling for content */
-            margin: auto; /* Center the modal */
-        }
-        .upload-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            position: sticky; /* Make header stick to top */
-            top: 0;
-            background-color: #fff;
-            z-index: 10; /* Ensure header stays above content */
-            padding-bottom: 10px;
-        }
-        .upload-form {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-        .form-group {
-            display: flex;
-            flex-direction: column;
-        }
-        .form-group label {
-            font-size: 14px;
-            margin-bottom: 5px;
-            color: #333;
-            font-weight: 500;
-        }
-        .form-group input,
-        .form-group textarea,
-        .form-group select {
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 14px;
-            transition: border-color 0.3s ease;
-        }
-        .form-group input:focus,
-        .form-group textarea:focus,
-        .form-group select:focus {
-            outline: none;
-            border-color: #00b300;
-            box-shadow: 0 0 0 2px rgba(0, 179, 0, 0.2);
-        }
-        .form-group textarea {
-            resize: vertical;
-            min-height: 80px;
-            max-height: 150px; /* Limit textarea height */
-        }
-        .upload-btn {
-            background: linear-gradient(to right, #004d00, #00b300);
-            color: #fff;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            margin-top: 10px;
-        }
-        .upload-btn:hover {
-            background: linear-gradient(to right, #003d00, #009900);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-        .upload-btn:active {
-            transform: translateY(0);
-        }
-        .upload-example {
-            margin-top: 15px;
-            padding: 15px;
-            background-color: #f5f5f5;
-            border-radius: 4px;
-            font-size: 12px;
-            border-left: 4px solid #00b300;
-        }
-        .upload-example h4 {
-            margin: 0 0 8px;
-            color: #333;
-            font-size: 14px;
-        }
-        .upload-example p {
-            margin: 0 0 5px;
-            color: #666;
-            line-height: 1.4;
-        }
-        
-        /* Add smooth scrolling */
-        .upload-content {
-            scroll-behavior: smooth;
-        }
-        
-        /* Style for scrollbar in Webkit browsers */
-        .upload-content::-webkit-scrollbar {
-            width: 8px;
-        }
-        .upload-content::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 4px;
-        }
-        .upload-content::-webkit-scrollbar-thumb {
-            background: #888;
-            border-radius: 4px;
-        }
-        .upload-content::-webkit-scrollbar-thumb:hover {
-            background: #555;
-        }
-        
-        /* Network Warning Styles - Updated to match image */
-        .network-warning {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #000;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            transition: opacity 0.3s ease;
-        }
-        .network-warning.hidden {
-            opacity: 0;
-            pointer-events: none;
-        }
-        .network-warning-icon {
-            font-size: 80px;
-            color: #ff0000;
-            margin-bottom: 20px;
-        }
-        .network-warning-text {
-            color: #ffffff;
-            font-size: 20px;
-            margin-bottom: 30px;
-            text-align: center;
-        }
-        .network-warning-retry {
-            background-color: #00b300;
-            color: white;
-            border: none;
-            padding: 12px 30px;
-            border-radius: 30px;
-            font-size: 16px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: background-color 0.3s ease;
-        }
-        .network-warning-retry:hover {
-            background-color: #009900;
-        }
-        
-        /* Search Suggestions */
-        .search-suggestions {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            width: 100%;
-            background-color: #333;
-            border-radius: 0 0 10px 10px;
-            max-height: 200px;
-            overflow-y: auto;
-            z-index: 100;
-            display: none;
-        }
-        .search-suggestions.show {
-            display: block;
-        }
-        .search-suggestion-item {
-            padding: 10px 15px;
-            cursor: pointer;
-            color: #fff;
-            border-bottom: 1px solid #444;
-        }
-        .search-suggestion-item:last-child {
-            border-bottom: none;
-        }
-        .search-suggestion-item:hover {
-            background-color: #444;
-        }
-        .search-suggestion-item .suggestion-type {
-            font-size: 12px;
-            color: #aaa;
-            margin-left: 5px;
-        }
-        
-        /* Loading Spinner */
-        .loading {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.7);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-        }
-        .loading-spinner {
-            width: 50px;
-            height: 50px;
-            border: 5px solid #f3f3f3;
-            border-top: 5px solid #00b300;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
         /* Season and Episode Management Styles */
         .seasons-container {
             margin-top: 15px;
@@ -2135,33 +1803,57 @@
             background-color: #009900;
         }
         
-        .folder-list {
-            display: flex;
+        /* Folder scroll wrapper for horizontal scrolling */
+        .folder-scroll-wrapper {
             overflow-x: auto;
-            gap: 10px;
+            overflow-y: hidden;
+            white-space: nowrap;
             padding-bottom: 10px;
-            scrollbar-width: thin; /* Firefox */
-            -ms-overflow-style: scrollbar; /* IE and Edge */
+            margin-bottom: 15px;
+            scrollbar-width: thin; /* For Firefox */
+            scrollbar-color: #444 #222; /* For Firefox */
         }
         
-        .folder-list::-webkit-scrollbar {
-            display: block; /* Chrome, Safari, Edge */
-            width: 8px;
+        /* Style for folder list in horizontal layout */
+        .folder-scroll-wrapper .folder-list {
+            display: inline-flex;
+            flex-wrap: nowrap;
+            gap: 15px;
+            padding: 5px 0;
+        }
+        
+        /* Adjust folder items for horizontal layout */
+        .folder-scroll-wrapper .folder-item {
+            flex: 0 0 auto;
+            width: 200px;
+            min-width: 200px;
+            max-width: 200px;
+        }
+        
+        /* Custom scrollbar for Webkit browsers */
+        .folder-scroll-wrapper::-webkit-scrollbar {
             height: 8px;
         }
         
-        .folder-list::-webkit-scrollbar-track {
-            background: #f1f1f1;
+        .folder-scroll-wrapper::-webkit-scrollbar-track {
+            background: #222;
             border-radius: 4px;
         }
         
-        .folder-list::-webkit-scrollbar-thumb {
-            background: #888;
+        .folder-scroll-wrapper::-webkit-scrollbar-thumb {
+            background: #444;
             border-radius: 4px;
         }
         
-        .folder-list::-webkit-scrollbar-thumb:hover {
+        .folder-scroll-wrapper::-webkit-scrollbar-thumb:hover {
             background: #555;
+        }
+        
+        .folder-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 15px;
         }
         
         .folder-item {
@@ -2171,9 +1863,8 @@
             padding: 10px;
             cursor: pointer;
             transition: all 0.3s ease;
-            flex: 0 0 auto;
-            width: 200px;
-            min-width: 200px;
+            flex: 1;
+            min-width: 150px;
             max-width: 200px;
         }
         
@@ -2389,34 +2080,333 @@
             font-weight: bold;
         }
         
-        /* Image preview styles */
-        .image-preview {
+        /* Edit Profile Modal */
+        .edit-profile-modal {
             display: none;
-            max-width: 100%;
-            max-height: 200px;
-            margin-top: 10px;
-            border-radius: 5px;
-            border: 1px solid #ddd;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 3000;
+            justify-content: center;
+            align-items: center;
         }
-        
-        .file-input-label {
-            display: inline-block;
-            padding: 8px 12px;
-            background-color: #f0f0f0;
+        .edit-profile-modal.open {
+            display: flex;
+        }
+        .edit-profile-content {
+            background-color: #fff;
+            width: 90%;
+            max-width: 400px;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .edit-profile-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .edit-profile-header h3 {
+            font-size: 18px;
+            margin: 0;
+            color: #333';
+        }
+        .edit-profile-header button {
+            background: none;
+            border: none;
+            color: #333';
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .avatar-selection {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .avatar-option {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin: 0 5px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            overflow: hidden;
+        }
+        .avatar-option.selected {
+            border-color: #00b300;
+        }
+        .avatar-option img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+            color: #333';
+        }
+        .form-group input {
+            width: 100%;
+            padding: 10px;
             border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .save-profile-btn {
+            width: 100%;
+            background: linear-gradient(to right, #004d00, #00b300);
+            color: #fff;
+            border: none;
+            padding: 10px;
             border-radius: 4px;
             cursor: pointer;
             font-size: 14px;
-            color: #333;
-            transition: all 0.3s ease;
         }
         
-        .file-input-label:hover {
-            background-color: #e0e0e0;
-        }
-        
-        .file-input {
+        /* Upload Modal Styles - Updated for scrolling */
+        .upload-modal {
             display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 3000;
+            justify-content: center;
+            align-items: center;
+            overflow-y: auto; /* Enable scrolling for the modal background */
+            padding: 20px 0; /* Add padding for better scrolling */
+        }
+        .upload-modal.open {
+            display: flex;
+        }
+        .upload-content {
+            background-color: #fff;
+            width: 90%;
+            max-width: 500px;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-height: 90vh; /* Limit height to 90% of viewport */
+            overflow-y: auto; /* Enable scrolling for content */
+            margin: auto; /* Center the modal */
+        }
+        .upload-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            position: sticky; /* Make header stick to top */
+            top: 0;
+            background-color: #fff;
+            z-index: 10; /* Ensure header stays above content */
+            padding-bottom: 10px;
+        }
+        .upload-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        .form-group label {
+            font-size: 14px;
+            margin-bottom: 5px;
+            color: #333;
+            font-weight: 500;
+        }
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #00b300;
+            box-shadow: 0 0 0 2px rgba(0, 179, 0, 0.2);
+        }
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+            max-height: 150px; /* Limit textarea height */
+        }
+        .upload-btn {
+            background: linear-gradient(to right, #004d00, #00b300);
+            color: #fff;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+        .upload-btn:hover {
+            background: linear-gradient(to right, #003d00, #009900);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .upload-btn:active {
+            transform: translateY(0);
+        }
+        .upload-example {
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #f5f5f5;
+            border-radius: 4px;
+            font-size: 12px;
+            border-left: 4px solid #00b300;
+        }
+        .upload-example h4 {
+            margin: 0 0 8px;
+            color: #333;
+            font-size: 14px;
+        }
+        .upload-example p {
+            margin: 0 0 5px;
+            color: #666;
+            line-height: 1.4;
+        }
+        
+        /* Add smooth scrolling */
+        .upload-content {
+            scroll-behavior: smooth;
+        }
+        
+        /* Style for scrollbar in Webkit browsers */
+        .upload-content::-webkit-scrollbar {
+            width: 8px;
+        }
+        .upload-content::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+        .upload-content::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+        .upload-content::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+        
+        /* Network Warning Styles - Updated to match image */
+        .network-warning {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.3s ease;
+        }
+        .network-warning.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .network-warning-icon {
+            font-size: 80px;
+            color: #ff0000;
+            margin-bottom: 20px;
+        }
+        .network-warning-text {
+            color: #ffffff;
+            font-size: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .network-warning-retry {
+            background-color: #00b300;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+        .network-warning-retry:hover {
+            background-color: #009900;
+        }
+        
+        /* Search Suggestions */
+        .search-suggestions {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background-color: #333;
+            border-radius: 0 0 10px 10px;
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 100;
+            display: none;
+        }
+        .search-suggestions.show {
+            display: block;
+        }
+        .search-suggestion-item {
+            padding: 10px 15px;
+            cursor: pointer;
+            color: #fff;
+            border-bottom: 1px solid #444;
+        }
+        .search-suggestion-item:last-child {
+            border-bottom: none;
+        }
+        .search-suggestion-item .suggestion-type {
+            font-size: 12px;
+            color: #aaa;
+            margin-left: 5px;
+        }
+        
+        /* Loading Spinner */
+        .loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #00b300;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
     </style>
 </head>
@@ -2613,35 +2603,36 @@
                 <div class="form-group">
                     <label for="video-category">Category</label>
                     <select id="video-category" required>
-                        <!-- Industries -->
-                        <option value="Hollywood">Hollywood</option>
-                        <option value="Nollywood">Nollywood</option>
-                        <option value="Bollywood">Bollywood</option>
-                        <option value="Kannywood">Kannywood</option>
+  <!-- Industries -->
+  <option value="Hollywood">Hollywood</option>
+  <option value="Nollywood">Nollywood</option>
+  <option value="Bollywood">Bollywood</option>
+  <option value="Kannywood">Kannywood</option>
 
-                        <!-- Genres -->
-                        <option value="Action">Action</option>
-                        <option value="Adventure">Adventure</option>
-                        <option value="Comedy">Comedy</option>
-                        <option value="Drama">Drama</option>
-                        <option value="Romance">Romance</option>
-                        <option value="Thriller">Thriller</option>
-                        <option value="Horror">Horror</option>
-                        <option value="Sci-Fi">Sci-Fi</option>
-                        <option value="Fantasy">Fantasy</option>
-                        <option value="Mystery">Mystery</option>
-                        <option value="Crime">Crime</option>
-                        <option value="Documentary">Documentary</option>
-                        <option value="Biography">Biography</option>
-                        <option value="Historical">Historical</option>
-                        <option value="War">War</option>
-                        <option value="Western">Western</option>
-                        <option value="Musical">Musical</option>
-                        <option value="Animation">Animation</option>
-                        <option value="Family">Family</option>
-                        <option value="Sports">Sports</option>
-                        <option value="Short-Drama">Short-Drama</option>
-                    </select>
+  <!-- Genres -->
+  <option value="Action">Action</option>
+  <option value="Adventure">Adventure</option>
+  <option value="Comedy">Comedy</option>
+  <option value="Drama">Drama</option>
+  <option value="Romance">Romance</option>
+  <option value="Thriller">Thriller</option>
+  <option value="Horror">Horror</option>
+  <option value="Sci-Fi">Sci-Fi</option>
+  <option value="Fantasy">Fantasy</option>
+  <option value="Mystery">Mystery</option>
+  <option value="Crime">Crime</option>
+  <option value="Documentary">Documentary</option>
+  <option value="Biography">Biography</option>
+  <option value="Historical">Historical</option>
+  <option value="War">War</option>
+  <option value="Western">Western</option>
+  <option value="Musical">Musical</option>
+  <option value="Animation">Animation</option>
+  <option value="Family">Family</option>
+  <option value="Sports">Sports</option>
+  <option value="Short-Drama">Short-Drama</option>
+</select>
+
                 </div>
                 <div class="form-group">
                     <label for="video-genre">Genre</label>
@@ -2690,22 +2681,12 @@
                     <small style="color: #666; font-size: 12px;">Optional: Provide a download link if available</small>
                 </div>
                 <div class="form-group">
-                    <label for="video-thumbnail">Thumbnail Image</label>
-                    <label for="video-thumbnail" class="file-input-label">
-                        <i class="fas fa-upload"></i> Choose Thumbnail Image
-                    </label>
-                    <input type="file" id="video-thumbnail" class="file-input" accept="image/*" onchange="previewThumbnail(event, 'video-thumbnail-preview')">
-                    <img id="video-thumbnail-preview" class="image-preview">
-                    <input type="hidden" id="video-thumbnail-url" name="video-thumbnail-url">
+                    <label for="video-thumbnail">Thumbnail URL</label>
+                    <input type="url" id="video-thumbnail" placeholder="https://example.com/thumbnail.jpg">
                 </div>
                 <div class="form-group">
-                    <label for="video-carousel-thumbnail">Carousel Thumbnail Image (Optional)</label>
-                    <label for="video-carousel-thumbnail" class="file-input-label">
-                        <i class="fas fa-upload"></i> Choose Carousel Thumbnail
-                    </label>
-                    <input type="file" id="video-carousel-thumbnail" class="file-input" accept="image/*" onchange="previewThumbnail(event, 'video-carousel-thumbnail-preview')">
-                    <img id="video-carousel-thumbnail-preview" class="image-preview">
-                    <input type="hidden" id="video-carousel-thumbnail-url" name="video-carousel-thumbnail-url">
+                    <label for="video-carousel-thumbnail">Carousel Thumbnail URL (Optional)</label>
+                    <input type="url" id="video-carousel-thumbnail" placeholder="https://example.com/carousel-thumbnail.jpg">
                     <small style="color: #666; font-size: 12px;">If not provided, the regular thumbnail will be used</small>
                 </div>
                 
@@ -2852,9 +2833,11 @@
                     <div class="breadcrumb-item" onclick="showAllVideosInManagement()">All Videos</div>
                 </div>
                 
-                <!-- Folder List -->
-                <div class="folder-list" id="folder-list">
-                    <!-- Folders will be loaded here dynamically -->
+                <!-- Folder List with Horizontal Scrolling -->
+                <div class="folder-scroll-wrapper">
+                    <div class="folder-list" id="folder-list">
+                        <!-- Folders will be loaded here dynamically -->
+                    </div>
                 </div>
             </div>
             
@@ -3475,46 +3458,6 @@
             }
         }
         
-        // Function to preview selected thumbnail
-        function previewThumbnail(event, previewId) {
-            const file = event.target.files[0];
-            const preview = document.getElementById(previewId);
-            
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    preview.src = e.target.result;
-                    preview.style.display = 'block';
-                };
-                reader.readAsDataURL(file);
-            } else {
-                preview.style.display = 'none';
-            }
-        }
-        
-        // Function to upload image to Firebase Storage
-        async function uploadImage(file, path) {
-            if (!file) return null;
-            
-            try {
-                showLoading();
-                const storageRef = storage.ref();
-                const fileName = `${Date.now()}_${file.name}`;
-                const fileRef = storageRef.child(`${path}/${fileName}`);
-                
-                await fileRef.put(file);
-                const downloadUrl = await fileRef.getDownloadURL();
-                hideLoading();
-                
-                return downloadUrl;
-            } catch (error) {
-                console.error('Error uploading image:', error);
-                hideLoading();
-                showNotification('Error uploading image. Please try again.', 'error');
-                return null;
-            }
-        }
-        
         // Save form data to localStorage
         function saveUploadFormData() {
             const formData = {
@@ -3528,8 +3471,8 @@
                 trending: document.getElementById('video-trending').checked,
                 videoUrl: document.getElementById('video-url').value,
                 downloadUrl: document.getElementById('video-download-url').value,
-                thumbnail: document.getElementById('video-thumbnail-url').value,
-                carouselThumbnail: document.getElementById('video-carousel-thumbnail-url').value,
+                thumbnail: document.getElementById('video-thumbnail').value,
+                carouselThumbnail: document.getElementById('video-carousel-thumbnail').value,
                 folderId: document.getElementById('video-folder').value,
                 seasons: seasons.map(season => ({
                     seasonNumber: season.seasonNumber,
@@ -3564,23 +3507,9 @@
                 document.getElementById('video-trending').checked = formData.trending || false;
                 document.getElementById('video-url').value = formData.videoUrl || '';
                 document.getElementById('video-download-url').value = formData.downloadUrl || '';
+                document.getElementById('video-thumbnail').value = formData.thumbnail || '';
+                document.getElementById('video-carousel-thumbnail').value = formData.carouselThumbnail || '';
                 document.getElementById('video-folder').value = formData.folderId || '';
-                
-                // Set thumbnail URL and preview
-                document.getElementById('video-thumbnail-url').value = formData.thumbnail || '';
-                if (formData.thumbnail) {
-                    const preview = document.getElementById('video-thumbnail-preview');
-                    preview.src = formData.thumbnail;
-                    preview.style.display = 'block';
-                }
-                
-                // Set carousel thumbnail URL and preview
-                document.getElementById('video-carousel-thumbnail-url').value = formData.carouselThumbnail || '';
-                if (formData.carouselThumbnail) {
-                    const preview = document.getElementById('video-carousel-thumbnail-preview');
-                    preview.src = formData.carouselThumbnail;
-                    preview.style.display = 'block';
-                }
                 
                 // Handle series data if present
                 if ((formData.type === 'series' || formData.type === 'anime') && formData.seasons && formData.seasons.length > 0) {
@@ -4831,7 +4760,7 @@
             openButton.style.border = 'none';
             openButton.style.padding = '6px 12px';
             openButton.style.borderRadius = '5px';
-            openButton.style.cursor = 'pointer';
+            openButton.style.cursor = pointer;
             openButton.style.fontSize = '14px';
             
             openButton.onclick = async () => {
@@ -4921,7 +4850,7 @@
             openButton.style.border = 'none';
             openButton.style.padding = '6px 12px';
             openButton.style.borderRadius = '5px';
-            openButton.style.cursor = 'pointer';
+            openButton.style.cursor = pointer;
             openButton.style.fontSize = '14px';
             
             openButton.onclick = async () => {
@@ -6363,8 +6292,6 @@
                     if (fetchedAds && fetchedAds.length > 0) {
                         adsData = fetchedAds;
                         updateAdDisplay();
-                        // Now initialize ad rotation
-                        initializeAdRotation();
                     }
                 }).catch(error => {
                     console.error('Error fetching ads for video modal:', error);
@@ -6939,36 +6866,14 @@
             const trending = document.getElementById('video-trending').checked;
             const videoUrl = document.getElementById('video-url').value;
             const downloadUrl = document.getElementById('video-download-url').value;
+            const thumbnail = document.getElementById('video-thumbnail').value || `https://picsum.photos/seed/${Math.random().toString(36).substring(7)}/300/450.jpg`;
+            const carouselThumbnail = document.getElementById('video-carousel-thumbnail').value;
             const folderId = document.getElementById('video-folder').value;
             
-            // Handle thumbnail upload
-            const thumbnailFile = document.getElementById('video-thumbnail').files[0];
-            let thumbnailUrl = document.getElementById('video-thumbnail-url').value;
-            
-            if (thumbnailFile) {
-                thumbnailUrl = await uploadImage(thumbnailFile, 'thumbnails');
-                if (!thumbnailUrl) {
-                    showNotification('Failed to upload thumbnail. Please try again.', 'error');
-                    return;
-                }
-            } else if (!thumbnailUrl) {
-                // Generate a placeholder if no thumbnail is provided
-                thumbnailUrl = `https://picsum.photos/seed/${Math.random().toString(36).substring(7)}/300/450.jpg`;
-            }
-            
-            // Handle carousel thumbnail upload
-            const carouselThumbnailFile = document.getElementById('video-carousel-thumbnail').files[0];
-            let carouselThumbnailUrl = document.getElementById('video-carousel-thumbnail-url').value;
-            
-            if (carouselThumbnailFile) {
-                carouselThumbnailUrl = await uploadImage(carouselThumbnailFile, 'carousel-thumbnails');
-                if (!carouselThumbnailUrl) {
-                    showNotification('Failed to upload carousel thumbnail. Please try again.', 'error');
-                    return;
-                }
-            } else if (!carouselThumbnailUrl) {
-                // Use regular thumbnail if carousel thumbnail is not provided
-                carouselThumbnailUrl = thumbnailUrl;
+            // Validate URL format - any valid URL is now accepted
+            if (!isValidVideoUrl(videoUrl)) {
+                showNotification('Please enter a valid video URL', 'warning');
+                return;
             }
             
             try {
@@ -6985,9 +6890,9 @@
                     year: parseInt(year),
                     trending,
                     videoUrl,
-                    downloadUrl: downloadUrl || null,
-                    imgUrl: thumbnailUrl,
-                    carouselCover: carouselThumbnailUrl,
+                    downloadUrl: downloadUrl || null, // Still optional for any video type
+                    imgUrl: thumbnail,
+                    carouselCover: carouselThumbnail || thumbnail,
                     folderId: folderId || null,
                     createdAt: firebase.firestore.FieldValue.serverTimestamp(),
                     uploadedBy: 'anonymous'
@@ -7053,11 +6958,6 @@
                 
                 // Clear saved form data
                 clearUploadFormData();
-                
-                // Clear form and previews
-                document.getElementById('upload-form').reset();
-                document.getElementById('video-thumbnail-preview').style.display = 'none';
-                document.getElementById('video-carousel-thumbnail-preview').style.display = 'none';
                 
                 // Close modal
                 closeUploadModal();
@@ -7370,23 +7270,9 @@
                 document.getElementById('video-trending').checked = video.trending || false;
                 document.getElementById('video-url').value = video.videoUrl || '';
                 document.getElementById('video-download-url').value = video.downloadUrl || '';
+                document.getElementById('video-thumbnail').value = video.imgUrl || '';
+                document.getElementById('video-carousel-thumbnail').value = video.carouselCover || '';
                 document.getElementById('video-folder').value = video.folderId || '';
-                
-                // Set thumbnail URL and preview
-                document.getElementById('video-thumbnail-url').value = video.imgUrl || '';
-                if (video.imgUrl) {
-                    const preview = document.getElementById('video-thumbnail-preview');
-                    preview.src = video.imgUrl;
-                    preview.style.display = 'block';
-                }
-                
-                // Set carousel thumbnail URL and preview
-                document.getElementById('video-carousel-thumbnail-url').value = video.carouselCover || '';
-                if (video.carouselCover) {
-                    const preview = document.getElementById('video-carousel-thumbnail-preview');
-                    preview.src = video.carouselCover;
-                    preview.style.display = 'block';
-                }
                 
                 // Set a flag to indicate we're editing an existing video
                 document.getElementById('upload-form').dataset.editingId = video.id;
