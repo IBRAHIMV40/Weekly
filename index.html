@@ -3001,7 +3001,6 @@
                 <button id="close-btn" onclick="closeNav()"><i class="fas fa-arrow-left"></i></button>
                 <div>
                     <button id="share-btn" onclick="shareMovie()"><i class="fas fa-share-alt"></i> Share</button>
-                    <span id="view-count" style="margin-left: 10px; color: #ccc;">0 views</span>
                     <button id="save-btn" class="save-btn" onclick="toggleSaveStatus()">Add to list</button>
                 </div>
             </div>
@@ -3111,28 +3110,14 @@
         const db = firebase.firestore();
         const storage = firebase.storage();
         
-        // Cache management functions
-        const CACHE_EXPIRY_HOURS = 24; // Cache expires after 24 hours
-
-        function isCacheExpired(timestamp) {
-            const now = new Date().getTime();
-            const cacheTime = new Date(timestamp).getTime();
-            const hoursDiff = (now - cacheTime) / (1000 * 60 * 60);
-            return hoursDiff > CACHE_EXPIRY_HOURS;
-        }
-
+        // Forever Cache System
         function getCachedData(key) {
             try {
                 const cachedData = localStorage.getItem(key);
                 if (!cachedData) return null;
                 
-                const { data, timestamp } = JSON.parse(cachedData);
-                if (isCacheExpired(timestamp)) {
-                    localStorage.removeItem(key);
-                    return null;
-                }
-                
-                return data;
+                const { data, lastSyncTime } = JSON.parse(cachedData);
+                return { data, lastSyncTime };
             } catch (error) {
                 console.error('Error reading from cache:', error);
                 return null;
@@ -3143,135 +3128,135 @@
             try {
                 const cacheData = {
                     data,
-                    timestamp: new Date().toISOString()
+                    lastSyncTime: new Date().toISOString()
                 };
                 localStorage.setItem(key, JSON.stringify(cacheData));
             } catch (error) {
                 console.error('Error writing to cache:', error);
             }
         }
-        
-        // Function to format view counts with K, M, B suffixes
-        function formatViewCount(count) {
-            if (!count) return '0';
-            
-            const num = parseInt(count);
-            if (num >= 1000000000) {
-                return (num / 1000000000).toFixed(1) + 'B';
-            } else if (num >= 1000000) {
-                return (num / 1000000).toFixed(1) + 'M';
-            } else if (num >= 1000) {
-                return (num / 1000).toFixed(1) + 'K';
+
+        function updateCachedData(key, newData) {
+            try {
+                const cachedResult = getCachedData(key);
+                let existingData = [];
+                
+                if (cachedResult) {
+                    existingData = cachedResult.data;
+                }
+                
+                // Merge new data with existing data, avoiding duplicates
+                const mergedData = [...existingData];
+                
+                newData.forEach(newItem => {
+                    const existingIndex = mergedData.findIndex(item => item.id === newItem.id);
+                    if (existingIndex !== -1) {
+                        // Update existing item
+                        mergedData[existingIndex] = newItem;
+                    } else {
+                        // Add new item
+                        mergedData.push(newItem);
+                    }
+                });
+                
+                // Sort by updatedAt or createdAt if available, newest first
+                mergedData.sort((a, b) => {
+                    const aTime = a.updatedAt || a.createdAt;
+                    const bTime = b.updatedAt || b.createdAt;
+                    if (!aTime) return 1;
+                    if (!bTime) return -1;
+                    
+                    const aDate = aTime.toDate ? aTime.toDate() : new Date(aTime);
+                    const bDate = bTime.toDate ? bTime.toDate() : new Date(bTime);
+                    return bDate - aDate;
+                });
+                
+                setCachedData(key, mergedData);
+                return mergedData;
+            } catch (error) {
+                console.error('Error updating cached data:', error);
+                return null;
             }
-            return num.toString();
+        }
+
+        // Function to check for new data in Firestore
+        async function checkForNewData(collectionName, cacheKey) {
+            try {
+                const cachedResult = getCachedData(cacheKey);
+                let lastSyncTime = null;
+                
+                if (cachedResult && cachedResult.lastSyncTime) {
+                    lastSyncTime = new Date(cachedResult.lastSyncTime);
+                }
+                
+                let query = db.collection(collectionName);
+                
+                // If we have a last sync time, only get documents updated after that time
+                if (lastSyncTime) {
+                    query = query.where('updatedAt', '>', lastSyncTime);
+                }
+                
+                const snapshot = await query.get();
+                const newData = [];
+                
+                snapshot.forEach(doc => {
+                    newData.push({ id: doc.id, ...doc.data() });
+                });
+                
+                // If there's new data or no cached data, update the cache
+                if (newData.length > 0 || !cachedResult) {
+                    if (cachedResult && cachedResult.data) {
+                        // Update existing cache with new data
+                        return updateCachedData(cacheKey, newData);
+                    } else {
+                        // Set new cache
+                        const allData = await fetchAllData(collectionName);
+                        setCachedData(cacheKey, allData);
+                        return allData;
+                    }
+                }
+                
+                // Return cached data if no updates
+                return cachedResult ? cachedResult.data : [];
+            } catch (error) {
+                console.error(`Error checking for new ${collectionName} data:`, error);
+                return [];
+            }
+        }
+
+        // Helper function to fetch all data from a collection
+        async function fetchAllData(collectionName) {
+            try {
+                const snapshot = await db.collection(collectionName).get();
+                const data = [];
+                snapshot.forEach(doc => {
+                    data.push({ id: doc.id, ...doc.data() });
+                });
+                return data;
+            } catch (error) {
+                console.error(`Error fetching all ${collectionName} data:`, error);
+                return [];
+            }
         }
         
-        // Fetch videos from Firestore
+        // Fetch videos from Firestore with Forever Cache
         async function fetchVideosFromFirestore() {
-            try {
-                // Check cache first
-                const cachedVideos = getCachedData('videosCache');
-                if (cachedVideos) {
-                    console.log('Using cached videos');
-                    return cachedVideos;
-                }
-                
-                showLoading();
-                const snapshot = await db.collection('videos').get();
-                const videos = [];
-                snapshot.forEach(doc => {
-                    videos.push({ id: doc.id, ...doc.data() });
-                });
-                
-                // Cache the results
-                setCachedData('videosCache', videos);
-                
-                hideLoading();
-                return videos;
-            } catch (error) {
-                console.error('Error fetching videos:', error);
-                hideLoading();
-                showNotification('Failed to load videos. Please check your connection.', 'error');
-                return [];
-            }
+            return await checkForNewData('videos', 'videosCache');
         }
-        
-        // Fetch ads from Firestore
+
+        // Fetch ads from Firestore with Forever Cache
         async function fetchAdsFromFirestore() {
-            try {
-                // Check cache first
-                const cachedAds = getCachedData('adsCache');
-                if (cachedAds) {
-                    console.log('Using cached ads');
-                    return cachedAds;
-                }
-                
-                const snapshot = await db.collection('ads').get();
-                const ads = [];
-                snapshot.forEach(doc => {
-                    ads.push({ id: doc.id, ...doc.data() });
-                });
-                
-                // Cache the results
-                setCachedData('adsCache', ads);
-                
-                return ads;
-            } catch (error) {
-                console.error('Error fetching ads:', error);
-                return [];
-            }
+            return await checkForNewData('ads', 'adsCache');
         }
-        
-        // Fetch apps from Firestore
+
+        // Fetch apps from Firestore with Forever Cache
         async function fetchAppsFromFirestore() {
-            try {
-                // Check cache first
-                const cachedApps = getCachedData('appsCache');
-                if (cachedApps) {
-                    console.log('Using cached apps');
-                    return cachedApps;
-                }
-                
-                const snapshot = await db.collection('apps').get();
-                const apps = [];
-                snapshot.forEach(doc => {
-                    apps.push({ id: doc.id, ...doc.data() });
-                });
-                
-                // Cache the results
-                setCachedData('appsCache', apps);
-                
-                return apps;
-            } catch (error) {
-                console.error('Error fetching apps:', error);
-                return [];
-            }
+            return await checkForNewData('apps', 'appsCache');
         }
-        
-        // Fetch folders from Firestore
+
+        // Fetch folders from Firestore with Forever Cache
         async function fetchFoldersFromFirestore() {
-            try {
-                // Check cache first
-                const cachedFolders = getCachedData('foldersCache');
-                if (cachedFolders) {
-                    console.log('Using cached folders');
-                    return cachedFolders;
-                }
-                
-                const snapshot = await db.collection('folders').get();
-                const folders = [];
-                snapshot.forEach(doc => {
-                    folders.push({ id: doc.id, ...doc.data() });
-                });
-                
-                // Cache the results
-                setCachedData('foldersCache', folders);
-                
-                return folders;
-            } catch (error) {
-                console.error('Error fetching folders:', error);
-                return [];
-            }
+            return await checkForNewData('folders', 'foldersCache');
         }
         
         // Function to clear cache when needed (e.g., after uploading new content)
@@ -3934,48 +3919,19 @@
             description.className = 'view-item-description';
             description.textContent = app.description;
             
-            const viewsButton = document.createElement('button');
-            viewsButton.className = 'view-item-views';
-            viewsButton.textContent = app.views ? `${formatViewCount(app.views)} views` : '0 views';
-            viewsButton.onclick = async () => {
-                try {
-                    // Get the app document
-                    const appRef = db.collection('apps').doc(app.id);
-                    const appDoc = await appRef.get();
-                    
-                    if (appDoc.exists) {
-                        // Get current view count
-                        const currentViews = appDoc.data().views || 0;
-                        const newViews = currentViews + 1;
-                        
-                        // Update view count in Firestore
-                        await appRef.update({ views: newViews });
-                        
-                        // Update button text to show view count
-                        viewsButton.textContent = `${formatViewCount(newViews)} views`;
-                        
-                        // Update local data
-                        app.views = newViews;
-                    } else {
-                        // If document doesn't exist, create it with view count
-                        await appRef.set({ 
-                            views: 1,
-                            ...app 
-                        });
-                        viewsButton.textContent = '1 views';
-                        app.views = 1;
-                    }
-                } catch (error) {
-                    console.error('Error updating app view count:', error);
-                    showNotification('Error updating view count', 'error');
-                }
+            const openButton = document.createElement('button');
+            openButton.className = 'view-item-views';
+            openButton.textContent = 'Install';
+            openButton.onclick = () => {
+                // Open the app link
+                window.open(app.link, '_blank');
             };
             
             content.appendChild(name);
             content.appendChild(description);
             appItem.appendChild(icon);
             appItem.appendChild(content);
-            appItem.appendChild(viewsButton);
+            appItem.appendChild(openButton);
             
             return appItem;
         };
@@ -4001,48 +3957,19 @@
             description.className = 'view-item-description';
             description.textContent = ad.description;
             
-            const viewsButton = document.createElement('button');
-            viewsButton.className = 'view-item-views';
-            viewsButton.textContent = ad.views ? `${formatViewCount(ad.views)} views` : '0 views';
-            viewsButton.onclick = async () => {
-                try {
-                    // Get the ad document
-                    const adRef = db.collection('ads').doc(ad.id);
-                    const adDoc = await adRef.get();
-                    
-                    if (adDoc.exists) {
-                        // Get current view count
-                        const currentViews = adDoc.data().views || 0;
-                        const newViews = currentViews + 1;
-                        
-                        // Update view count in Firestore
-                        await adRef.update({ views: newViews });
-                        
-                        // Update button text to show view count
-                        viewsButton.textContent = `${formatViewCount(newViews)} views`;
-                        
-                        // Update local data
-                        ad.views = newViews;
-                    } else {
-                        // If document doesn't exist, create it with view count
-                        await adRef.set({ 
-                            views: 1,
-                            ...ad 
-                        });
-                        viewsButton.textContent = '1 views';
-                        ad.views = 1;
-                    }
-                } catch (error) {
-                    console.error('Error updating ad view count:', error);
-                    showNotification('Error updating view count', 'error');
-                }
+            const openButton = document.createElement('button');
+            openButton.className = 'view-item-views';
+            openButton.textContent = 'Install';
+            openButton.onclick = () => {
+                // Open the ad link
+                window.open(ad.link, '_blank');
             };
             
             content.appendChild(name);
             content.appendChild(description);
             adItem.appendChild(icon);
             adItem.appendChild(content);
-            adItem.appendChild(viewsButton);
+            adItem.appendChild(openButton);
             
             return adItem;
         };
@@ -4729,47 +4656,12 @@
             openButton.style.border = 'none';
             openButton.style.padding = '6px 12px';
             openButton.style.borderRadius = '5px';
-            openButton.style.cursor = pointer;
+            openButton.style.cursor = 'pointer';
             openButton.style.fontSize = '14px';
             
-            openButton.onclick = async () => {
-                try {
-                    // Get the app document
-                    const appRef = db.collection('apps').doc(item.id);
-                    const appDoc = await appRef.get();
-                    
-                    if (appDoc.exists) {
-                        // Get current view count
-                        const currentViews = appDoc.data().views || 0;
-                        const newViews = currentViews + 1;
-                        
-                        // Update view count in Firestore
-                        await appRef.update({ views: newViews });
-                        
-                        // Update button text to show view count
-                        openButton.textContent = `${formatViewCount(newViews)} views`;
-                        
-                        // Update local data
-                        item.views = newViews;
-                    } else {
-                        // If document doesn't exist, create it with view count
-                        await appRef.set({ 
-                            views: 1,
-                            ...item 
-                        });
-                        openButton.textContent = '1 views';
-                        item.views = 1;
-                    }
-                    
-                    // Open the app link
-                    window.open(item.link, '_blank');
-                } catch (error) {
-                    console.error('Error updating app view count:', error);
-                    showNotification('Error updating view count', 'error');
-                    
-                    // Still open the link even if there's an error
-                    window.open(item.link, '_blank');
-                }
+            openButton.onclick = () => {
+                // Open the app link
+                window.open(item.link, '_blank');
             };
             
             content.appendChild(name);
@@ -4819,47 +4711,12 @@
             openButton.style.border = 'none';
             openButton.style.padding = '6px 12px';
             openButton.style.borderRadius = '5px';
-            openButton.style.cursor = pointer;
+            openButton.style.cursor = 'pointer';
             openButton.style.fontSize = '14px';
             
-            openButton.onclick = async () => {
-                try {
-                    // Get the ad document
-                    const adRef = db.collection('ads').doc(item.id);
-                    const adDoc = await adRef.get();
-                    
-                    if (adDoc.exists) {
-                        // Get current view count
-                        const currentViews = adDoc.data().views || 0;
-                        const newViews = currentViews + 1;
-                        
-                        // Update view count in Firestore
-                        await adRef.update({ views: newViews });
-                        
-                        // Update button text to show view count
-                        openButton.textContent = `${formatViewCount(newViews)} views`;
-                        
-                        // Update local data
-                        item.views = newViews;
-                    } else {
-                        // If document doesn't exist, create it with view count
-                        await adRef.set({ 
-                            views: 1,
-                            ...item 
-                        });
-                        openButton.textContent = '1 views';
-                        item.views = 1;
-                    }
-                    
-                    // Open the ad link
-                    window.open(item.link, '_blank');
-                } catch (error) {
-                    console.error('Error updating ad view count:', error);
-                    showNotification('Error updating view count', 'error');
-                    
-                    // Still open the link even if there's an error
-                    window.open(item.link, '_blank');
-                }
+            openButton.onclick = () => {
+                // Open the ad link
+                window.open(item.link, '_blank');
             };
             
             content.appendChild(name);
@@ -5132,43 +4989,6 @@
             
             // Initialize video ad rotation
             initVideoAdRotation();
-            
-            // Update view count
-            if (item && item.id) {
-                try {
-                    // Get the video document
-                    const videoRef = db.collection('videos').doc(item.id);
-                    const videoDoc = await videoRef.get();
-                    
-                    if (videoDoc.exists) {
-                        // Get current view count
-                        const currentViews = videoDoc.data().views || 0;
-                        const newViews = currentViews + 1;
-                        
-                        // Update view count in Firestore
-                        await videoRef.update({ views: newViews });
-                        
-                        // Update view count display with icon only
-                        document.getElementById('view-count').innerHTML = `<i class="fas fa-eye"></i> ${formatViewCount(newViews)}`;
-                        
-                        // Update local data
-                        item.views = newViews;
-                    } else {
-                        // If document doesn't exist, create it with view count
-                        await videoRef.set({ 
-                            views: 1,
-                            ...item 
-                        });
-                        document.getElementById('view-count').innerHTML = `<i class="fas fa-eye"></i> 1`;
-                        item.views = 1;
-                    }
-                } catch (error) {
-                    console.error('Error updating view count:', error);
-                    document.getElementById('view-count').innerHTML = `<i class="fas fa-eye"></i> Error`;
-                }
-            } else {
-                document.getElementById('view-count').innerHTML = `<i class="fas fa-eye"></i> 0`;
-            }
             
             // Only push state if we're not already in the modal
             if (!inVideoModal) {
@@ -6218,6 +6038,37 @@
                     saveUploadFormData();
                 });
             }
+            
+            // Handle device back button
+            window.addEventListener('popstate', (event) => {
+                if (inVideoModal) {
+                    closeNav();
+                } else if (inGridView) {
+                    showDiscoverSection();
+                } else if (inSidebarModal) {
+                    toggleSidebarModal();
+                } else if (inHistoryModal) {
+                    toggleHistoryModal();
+                } else if (inFilterModal) {
+                    toggleFilterModal();
+                } else if (inUploadModal) {
+                    closeUploadModal();
+                } else if (inAdUploadModal) {
+                    closeAdUploadModal();
+                } else if (inAppUploadModal) {
+                    closeAppUploadModal();
+                } else if (inPasswordModal) {
+                    closePasswordModal();
+                } else if (inVideoManagementModal) {
+                    closeVideoManagementModal();
+                } else if (inCreateFolderModal) {
+                    closeCreateFolderModal();
+                } else if (inEditFolderModal) {
+                    closeEditFolderModal();
+                } else if (inVideoFolderModal) {
+                    closeVideoFolderModal();
+                }
+            });
         });
         
         // Function to initialize ad rotation in the video modal
@@ -6266,44 +6117,10 @@
                     </div>
                 `;
                 
-                // Update install button click handler to track views
-                installButton.onclick = async () => {
-                    try {
-                        // Get the ad document
-                        const adRef = db.collection('ads').doc(ad.id);
-                        const adDoc = await adRef.get();
-                        
-                        if (adDoc.exists) {
-                            // Get current view count
-                            const currentViews = adDoc.data().views || 0;
-                            const newViews = currentViews + 1;
-                            
-                            // Update view count in Firestore
-                            await adRef.update({ views: newViews });
-                            
-                            // Update local data
-                            ad.views = newViews;
-                            
-                            // Open the ad link
-                            window.open(ad.link, '_blank');
-                        } else {
-                            // If document doesn't exist, create it with view count
-                            await adRef.set({ 
-                                views: 1,
-                                ...ad 
-                            });
-                            ad.views = 1;
-                            
-                            // Open the ad link
-                            window.open(ad.link, '_blank');
-                        }
-                    } catch (error) {
-                        console.error('Error updating ad view count:', error);
-                        showNotification('Error updating view count', 'error');
-                        
-                        // Still open the link even if there's an error
-                        window.open(ad.link, '_blank');
-                    }
+                // Update install button click handler
+                installButton.onclick = () => {
+                    // Open the ad link
+                    window.open(ad.link, '_blank');
                 };
                 
                 // Ensure the ad container is displayed
@@ -6771,6 +6588,7 @@
                     carouselCover: carouselThumbnail || thumbnail,
                     folderId: folderId || null,
                     createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
                     uploadedBy: 'anonymous'
                 };
                 
@@ -6811,7 +6629,10 @@
                 
                 if (editingId) {
                     // Update existing video
-                    await db.collection('videos').doc(editingId).update(videoData);
+                    await db.collection('videos').doc(editingId).update({
+                        ...videoData,
+                        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                    });
                     showNotification('Video updated successfully!', 'success');
                     
                     // Remove the editing flag
@@ -7294,7 +7115,8 @@
                 const folderData = {
                     name: folderName,
                     description: folderDescription,
-                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
                 };
                 
                 const docRef = await db.collection('folders').add(folderData);
@@ -7338,7 +7160,8 @@
                 // Update folder in Firestore
                 await db.collection('folders').doc(folderId).update({
                     name: folderName,
-                    description: folderDescription
+                    description: folderDescription,
+                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
                 });
                 
                 // Clear cache to force refresh
@@ -7499,7 +7322,8 @@
                 
                 // Update video in Firestore
                 await db.collection('videos').doc(videoId).update({
-                    folderId: folderId || null
+                    folderId: folderId || null,
+                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
                 });
                 
                 // Clear cache to force refresh
