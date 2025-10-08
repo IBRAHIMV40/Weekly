@@ -3030,7 +3030,7 @@
                 <button id="close-btn" onclick="closeNav()"><i class="fas fa-arrow-left"></i></button>
                 <div>
                     <button id="share-btn" onclick="shareMovie()"><i class="fas fa-share-alt"></i> Share</button>
-                    <span id="view-count" style="margin-left: 10px; color: #ccc;">0 views</span>
+                    <span id="view-count" style="margin-left: 10px; color: #ccc;"><i class="fas fa-eye"></i></span>
                     <button id="save-btn" class="save-btn" onclick="toggleSaveStatus()">Add to list</button>
                 </div>
             </div>
@@ -3140,92 +3140,136 @@
         const db = firebase.firestore();
         const storage = firebase.storage();
         
-        // Cache management functions
-        const CACHE_EXPIRY_HOURS = 24; // Cache expires after 24 hours
+        // Forever Cache System
+        const CACHE_KEY = 'movieNestCache';
+        const LAST_SYNC_KEY = 'movieNestLastSync';
 
-        function isCacheExpired(timestamp) {
-            const now = new Date().getTime();
-            const cacheTime = new Date(timestamp).getTime();
-            const hoursDiff = (now - cacheTime) / (1000 * 60 * 60);
-            return hoursDiff > CACHE_EXPIRY_HOURS;
-        }
-
-        function getCachedData(key) {
+        // Function to get cached data
+        function getCachedData() {
             try {
-                const cachedData = localStorage.getItem(key);
+                const cachedData = localStorage.getItem(CACHE_KEY);
                 if (!cachedData) return null;
                 
-                const { data, timestamp } = JSON.parse(cachedData);
-                if (isCacheExpired(timestamp)) {
-                    localStorage.removeItem(key);
-                    return null;
-                }
-                
-                return data;
+                return JSON.parse(cachedData);
             } catch (error) {
                 console.error('Error reading from cache:', error);
                 return null;
             }
         }
 
-        function setCachedData(key, data) {
+        // Function to set cached data with timestamp
+        function setCachedData(data) {
             try {
-                const cacheData = {
-                    data,
-                    timestamp: new Date().toISOString()
-                };
-                localStorage.setItem(key, JSON.stringify(cacheData));
+                localStorage.setItem(CACHE_KEY, JSON.stringify(data));
+                localStorage.setItem(LAST_SYNC_KEY, new Date().toISOString());
             } catch (error) {
                 console.error('Error writing to cache:', error);
             }
         }
-        
-        // Function to format view counts with K, M, B suffixes
-        function formatViewCount(count) {
-            if (!count) return '0';
-            
-            const num = parseInt(count);
-            if (num >= 1000000000) {
-                return (num / 1000000000).toFixed(1) + 'B';
-            } else if (num >= 1000000) {
-                return (num / 1000000).toFixed(1) + 'M';
-            } else if (num >= 1000) {
-                return (num / 1000).toFixed(1) + 'K';
+
+        // Function to get last sync time
+        function getLastSyncTime() {
+            try {
+                const lastSync = localStorage.getItem(LAST_SYNC_KEY);
+                return lastSync ? new Date(lastSync) : null;
+            } catch (error) {
+                console.error('Error reading last sync time:', error);
+                return null;
             }
-            return num.toString();
         }
-        
-        // Fetch videos from Firestore
+
+        // Function to check if there are new videos in Firestore
+        async function checkForNewVideos() {
+            try {
+                const lastSync = getLastSyncTime();
+                if (!lastSync) return true; // If no last sync, assume there are new videos
+                
+                // Query for videos updated after the last sync time
+                const snapshot = await db.collection('videos')
+                    .where('updatedAt', '>', lastSync)
+                    .limit(1)
+                    .get();
+                
+                return !snapshot.empty; // Return true if there are new videos
+            } catch (error) {
+                console.error('Error checking for new videos:', error);
+                return true; // On error, assume there are new videos to be safe
+            }
+        }
+
+        // Function to update cache with new videos
+        async function updateCacheWithNewVideos() {
+            try {
+                const lastSync = getLastSyncTime();
+                let query = db.collection('videos');
+                
+                if (lastSync) {
+                    // Only get videos updated after the last sync
+                    query = query.where('updatedAt', '>', lastSync);
+                }
+                
+                const snapshot = await query.get();
+                const newVideos = [];
+                snapshot.forEach(doc => {
+                    newVideos.push({ id: doc.id, ...doc.data() });
+                });
+                
+                if (newVideos.length > 0) {
+                    // Get existing cached data
+                    const cachedData = getCachedData() || [];
+                    
+                    // Create a map of existing videos by ID for easy lookup
+                    const existingVideosMap = new Map();
+                    cachedData.forEach(video => {
+                        existingVideosMap.set(video.id, video);
+                    });
+                    
+                    // Update existing videos and add new ones
+                    newVideos.forEach(newVideo => {
+                        existingVideosMap.set(newVideo.id, newVideo);
+                    });
+                    
+                    // Convert back to array and update cache
+                    const updatedData = Array.from(existingVideosMap.values());
+                    setCachedData(updatedData);
+                    
+                    return true; // Return true if cache was updated
+                }
+                
+                return false; // Return false if no updates were needed
+            } catch (error) {
+                console.error('Error updating cache with new videos:', error);
+                return false;
+            }
+        }
+
+        // Function to fetch videos from Firestore with new caching system
         async function fetchVideosFromFirestore() {
             try {
                 // Check cache first
-                const cachedVideos = getCachedData('videosCache');
-                if (cachedVideos) {
-                    console.log('Using cached videos');
-                    return cachedVideos;
+                const cachedVideos = getCachedData();
+                
+                // Check if there are new videos
+                const hasNewVideos = await checkForNewVideos();
+                
+                if (hasNewVideos) {
+                    // Update cache with new videos
+                    await updateCacheWithNewVideos();
+                    // Get updated cached data
+                    const updatedVideos = getCachedData();
+                    return updatedVideos || [];
                 }
                 
-                showLoading();
-                const snapshot = await db.collection('videos').get();
-                const videos = [];
-                snapshot.forEach(doc => {
-                    videos.push({ id: doc.id, ...doc.data() });
-                });
-                
-                // Cache the results
-                setCachedData('videosCache', videos);
-                
-                hideLoading();
-                return videos;
+                // If no new videos, return cached data
+                return cachedVideos || [];
             } catch (error) {
                 console.error('Error fetching videos:', error);
-                hideLoading();
                 showNotification('Failed to load videos. Please check your connection.', 'error');
                 return [];
             }
         }
         
-        // Fetch ads from Firestore
+        // Function to fetch ads from Firestore
         async function fetchAdsFromFirestore() {
             try {
                 // Check cache first
@@ -3251,7 +3295,7 @@
             }
         }
         
-        // Fetch apps from Firestore
+        // Function to fetch apps from Firestore
         async function fetchAppsFromFirestore() {
             try {
                 // Check cache first
@@ -3277,7 +3321,7 @@
             }
         }
         
-        // Fetch folders from Firestore
+        // Function to fetch folders from Firestore
         async function fetchFoldersFromFirestore() {
             try {
                 // Check cache first
@@ -3305,7 +3349,8 @@
         
         // Function to clear cache when needed (e.g., after uploading new content)
         function clearAppCache() {
-            localStorage.removeItem('videosCache');
+            localStorage.removeItem(CACHE_KEY);
+            localStorage.removeItem(LAST_SYNC_KEY);
             localStorage.removeItem('adsCache');
             localStorage.removeItem('appsCache');
             localStorage.removeItem('foldersCache');
@@ -5164,42 +5209,8 @@
             // Initialize video ad rotation
             initVideoAdRotation();
             
-            // Update view count
-            if (item && item.id) {
-                try {
-                    // Get the video document
-                    const videoRef = db.collection('videos').doc(item.id);
-                    const videoDoc = await videoRef.get();
-                    
-                    if (videoDoc.exists) {
-                        // Get current view count
-                        const currentViews = videoDoc.data().views || 0;
-                        const newViews = currentViews + 1;
-                        
-                        // Update view count in Firestore
-                        await videoRef.update({ views: newViews });
-                        
-                        // Update view count display with icon only
-                        document.getElementById('view-count').innerHTML = `<i class="fas fa-eye"></i> ${formatViewCount(newViews)}`;
-                        
-                        // Update local data
-                        item.views = newViews;
-                    } else {
-                        // If document doesn't exist, create it with view count
-                        await videoRef.set({ 
-                            views: 1,
-                            ...item 
-                        });
-                        document.getElementById('view-count').innerHTML = `<i class="fas fa-eye"></i> 1`;
-                        item.views = 1;
-                    }
-                } catch (error) {
-                    console.error('Error updating view count:', error);
-                    document.getElementById('view-count').innerHTML = `<i class="fas fa-eye"></i> Error`;
-                }
-            } else {
-                document.getElementById('view-count').innerHTML = `<i class="fas fa-eye"></i> 0`;
-            }
+            // Update view count with simple icon only
+            document.getElementById('view-count').innerHTML = `<i class="fas fa-eye"></i>`;
             
             // Only push state if we're not already in the modal
             if (!inVideoModal) {
@@ -6895,6 +6906,7 @@
                     carouselCover: carouselThumbnail || thumbnail,
                     folderId: folderId || null,
                     createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
                     uploadedBy: 'anonymous'
                 };
                 
@@ -7625,7 +7637,8 @@
                 
                 // Update video in Firestore
                 await db.collection('videos').doc(videoId).update({
-                    folderId: folderId || null
+                    folderId: folderId || null,
+                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
                 });
                 
                 // Clear cache to force refresh
