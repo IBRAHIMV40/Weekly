@@ -2307,6 +2307,58 @@
             background: #555;
         }
         
+        /* File Upload Styles */
+        .file-upload-container {
+            position: relative;
+            margin-bottom: 10px;
+        }
+        
+        .file-upload-container input[type="file"] {
+            position: absolute;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+            z-index: 2;
+        }
+        
+        .file-upload-preview {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 2px dashed #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            min-height: 120px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .file-upload-preview:hover {
+            border-color: #00b300;
+            background-color: #f0f8f0;
+        }
+        
+        .file-upload-preview i {
+            font-size: 32px;
+            color: #999;
+            margin-bottom: 10px;
+        }
+        
+        .file-upload-preview span {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .file-upload-preview img {
+            max-width: 100%;
+            max-height: 200px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+        
         /* Network Warning Styles - Updated to match image */
         .network-warning {
             position: fixed;
@@ -2680,14 +2732,31 @@
                     <input type="url" id="video-download-url" placeholder="https://example.com/download-link">
                     <small style="color: #666; font-size: 12px;">Optional: Provide a download link if available</small>
                 </div>
+                
+                <!-- Video Thumbnail - Changed to file upload -->
                 <div class="form-group">
-                    <label for="video-thumbnail">Thumbnail URL</label>
-                    <input type="url" id="video-thumbnail" placeholder="https://example.com/thumbnail.jpg">
+                    <label for="video-thumbnail">Video Thumbnail</label>
+                    <div class="file-upload-container">
+                        <input type="file" id="video-thumbnail" accept="image/*" onchange="previewThumbnail(event, 'video-thumbnail-preview')" required>
+                        <div class="file-upload-preview" id="video-thumbnail-preview">
+                            <i class="fas fa-image"></i>
+                            <span>No image selected</span>
+                        </div>
+                    </div>
+                    <small style="color: #666; font-size: 12px;">Upload an image file for the video thumbnail</small>
                 </div>
+                
+                <!-- Carousel Thumbnail - Changed to file upload -->
                 <div class="form-group">
-                    <label for="video-carousel-thumbnail">Carousel Thumbnail URL (Optional)</label>
-                    <input type="url" id="video-carousel-thumbnail" placeholder="https://example.com/carousel-thumbnail.jpg">
-                    <small style="color: #666; font-size: 12px;">If not provided, the regular thumbnail will be used</small>
+                    <label for="video-carousel-thumbnail">Carousel Thumbnail (Optional)</label>
+                    <div class="file-upload-container">
+                        <input type="file" id="video-carousel-thumbnail" accept="image/*" onchange="previewThumbnail(event, 'video-carousel-thumbnail-preview')">
+                        <div class="file-upload-preview" id="video-carousel-thumbnail-preview">
+                            <i class="fas fa-image"></i>
+                            <span>No image selected</span>
+                        </div>
+                    </div>
+                    <small style="color: #666; font-size: 12px;">Optional: Upload a different image for the carousel</small>
                 </div>
                 
                 <!-- Folder Selection -->
@@ -3483,6 +3552,10 @@
         // Track if we're opening a direct video link
         let openingDirectLink = false;
         
+        // Track uploaded image files
+        let uploadedThumbnailFile = null;
+        let uploadedCarouselThumbnailFile = null;
+        
         // Function to show/hide loading spinner
         function showLoading() {
             document.getElementById('loading').style.display = 'flex';
@@ -3516,8 +3589,6 @@
                 trending: document.getElementById('video-trending').checked,
                 videoUrl: document.getElementById('video-url').value,
                 downloadUrl: document.getElementById('video-download-url').value,
-                thumbnail: document.getElementById('video-thumbnail').value,
-                carouselThumbnail: document.getElementById('video-carousel-thumbnail').value,
                 folderId: document.getElementById('video-folder').value,
                 seasons: seasons.map(season => ({
                     seasonNumber: season.seasonNumber,
@@ -3552,8 +3623,6 @@
                 document.getElementById('video-trending').checked = formData.trending || false;
                 document.getElementById('video-url').value = formData.videoUrl || '';
                 document.getElementById('video-download-url').value = formData.downloadUrl || '';
-                document.getElementById('video-thumbnail').value = formData.thumbnail || '';
-                document.getElementById('video-carousel-thumbnail').value = formData.carouselThumbnail || '';
                 document.getElementById('video-folder').value = formData.folderId || '';
                 
                 // Handle series data if present
@@ -3644,6 +3713,20 @@
             const uploadModal = document.getElementById('upload-modal');
             uploadModal.classList.remove('open');
             inUploadModal = false;
+            
+            // Reset uploaded files
+            uploadedThumbnailFile = null;
+            uploadedCarouselThumbnailFile = null;
+            
+            // Reset file preview
+            document.getElementById('video-thumbnail-preview').innerHTML = `
+                <i class="fas fa-image"></i>
+                <span>No image selected</span>
+            `;
+            document.getElementById('video-carousel-thumbnail-preview').innerHTML = `
+                <i class="fas fa-image"></i>
+                <span>No image selected</span>
+            `;
             
             // Save form data before closing
             saveUploadFormData();
@@ -4805,7 +4888,7 @@
             openButton.style.border = 'none';
             openButton.style.padding = '6px 12px';
             openButton.style.borderRadius = '5px';
-            openButton.style.cursor = pointer;
+            openButton.style.cursor = 'pointer';
             openButton.style.fontSize = '14px';
             
             openButton.onclick = async () => {
@@ -4895,7 +4978,7 @@
             openButton.style.border = 'none';
             openButton.style.padding = '6px 12px';
             openButton.style.borderRadius = '5px';
-            openButton.style.cursor = pointer;
+            openButton.style.cursor = 'pointer';
             openButton.style.fontSize = '14px';
             
             openButton.onclick = async () => {
@@ -6862,6 +6945,64 @@
             saveUploadFormData();
         };
         
+        // Function to preview selected thumbnail
+        function previewThumbnail(event, previewId) {
+            const file = event.target.files[0];
+            const preview = document.getElementById(previewId);
+            
+            if (file) {
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    preview.innerHTML = `<img src="${e.target.result}" alt="Thumbnail preview">`;
+                }
+                
+                reader.readAsDataURL(file);
+                
+                // Store the file for later upload
+                if (previewId === 'video-thumbnail-preview') {
+                    uploadedThumbnailFile = file;
+                } else if (previewId === 'video-carousel-thumbnail-preview') {
+                    uploadedCarouselThumbnailFile = file;
+                }
+            } else {
+                preview.innerHTML = `
+                    <i class="fas fa-image"></i>
+                    <span>No image selected</span>
+                `;
+                
+                // Clear the stored file
+                if (previewId === 'video-thumbnail-preview') {
+                    uploadedThumbnailFile = null;
+                } else if (previewId === 'video-carousel-thumbnail-preview') {
+                    uploadedCarouselThumbnailFile = null;
+                }
+            }
+        }
+        
+        // Function to upload image to Firebase Storage
+        async function uploadImageToStorage(file, path) {
+            try {
+                showLoading();
+                
+                // Create a reference to the storage location
+                const storageRef = storage.ref(path);
+                
+                // Upload file
+                const snapshot = await storageRef.put(file);
+                
+                // Get download URL
+                const downloadURL = await snapshot.ref.getDownloadURL();
+                
+                hideLoading();
+                return downloadURL;
+            } catch (error) {
+                console.error('Error uploading image:', error);
+                hideLoading();
+                throw error;
+            }
+        }
+        
         // Handle form submission for video upload - Enhanced for series
         document.getElementById('upload-form').addEventListener('submit', async function(e) {
             e.preventDefault();
@@ -6877,8 +7018,6 @@
             const trending = document.getElementById('video-trending').checked;
             const videoUrl = document.getElementById('video-url').value;
             const downloadUrl = document.getElementById('video-download-url').value;
-            const thumbnail = document.getElementById('video-thumbnail').value || `https://picsum.photos/seed/${Math.random().toString(36).substring(7)}/300/450.jpg`;
-            const carouselThumbnail = document.getElementById('video-carousel-thumbnail').value;
             const folderId = document.getElementById('video-folder').value;
             
             // Validate URL format - any valid URL is now accepted
@@ -6887,8 +7026,25 @@
                 return;
             }
             
+            // Validate that thumbnail is selected
+            if (!uploadedThumbnailFile) {
+                showNotification('Please select a thumbnail image', 'warning');
+                return;
+            }
+            
             try {
                 showLoading();
+                
+                // Upload thumbnail image
+                const thumbnailPath = `thumbnails/${Date.now()}_${uploadedThumbnailFile.name}`;
+                const thumbnailUrl = await uploadImageToStorage(uploadedThumbnailFile, thumbnailPath);
+                
+                // Upload carousel thumbnail if provided
+                let carouselThumbnailUrl = thumbnailUrl; // Default to regular thumbnail
+                if (uploadedCarouselThumbnailFile) {
+                    const carouselThumbnailPath = `carousel-thumbnails/${Date.now()}_${uploadedCarouselThumbnailFile.name}`;
+                    carouselThumbnailUrl = await uploadImageToStorage(uploadedCarouselThumbnailFile, carouselThumbnailPath);
+                }
                 
                 // Create video object
                 const videoData = {
@@ -6902,8 +7058,8 @@
                     trending,
                     videoUrl,
                     downloadUrl: downloadUrl || null, // Still optional for any video type
-                    imgUrl: thumbnail,
-                    carouselCover: carouselThumbnail || thumbnail,
+                    imgUrl: thumbnailUrl,
+                    carouselCover: carouselThumbnailUrl,
                     folderId: folderId || null,
                     createdAt: firebase.firestore.FieldValue.serverTimestamp(),
                     updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
@@ -7282,8 +7438,6 @@
                 document.getElementById('video-trending').checked = video.trending || false;
                 document.getElementById('video-url').value = video.videoUrl || '';
                 document.getElementById('video-download-url').value = video.downloadUrl || '';
-                document.getElementById('video-thumbnail').value = video.imgUrl || '';
-                document.getElementById('video-carousel-thumbnail').value = video.carouselCover || '';
                 document.getElementById('video-folder').value = video.folderId || '';
                 
                 // Set a flag to indicate we're editing an existing video
